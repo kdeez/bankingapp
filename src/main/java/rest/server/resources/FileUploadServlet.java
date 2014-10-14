@@ -24,8 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import rest.server.utils.GzipUtil;
-
 @Path("/file")
 @Component("FileUploadServlet")
 public class FileUploadServlet
@@ -76,11 +74,6 @@ public class FileUploadServlet
 			long size = Files.size(path);
 
 			logger.info("Uploading file=" + filename + ", size=" + size + " bytes");
-			if (decompress)
-			{
-				File decompressFile = new File(filename);
-				GzipUtil.decompress(decompressFile, new File(filePath));
-			}
 
 			return Response.created(URI.create(URLEncoder.encode(filePath, "UTF-8"))).build();
 

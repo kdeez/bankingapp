@@ -12,6 +12,8 @@
 		<jetty.version>8.1.0.RC0</jetty.version>
 		<glassfish.javax.version>2.2.3</glassfish.javax.version>
 		<glassfish.javax-jstl.version>1.2.1</glassfish.javax-jstl.version>
+		<hibernate-core.version>4.1.9.Final</hibernate-core.version>
+		<http-client.version>4.3.3</http-client.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>1.7.7</slf4j.version>
 	</properties>
@@ -55,6 +57,12 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${http-client.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- web server -->
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
@@ -67,14 +75,12 @@
 			<artifactId>javax.servlet.jsp</artifactId>
 			<version>${glassfish.javax.version}</version>
 		</dependency>
-
 		<!-- EL Support -->
 		<dependency>
 			<groupId>org.glassfish.web</groupId>
 			<artifactId>javax.el</artifactId>
 			<version>${glassfish.javax.version}</version>
 		</dependency>
-
 		<!-- JSTL Support -->
 		<dependency>
 			<groupId>org.glassfish.web</groupId>
@@ -86,6 +92,22 @@
 					<groupId>javax.servlet.jsp.jstl</groupId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<!--hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate-core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.30</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
 		</dependency>
 		<!-- Misc -->
 		<dependency>
