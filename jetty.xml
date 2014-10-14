@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+	<!-- Basic Authentication (comment out if you not needed) -->
+	<Call name="addBean">
+		<Arg>
+			<New class="org.eclipse.jetty.security.HashLoginService">
+				<Set name="name">Rest</Set>
+				<Set name="config">realm.properties</Set>
+				<Set name="refreshInterval">0</Set>
+			</New>
+		</Arg>
+	</Call>
+	<!-- end of Basic Authentication -->
+	<!-- =========================================================== -->
+	<!-- Server Thread Pool -->
+	<!-- =========================================================== -->
+	<Set name="ThreadPool">
+		<New class="org.eclipse.jetty.util.thread.QueuedThreadPool">
+			<!-- initial threads set to 10 -->
+			<Set name="minThreads">10</Set>
+			<!-- the thread pool will grow only up to 200 -->
+			<Set name="maxThreads">200</Set>
+		</New>
+	</Set>
+	<Set name="handler">
+		<New id="Handlers" class="org.eclipse.jetty.server.handler.HandlerCollection">
+			<Set name="handlers">
+				<Array type="org.eclipse.jetty.server.Handler">
+					<Item>
+						<New id="RequestLog" class="org.eclipse.jetty.server.handler.RequestLogHandler" />
+					</Item>
+					<Item>
+						<New class="org.eclipse.jetty.server.handler.ContextHandler">
+							<Set name="contextPath">/home</Set>
+							<Set name="handler">
+								<New class="org.eclipse.jetty.server.handler.ResourceHandler">
+									<Set name="directoriesListed">true</Set>
+									<Set name="resourceBase">C:\public_html</Set>
+								</New>
+							</Set>
+						</New>
+					</Item>
+				</Array>
+			</Set>
+		</New>
+	</Set>
+	<!-- =========================================================== -->
+	<!-- Set connectors -->
+	<!-- general properties available described here http://docs.codehaus.org/display/JETTY/Configuring+Connectors -->
+	<!-- =========================================================== -->
+	<Call name="addConnector">
+		<Arg>
+			<!-- if using apache proxy on ssl and jetty is on http, then specify this 
+				as connector class <New class="com.onrampwireless.gateway.server.support.JettyWithHttpsScheme"> 
+				in httpd.conf for mod_proxy module: LoadModule proxy_module modules/mod_proxy.so 
+				LoadModule proxy_connect_module modules/mod_proxy_connect.so LoadModule proxy_http_module 
+				modules/mod_proxy_http.so <IfModule mod_proxy.c> ProxyRequests On ProxyPass 
+				/cima http://localhost:8081/cima retry=0 </IfModule> change <Set name="forwarded">true</Set> 
+				in here -->
+			<New class="org.eclipse.jetty.server.nio.SelectChannelConnector">
+				<!-- the ip address or domain to bind -->
+				<Set name="host">0.0.0.0</Set>
+				<!-- the port to use/bind, defaults to 8080 if property not set -->
+				<Set name="port">8081</Set>
+				<!-- the time in milliseconds when a connection is considered idle -->
+				<Set name="maxIdleTime">30000</Set>
+				<!-- the number of acceptors (their job is to accept the connection and 
+					dispatch to thread pool) -->
+				<Set name="Acceptors">2</Set>
+				<!-- should the connection statistics be turned on? (Not advisable in 
+					production) -->
+				<Set name="statsOn">false</Set>
+				<!-- the confidential port, requests to port get redirect here -->
+				<Set name="confidentialPort">8443</Set>
+				<!-- indicates the minimum number of connections when the server is considered 
+					low on resources -->
+				<Set name="lowResourcesConnections">20000</Set>
+				<!-- when low on resources, this indicates the maximum time (milliseconds) 
+					a connection must be idle to not be closed -->
+				<Set name="lowResourcesMaxIdleTime">5000</Set>
+				<!-- The socket LingerTime in secs or 0 for no wait -->
+				<!-- <Set name="soLingerTime">-1</Set> -->
+				<!-- for proxy, forwared must be true -->
+				<!-- <Set name="hostHeader">proxy.onramp.local</Set> -->
+				<!-- true if this connector is checking the x-forwarded-for/host/server 
+					headers -->
+				<Set name="forwarded">false</Set>
+				<!-- Set a forced valued for the host header to control what is returned 
+					by ServletRequest.getServerName() and ServletRequest.getServerPort(). This 
+					value is only used if forwarded is true. -->
+				<Set name="hostHeader"></Set>
+			</New>
+		</Arg>
+	</Call>
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<!-- To add an HTTPS SSL connector -->
+	<!-- -->
+	<!-- requires jsse.jar, jce.jar are available from -->
+	<!-- jre classpath, they should be by default -->
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<!-- <Call name="addConnector"> -->
+	<!-- <Arg> -->
+	<!-- <New class="org.eclipse.jetty.server.ssl.SslSocketConnector"> -->
+	<!-- <Set name="port">8443</Set> -->
+	<!-- <Set name="host">0.0.0.0</Set> -->
+	<!-- <Set name="maxIdleTime">30000</Set> -->
+	<!-- <Set name="Acceptors">2</Set> -->
+	<!-- <Set name="statsOn">false</Set> -->
+	<!-- <Set name="lowResourcesConnections">20000</Set> -->
+	<!-- <Set name="lowResourcesMaxIdleTime">5000</Set> -->
+	<!-- <Set name="forwarded">false</Set> -->
+	<!-- <Set name="hostHeader"></Set> -->
+	<!-- <Set name="keystore"><SystemProperty name="server.HOME_DIR" default="." 
+		/> /sslkeystore.jks</Set> -->
+	<!-- <Set name="password">whatever</Set> -->
+	<!-- <Set name="keyPassword">whatever</Set> -->
+	<!-- <Set name="truststore">/path/to/keystore/truststore.jks</Set> -->
+	<!-- <Set name="trustPassword">whatever</Set> -->
+	<!-- <Set name="handshakeTimeout">20000</Set> -->
+	<!-- <Set name="needClientAuth">false</Set> -->
+	<!-- </New> -->
+	<!-- </Arg> -->
+	<!-- </Call> -->
+	<!-- =========================================================== -->
+	<!-- =========================================================== -->
+	<!-- extra options -->
+	<!-- =========================================================== -->
+	<!-- Stops the server when ctrl+c is pressed (registers to Runtime.addShutdownHook) -->
+	<Set name="stopAtShutdown">true</Set>
+	<!-- send the server version in the response header? -->
+	<Set name="sendServerVersion">false</Set>
+	<!-- send the date header in the response header? -->
+	<Set name="sendDateHeader">true</Set>
+	<!-- allows requests(prior to shutdown) to finish gracefully -->
+	<Set name="gracefulShutdown">1000</Set>
+</Configure>
