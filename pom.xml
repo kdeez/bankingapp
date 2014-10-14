@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.ucsd.cse110</groupId>
+	<groupId>com.ucsd.bytekonzz</groupId>
 	<version>1.0.0-SNAPSHOT</version>
-	<artifactId>jetty-server</artifactId>
+	<artifactId>banking-web-application</artifactId>
 	<packaging>jar</packaging>
-	<name>Jetty Server Application</name>
+	<name>Banking Application</name>
 	<properties>
 		<spring.version>4.0.2.RELEASE</spring.version>
 		<jetty.version>8.1.0.RC0</jetty.version>
