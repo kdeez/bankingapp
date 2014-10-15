@@ -11,17 +11,9 @@ import rest.server.pojos.User;
 
 @Repository("userDao")
 public class HibernateUserDao implements UserDao {
-	private SessionFactory sessionFactory;
-
+	
 	@Autowired
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-
-	}
-
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
+	private SessionFactory sessionFactory;
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)

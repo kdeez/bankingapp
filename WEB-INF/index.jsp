@@ -14,5 +14,7 @@
 		</script>
 	</h1>
 	<h1><% out.write("Server-side: Java works!"); %></h1>
+	
+	<script src="js/jquery.min.js"></script>
 </body>
 </html>
