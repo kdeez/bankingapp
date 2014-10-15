@@ -22,3 +22,6 @@ http://localhost:8081/index.html
 
 Java Server Pages can run Java as the server side scripting language.
 http://localhost:8081/index.jsp
+
+You will also need to install MySQL Server if you wish to run the web application on your local machine.
+http://dev.mysql.com/downloads/mysql/

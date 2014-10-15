@@ -18,6 +18,7 @@ public class JettyServer
 	 */
 	public static void main(String[] args) throws Exception
 	{
+		System.out.println("User directory = " + System.getProperty("user.dir"));
 		Resource jettyConfig = Resource.newResource(JETTY_CONFIG);
 		XmlConfiguration configuration = new XmlConfiguration(jettyConfig.getInputStream());
 		Server server = (Server) configuration.configure();
