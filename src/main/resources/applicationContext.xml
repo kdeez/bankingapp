@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 	
-	<context:component-scan base-package="rest.server.resources" />
+	<context:component-scan base-package="rest.server" />
 	
 	<bean id="log4jInitializer" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
 		<property name="staticMethod">

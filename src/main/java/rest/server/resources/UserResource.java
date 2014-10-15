@@ -8,21 +8,25 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 
+import rest.server.dao.UserDao;
 import rest.server.pojos.User;
 
 @Path("/user")
+//@Component("userResource")
 public class UserResource {
+	
+	@Autowired
+	private UserDao userDao;
+	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public Response getUser(@QueryParam("id") String id){
-		//this is temporary for demo...
-		//TODO: implement hibernate DAO
-		User user = new User();
-		user.setFirstName("Roger Hagen");
-		user.setLastname("Hagen");
+	public Response getUser(@QueryParam("id") Long id){
+		User user = userDao.getUser(id);
 		return Response.ok(user).build();
 	}
 	
@@ -30,7 +34,11 @@ public class UserResource {
 	@Consumes(MediaType.APPLICATION_JSON_VALUE)
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public Response addUser(User user){
-		return null;
+		boolean saved = userDao.saveUser(user);
+		if(!saved){
+			return Response.serverError().build();
+		}
+		return Response.ok().build();
 	}
 	 
 }
