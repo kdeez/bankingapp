@@ -23,7 +23,7 @@
 	<!--jax-rs configuration -->
 	<servlet>
 		<servlet-name>RestServiceProvider</servlet-name>
-		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.resourceConfigClass</param-name>
 			<param-value>com.sun.jersey.api.core.PackagesResourceConfig</param-value>

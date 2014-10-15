@@ -9,20 +9,21 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import rest.server.dao.UserDao;
 import rest.server.pojos.User;
 
+@Service("userResource")
 @Path("/user")
-//@Component("userResource")
 public class UserResource {
 	
 	@Autowired
+	@Qualifier("userDao")
 	private UserDao userDao;
-	
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public Response getUser(@QueryParam("id") Long id){
@@ -40,5 +41,5 @@ public class UserResource {
 		}
 		return Response.ok().build();
 	}
-	 
+ 
 }

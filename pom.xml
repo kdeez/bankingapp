@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 	<name>Banking Application</name>
 	<properties>
-		<spring.version>4.0.2.RELEASE</spring.version>
+		<spring.version>4.1.1.RELEASE</spring.version>
 		<jetty.version>8.1.0.RC0</jetty.version>
 		<glassfish.javax.version>2.2.3</glassfish.javax.version>
 		<glassfish.javax-jstl.version>1.2.1</glassfish.javax-jstl.version>
@@ -22,12 +22,39 @@
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
-			<version>1.8</version>
+			<version>1.9</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-json</artifactId>
-			<version>1.8</version>
+			<version>1.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-spring</artifactId>
+			<version>1.18.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-aop</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- Spring -->
 		<dependency>
@@ -114,12 +141,6 @@
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>2.5</version>
-		</dependency>
-		<!-- file upload -->
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
