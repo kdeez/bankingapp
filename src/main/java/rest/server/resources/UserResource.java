@@ -39,7 +39,7 @@ public class UserResource {
 		if(!saved){
 			return Response.serverError().build();
 		}
-		return Response.ok().build();
+		return Response.ok(user).build();
 	}
  
 }
