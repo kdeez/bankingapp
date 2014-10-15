@@ -18,7 +18,7 @@ Installing the database via command-line(MySQLWorkbench can also be used)
 1. start mysql by typing "mysql -uroot -ppassword" where root and password are your credentials for your mysql server
 2. type "create database bytekonzz";
 3. type "quit";
-4. type "mysql -uroot -ppassord bytekonzz < /src/main/sql/bytekonzz-mysql.sql"  (note that you may need cd or change the path)
+4. type "mysql -uroot -ppassword bytekonzz < /src/main/sql/bytekonzz-mysql.sql"  (note that you may need cd or change the path)
 5. That's it!
 
 Running the application from Eclipse:
