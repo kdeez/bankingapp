@@ -104,7 +104,7 @@
 			
 		<property name="packagesToScan">
 			<list>
-				<value>rest.server.pojos</value>
+				<value>rest.server.model</value>
 			</list>
 		</property>
 	</bean>
