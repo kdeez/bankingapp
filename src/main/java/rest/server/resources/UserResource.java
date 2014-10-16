@@ -11,12 +11,20 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 
 import rest.server.dao.UserDao;
-import rest.server.pojos.User;
+import rest.server.model.User;
 
-@Service("userResource")
+/**
+ * 
+ * @author roger.hagen
+ *
+ * This is a web resource that is accessed via HTTP
+ * This class is scanned by Spring and JAX-RS on application startup and this is
+ * how the web server knows to answer HTTP request and redirect them to this Java class.
+ */
+@Controller("userResource")
 @Path("/user")
 public class UserResource {
 	

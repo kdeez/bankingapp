@@ -1,4 +1,4 @@
-package rest.server.pojos;
+package rest.server.model;
 
 import java.io.Serializable;
 
@@ -10,6 +10,16 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author roger.hagen
+ * 
+ * This is a Plain Old Java Object (POJO) that holds information to be stored or sent.
+ * 
+ * @Entity and @Table map this Java class to a database table.  Notice how each Java
+ * variable includes an @Column annotation that maps itself to a table column.
+ *
+ */
 @Entity
 @Table(name = "users")
 @SequenceGenerator(name = "user_seq", sequenceName = "user_seq")
@@ -29,6 +39,10 @@ public class User implements Serializable {
 		super();
 	}
 
+	/**
+	 * Unique primary key for this class.
+	 * @return
+	 */
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "user_seq")
