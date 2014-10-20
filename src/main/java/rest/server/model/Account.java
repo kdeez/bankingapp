@@ -33,7 +33,7 @@ public class Account implements Serializable {
 	 */
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "user_seq")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "account_seq")
 	public long getId() {
 		return id;
 	}
