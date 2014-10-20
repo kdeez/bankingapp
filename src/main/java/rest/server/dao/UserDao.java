@@ -24,5 +24,6 @@ public interface UserDao {
 	 * @return
 	 */
 	public boolean saveUser(User user);
+	
 
 }

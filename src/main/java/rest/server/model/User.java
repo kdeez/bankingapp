@@ -2,12 +2,16 @@ package rest.server.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -36,6 +40,7 @@ public class User implements Serializable {
 	private boolean deletable;
 	private int roleId;
 	private Date created;
+	private List<Account> accounts;
 
 	public User() {
 		super();
@@ -135,6 +140,15 @@ public class User implements Serializable {
 
 	public void setCreated(Date created) {
 		this.created = created;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userId")
+	public List<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
 	}
 
 }
