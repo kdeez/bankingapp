@@ -4,7 +4,7 @@ CREATE TABLE users(
 	id INT NOT NULL AUTO_INCREMENT,
 	active TINYINT DEFAULT 0,
 	deletable TINYINT DEFAULT 1,
-	roleId INT DEFAULT 2,
+	roleId INT DEFAULT 1,
 	username VARCHAR(255) UNIQUE NOT NULL,
 	password VARCHAR(255),
 	firstName VARCHAR(255) DEFAULT NULL,
@@ -22,3 +22,9 @@ CREATE TABLE role(
 
 INSERT INTO role (id,name) VALUES (1,'Admin');
 INSERT INTO users (id,username,password,active,roleId,deletable) VALUES (1,'superuser', 'password', 1,1,0);
+
+CREATE TABLE account(
+	id INT NOT NULL AUTO_INCREMENT,
+	
+	PRIMARY KEY(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

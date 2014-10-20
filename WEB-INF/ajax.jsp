@@ -20,7 +20,7 @@
 		</script>
 	</p>
 	<h2>Server-side scripting</h2>
-	<p><% out.write("Java works! This content was actually created on the server before being sent to client (browser)"); %></p>
+	<p><% out.write("Java works! This content was actually created on the server before being sent to client (browser)" + new java.util.Date()); %></p>
 	
 	<h2>Ajax</h2>
 	<p id=ajax-example></p>
@@ -33,7 +33,7 @@
 		    {
 			  	var user = JSON.parse(xmlhttp.responseText)
 			  	if(user){
-			  		document.getElementById("ajax-example").innerHTML="AJAX Works! I sent a specific HTTP request to the server and the server sent back a HTTP response. user=" + user.username;
+			  		document.getElementById("ajax-example").innerHTML="AJAX Works! I sent a specific HTTP request to the server and the server sent back a HTTP response. user=" + user.username + ", rawText=" + xmlhttp.responseText;
 			  	}
 		    }
 		  }

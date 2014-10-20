@@ -1,6 +1,7 @@
 package rest.server.dao;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
@@ -34,7 +35,7 @@ public class HibernateUserDao implements UserDao {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 	public User getUser(long id) {
-		return (User) sessionFactory.getCurrentSession().get(User.class, id);
+		return (User) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("id", id)).add(Restrictions.eq("active", true)).uniqueResult();
 	}
 
 	@Override
