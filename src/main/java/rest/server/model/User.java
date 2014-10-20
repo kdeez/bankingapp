@@ -1,6 +1,7 @@
 package rest.server.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +35,7 @@ public class User implements Serializable {
 	private boolean active;
 	private boolean deletable;
 	private int roleId;
+	private Date created;
 
 	public User() {
 		super();
@@ -124,6 +126,15 @@ public class User implements Serializable {
 
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
+	}
+
+	@Column(name = "created")
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 
 }
