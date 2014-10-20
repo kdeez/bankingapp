@@ -16,6 +16,18 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	
+	<!--user session management -->
+<!-- 	<filter> -->
+<!-- 		<filter-name>sessionFilter</filter-name> -->
+<!-- 		<filter-class>rest.server.main.HttpSessionFilter</filter-class> -->
+<!-- 	</filter> -->
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>sessionFilter</filter-name> -->
+<!-- 		<url-pattern>/rest/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
+	
+	<!-- servlets -->
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
 		<url-pattern>/</url-pattern>
@@ -71,20 +83,20 @@
 		<url-pattern>*.JSPX</url-pattern>
 		<url-pattern>*.XSP</url-pattern>
 	</servlet-mapping>
-	<!-- Basic Authentication (comment out if you not needed) -->
-<!-- 	<security-constraint> -->
-<!-- 		<web-resource-collection> -->
-<!-- 			<web-resource-name>RestService</web-resource-name> -->
-<!-- 			<url-pattern>/rest/*</url-pattern> -->
-<!-- 		</web-resource-collection> -->
-<!-- 		<auth-constraint> -->
-<!-- 			<role-name>admin</role-name> -->
-<!-- 			<role-name>user</role-name> -->
-<!-- 		</auth-constraint> -->
-<!-- 	</security-constraint> -->
-<!-- 	<login-config> -->
-<!-- 		<auth-method>BASIC</auth-method> -->
-<!-- 		<realm-name>Rest</realm-name> -->
-<!-- 	</login-config> -->
+	<!-- Basic Authentication (comment out if you don't need) -->
+	<!-- <security-constraint> -->
+	<!-- <web-resource-collection> -->
+	<!-- <web-resource-name>RestService</web-resource-name> -->
+	<!-- <url-pattern>/rest/*</url-pattern> -->
+	<!-- </web-resource-collection> -->
+	<!-- <auth-constraint> -->
+	<!-- <role-name>admin</role-name> -->
+	<!-- <role-name>user</role-name> -->
+	<!-- </auth-constraint> -->
+	<!-- </security-constraint> -->
+	<!-- <login-config> -->
+	<!-- <auth-method>BASIC</auth-method> -->
+	<!-- <realm-name>Rest</realm-name> -->
+	<!-- </login-config> -->
 	<!-- end of Basic Authentication -->
 </web-app>
