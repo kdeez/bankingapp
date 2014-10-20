@@ -40,7 +40,7 @@ public class User implements Serializable {
 	private boolean deletable;
 	private int roleId;
 	private Date created;
-	private List<Account> accounts;
+//	private List<Account> accounts;
 
 	public User() {
 		super();
@@ -142,13 +142,13 @@ public class User implements Serializable {
 		this.created = created;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userId")
-	public List<Account> getAccounts() {
-		return accounts;
-	}
-
-	public void setAccounts(List<Account> accounts) {
-		this.accounts = accounts;
-	}
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userId")
+//	public List<Account> getAccounts() {
+//		return accounts;
+//	}
+//
+//	public void setAccounts(List<Account> accounts) {
+//		this.accounts = accounts;
+//	}
 
 }
