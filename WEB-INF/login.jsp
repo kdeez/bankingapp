@@ -71,18 +71,23 @@ String username = request.getParameter("user-name");
 String password = request.getParameter("pass-word");
 if(username != null && password != null)
 {
+	//grab the database connection properties from our Java Properties file
 	InputStream stream = new FileInputStream("config.properties");
 	Properties props = new Properties();
 	props.load(stream);
 
 	Class.forName(props.getProperty("db.jdbcdriver", "com.mysql.jdbc.Driver"));
 	Connection connection = DriverManager.getConnection(props.getProperty("db.jdbcurl"), props.getProperty("db.userid"), props.getProperty("db.userpwd"));
+	
+	//always use PreparedStatements to protect against SQL injection
 	PreparedStatement statement = connection.prepareStatement("select * from users where username = ? and password = ?");
 	statement.setString(1, username);
 	statement.setString(2, password);
 	
 	ResultSet result = statement.executeQuery();
-	if (result.next()) {
+	if (result.next()) 
+	{
+		//logged in... use the session attribute from now on
 	    session.setAttribute("user-name", username);
 	    response.sendRedirect("ajax.jsp");
 	}
