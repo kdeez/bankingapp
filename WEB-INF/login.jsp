@@ -98,7 +98,7 @@ if(username != null && password != null)
 	<div class="container">
 		<form class="form-signin" method="post" action="login.jsp">
 			<h2 class="form-signin-heading">Please sign in</h2>
-			<input type="text" class="input-block-level" placeholder="Username" name="user-name"> 
+			<input type="text" class="input-block-level" placeholder="Username" value="<%=username != null ? username : "" %>" name="user-name"> 
 			<input type="password"class="input-block-level" placeholder="Password" name="pass-word"> 
 			<label class="checkbox"><input type="checkbox" value="remember-me">Remember me</label>
 			<button class="btn btn-large btn-primary" type="submit">Sign in</button>

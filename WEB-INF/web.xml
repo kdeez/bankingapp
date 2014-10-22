@@ -18,14 +18,14 @@
 	</listener>
 	
 	<!--user session management -->
-<!-- 	<filter> -->
-<!-- 		<filter-name>sessionFilter</filter-name> -->
-<!-- 		<filter-class>rest.server.main.HttpSessionFilter</filter-class> -->
-<!-- 	</filter> -->
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>sessionFilter</filter-name> -->
-<!-- 		<url-pattern>/rest/*</url-pattern> -->
-<!-- 	</filter-mapping> -->
+	<filter>
+		<filter-name>sessionFilter</filter-name>
+		<filter-class>rest.server.main.UserSessionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>sessionFilter</filter-name>
+		<url-pattern>/rest/*</url-pattern>
+	</filter-mapping>
 	
 	<!-- servlets -->
 	<servlet-mapping>
