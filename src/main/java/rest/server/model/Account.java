@@ -17,9 +17,8 @@ import javax.persistence.Transient;
 @SequenceGenerator(name = "account_seq", sequenceName = "account_seq")
 public class Account implements Serializable {
 	private static final long serialVersionUID = 2395215592820350575L;
-	private long id;
+	private long accountNumber;
 	private long userId;
-	private int accountNumber;
 	private int balance;
 	private int accountType;
 	private Date created;
@@ -53,14 +52,14 @@ public class Account implements Serializable {
 	 * @return
 	 */
 	@Id
-	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "account_seq")
-	public long getId() {
-		return id;
+	@Column(name = "accountNumber")
+	public long getAccountNumber() {
+		return accountNumber;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setAccountNumber(long accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 
 	@Column(name = "userId")
@@ -70,15 +69,6 @@ public class Account implements Serializable {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
-	}
-
-	@Column(name = "accountNumber")
-	public int getAccountNumber() {
-		return accountNumber;
-	}
-
-	public void setAccountNumber(int accountNumber) {
-		this.accountNumber = accountNumber;
 	}
 
 	@Column(name = "balance")
