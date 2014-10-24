@@ -25,18 +25,19 @@
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="panel panel-default">
-			<form id="new-account-form" class="navbar-form navbar-left" method="POST" action="rest/account">
-				<div class="form-group">
-				 	<label>Account Type</label>
-					<select name="accountType">
-						<option value="0">Checking</option>
-						<option value="1">Savings</option>
-					</select>
-				</div>
-				<br>
-				<button type="submit" class="btn btn-default">Submit</button>
-			</form>
-
+			<div class="panel-body">
+				<form id="new-account-form" class="form-horizontal" method="POST"
+					action="rest/account">
+					<div class="form-group">
+						<label>Account Type</label> <select name="accountType">
+							<option value="0">Checking</option>
+							<option value="1">Savings</option>
+						</select>
+					</div>
+					<br>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
 			<div id="response-element"></div>
 	</div>
 </div>
