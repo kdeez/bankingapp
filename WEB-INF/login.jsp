@@ -89,7 +89,7 @@ if(username != null && password != null)
 	{
 		//logged in... use the session attribute from now on
 	    session.setAttribute("user-name", username);
-	    response.sendRedirect("ajax.jsp");
+	    response.sendRedirect("dashboard.jsp");
 	}
 }
 %>
