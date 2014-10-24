@@ -24,14 +24,34 @@
 	<%@include file="navbar.jsp" %>
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>Navbar example</h1>
-        <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-        <p>To see the difference between static and fixed top navbars, just scroll.</p>
-        <p>
-          <a class="btn btn-lg btn-primary" href="#" role="button">View navbar docs &raquo;</a>
-        </p>
-      </div>
+      <div class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">Accounts</div>
+			<div class="panel-body">
+				<!-- Table -->
+				<table class="table">
+					<tr>
+						<th>Name</th>
+						<th>Account Number</th>
+						<th>Type</th>
+						<th>Balance</th>
+					</tr>
+					<tr>
+						<td>Everyday Checking</td>
+						<td>000012356</td>
+						<td>Checking</td>
+						<td>$25,235</td>
+					</tr>
+					<tr>
+						<td>Fluffer Savings</td>
+						<td>000012500</td>
+						<td>Savings</td>
+						<td>$100,000</td>
+					</tr>
+				</table>
+			</div>
+			
+		</div>
 
     </div> <!-- /container -->
   </body>
