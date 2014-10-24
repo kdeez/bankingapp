@@ -19,13 +19,6 @@
 	</style>
 </head>
 <body>
-<%
-	//check for user session
-	Object user = session.getAttribute("user-name");
-	if (user == null) {
-		response.sendRedirect("login.jsp");
-	}
-%>
 
 <!--include directive to import the navigation bar so it is not copy and pasted into every page -->
 	<%@include file="navbar.jsp" %>
