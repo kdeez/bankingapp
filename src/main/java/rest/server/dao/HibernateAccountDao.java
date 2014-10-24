@@ -29,7 +29,7 @@ public class HibernateAccountDao implements AccountDao
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 	public Account getAccount(long id) {
-		return (Account) sessionFactory.getCurrentSession().createCriteria(Account.class).add(Restrictions.eq("id", id)).add(Restrictions.eq("active", true)).uniqueResult();
+		return (Account) sessionFactory.getCurrentSession().createCriteria(Account.class).add(Restrictions.eq("id", id)).uniqueResult();
 	}
 
 	@Override
