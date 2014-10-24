@@ -20,7 +20,7 @@
 	
 	<div id="response-element"></div>
 	
-<script src="../js/jquery.js"></script>
-<script src="../js/form2json.js"></script>
+<script src="../../js/jquery.js"></script>
+<script src="../../js/form2json.js"></script>
 </body>
 </html>
