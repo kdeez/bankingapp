@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../favicon.ico">
-    <title>Fixed Top Navbar Example for Bootstrap</title>
+    <title>Bytekonzz Banking</title>
     <!-- Custom styles for this template -->
     <style>
 		body {
