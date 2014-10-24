@@ -4,11 +4,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Bytekonzz Banking</title>
 <!-- Bootstrap core CSS -->
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<%
+	//check for user session
+	Object user = session.getAttribute("user-name");
+	if (user == null) {
+		response.sendRedirect("login.jsp");
+	}
+%>
 <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
@@ -27,20 +34,24 @@
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">I Want To... <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
+                <li><a href="#">Open Account</a></li>
+                <li><a href="#">Deposit Funds</a></li>
+                <li><a href="#">Withdraw Funds</a></li>
+                <li><a href="#">Transfer Funds</a></li>
+                <li><a href="#">Close Account</a></li>
+<!--                 <li class="divider"></li> -->
+<!--                 <li class="dropdown-header">Existing Accounts</li> -->
+<!--                 <li><a href="#">Deposit Funds</a></li> -->
+<!--                 <li><a href="#">Withdraw Funds</a></li> -->
+<!--                 <li><a href="#">Transfer Funds</a></li> -->
+<!--                 <li><a href="#">Close Account</a></li> -->
               </ul>
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Sign out</a></li>
+            <li><a href="logout.jsp">Sign out</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
