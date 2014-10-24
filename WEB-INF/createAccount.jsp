@@ -17,52 +17,6 @@
 			padding-top: 70px;
 		}
 	</style>
-<%@ page import ="java.sql.*" %>
-<%@ page import="java.io.InputStream" %>
-<%@ page import="java.io.FileInputStream" %>
-<%@ page import="java.util.Properties" %>
-<% 
-String username = request.getParameter("username");
-String password = request.getParameter("password");
-String firstname = request.getParameter("firstname");
-String lastname = request.getParameter("lastname");
-String email = request.getParameter("email");
-if(firstname != null && lastname != null)
-{
-	//grab the database connection properties from our Java Properties file
-	InputStream stream = new FileInputStream("config.properties");
-	Properties props = new Properties();
-	props.load(stream);
-
-	Class.forName(props.getProperty("db.jdbcdriver", "com.mysql.jdbc.Driver"));
-	Connection connection = DriverManager.getConnection(props.getProperty("db.jdbcurl"), props.getProperty("db.userid"), props.getProperty("db.userpwd"));
-	
-	
-	
-	//always use PreparedStatements to protect against SQL injection
-	PreparedStatement statement = connection.prepareStatement("select * from users where firstName = ? and lastname = ?");
-	statement.setString(1, firstname);
-	statement.setString(2, lastname);
-	
-	ResultSet result = statement.executeQuery();
-	
-	if(result == null)
-	{
-		//create a user to get user id
-	}
-	else
-	{
-		//get the id and input into new account for the user id field
-	}
-	/*if (result.next()) 
-	{
-		//logged in... use the session attribute from now on
-	    session.setAttribute("user-name", username);
-	    response.sendRedirect("dashboard.jsp");
-	}*/
-	
-}
-%>
 </head>
 <body>
 
