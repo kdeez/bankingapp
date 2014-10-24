@@ -25,7 +25,7 @@
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="panel panel-default">
-			<form class="navbar-form navbar-left" method="POST" action="rest/account">
+			<form id="new-user-form" class="navbar-form navbar-left" method="POST" action="rest/account">
 				<div class="form-group">
 				 	<label>Account Type</label>
 					<select name="accountType">
@@ -43,5 +43,31 @@
 
 <script src="../js/jquery.js"></script>
 <script src="../js/form2json.js"></script>
+<script>
+$(function() {
+    $('#new-user-form').submit(function(evt) {
+    	var form = $(this);
+        var json = form.toJSONString();
+        var action = this.getAttribute("action");
+        xmlhttp= new XMLHttpRequest();
+		xmlhttp.open("POST", action, true);
+		xmlhttp.setRequestHeader("Content-Type","application/json");
+		xmlhttp.onreadystatechange=function()
+		  {
+		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		    {
+			  var entity = JSON.parse(xmlhttp.responseText)
+			  if(entity)
+			  {
+				//here is where you can update the UI
+				document.getElementById("response-element").innerHTML= "Created=" + xmlhttp.responseText;
+			  }
+		    }
+		  }
+		xmlhttp.send(json);
+        return false;
+    });
+});
+</script>
 </body>
 </html>

@@ -19,28 +19,33 @@ $.fn.serializeObject = function()
    return o;
 };
 
+$.fn.toJSONString = function()
+{
+	return JSON.stringify(this.serializeObject())
+}
 
-$(function() {
-    $('form').submit(function(evt) {
-    	var form = $('form');
-        var json = JSON.stringify(form.serializeObject())
-        var action = this.getAttribute("action");
-        xmlhttp= new XMLHttpRequest();
-		xmlhttp.open("POST", action, true);
-		xmlhttp.setRequestHeader("Content-Type","application/json");
-		xmlhttp.onreadystatechange=function()
-		  {
-		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		    {
-			  var entity = JSON.parse(xmlhttp.responseText)
-			  if(entity)
-			  {
-				//here is where you can update the UI
-				document.getElementById("response-element").innerHTML= "Created=" + xmlhttp.responseText;
-			  }
-		    }
-		  }
-		xmlhttp.send(json);
-        return false;
-    });
-});
+
+//$(function() {
+//    $('form').submit(function(evt) {
+//    	var form = $('form');
+//        var json = JSON.stringify(form.serializeObject())
+//        var action = this.getAttribute("action");
+//        xmlhttp= new XMLHttpRequest();
+//		xmlhttp.open("POST", action, true);
+//		xmlhttp.setRequestHeader("Content-Type","application/json");
+//		xmlhttp.onreadystatechange=function()
+//		  {
+//		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+//		    {
+//			  var entity = JSON.parse(xmlhttp.responseText)
+//			  if(entity)
+//			  {
+//				//here is where you can update the UI
+//				document.getElementById("response-element").innerHTML= "Created=" + xmlhttp.responseText;
+//			  }
+//		    }
+//		  }
+//		xmlhttp.send(json);
+//        return false;
+//    });
+//});
