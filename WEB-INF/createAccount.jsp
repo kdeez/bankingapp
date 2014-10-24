@@ -47,9 +47,6 @@
 			</div>
 		</div>
 	</div>
-
-<script src="../js/jquery.js"></script>
-<script src="../js/form2json.js"></script>
 <script>
 $(function() {
     $('#new-account-form').submit(function(evt) {
