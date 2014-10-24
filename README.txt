@@ -29,7 +29,7 @@ Running the application from Eclipse:
 A couple of test pages called ajax.jsp has been configured in WEB-INF directory (our web root).  The web.xml in that directory is a configuration file for the web server and is not a web resource.
 
 The test page is located at...
-http://localhost:8081/ajax.jsp
+http://localhost:8081/examples/ajax.jsp
 
 Spring is a very powerful framework and will be used throughout our application.  Here is a reference in case you want to look up something you see in the code.
 http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/
