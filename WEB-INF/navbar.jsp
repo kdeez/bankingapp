@@ -41,12 +41,6 @@
                 <li><a href="#">Withdraw Funds</a></li>
                 <li><a href="#">Transfer Funds</a></li>
                 <li><a href="#">Close Account</a></li>
-<!--                 <li class="divider"></li> -->
-<!--                 <li class="dropdown-header">Existing Accounts</li> -->
-<!--                 <li><a href="#">Deposit Funds</a></li> -->
-<!--                 <li><a href="#">Withdraw Funds</a></li> -->
-<!--                 <li><a href="#">Transfer Funds</a></li> -->
-<!--                 <li><a href="#">Close Account</a></li> -->
               </ul>
             </li>
           </ul>
@@ -54,6 +48,8 @@
             <li><a href="logout.jsp">Logged in as <%=user %> (Sign Out)</a></li>
           </ul>
         </div><!--/.nav-collapse -->
+         <!--User feedback messages can be displayed here... -->
+        <div id="user-feedback-message"></div>
       </div>
     </div>
 	<!-- Bootstrap core JavaScript

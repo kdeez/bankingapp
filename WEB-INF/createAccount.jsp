@@ -24,7 +24,10 @@
 	<%@include file="navbar.jsp" %>
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="panel panel-default">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">New Account</h3>
+			</div>
 			<div class="panel-body">
 				<form id="new-account-form" class="form-horizontal" method="POST"
 					action="rest/account">
@@ -39,8 +42,8 @@
 				</form>
 			</div>
 			<div id="response-element"></div>
+		</div>
 	</div>
-</div>
 
 <script src="../js/jquery.js"></script>
 <script src="../js/form2json.js"></script>
@@ -60,9 +63,12 @@ $(function() {
 			  var entity = JSON.parse(xmlhttp.responseText)
 			  if(entity)
 			  {
-				//here is where you can update the UI
-				document.getElementById("response-element").innerHTML= "Created=" + xmlhttp.responseText;
+// 				showSuccessMessage("Successfully opened new account.");
+				//simply show the new account in the table listing
+				window.location.href = "dashboard.jsp";
 			  }
+		    }else{
+		    	showErrorMessage(" Unable to create account.");
 		    }
 		  }
 		xmlhttp.send(json);

@@ -23,3 +23,23 @@ $.fn.toJSONString = function()
 {
 	return JSON.stringify(this.serializeObject())
 }
+
+function showSuccessMessage(message)
+{
+	var element = document.getElementById("user-feedback-message");
+	element.innerHTML = "<div class='alert alert-success alert-dismissible' role='alert'>"
+						+ "<button type='button' class='close' data-dismiss='alert'>&times;</button>"
+						+ "<strong>Success!</strong>" + message
+						+ "</div>";
+}
+
+function showErrorMessage(message)
+{
+	var element = document.getElementById("user-feedback-message");
+	element.innerHTML = "<div class='alert alert-danger alert-dismissible' role='alert'>"
+						+ "<button type='button' class='close' data-dismiss='alert'>&times;</button>"
+						+ "<strong>Error!</strong>" + message
+						+ "</div>";
+}
+
+
