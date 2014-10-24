@@ -25,7 +25,7 @@
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="panel panel-default">
-			<form id="new-user-form" class="navbar-form navbar-left" method="POST" action="rest/account">
+			<form id="new-account-form" class="navbar-form navbar-left" method="POST" action="rest/account">
 				<div class="form-group">
 				 	<label>Account Type</label>
 					<select name="accountType">
@@ -45,7 +45,7 @@
 <script src="../js/form2json.js"></script>
 <script>
 $(function() {
-    $('#new-user-form').submit(function(evt) {
+    $('#new-account-form').submit(function(evt) {
     	var form = $(this);
         var json = form.toJSONString();
         var action = this.getAttribute("action");
