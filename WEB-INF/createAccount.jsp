@@ -61,17 +61,19 @@ $(function() {
 		xmlhttp.setRequestHeader("Content-Type","application/json");
 		xmlhttp.onreadystatechange=function()
 		  {
-		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		  if (xmlhttp.readyState==4)
 		    {
-			  var entity = JSON.parse(xmlhttp.responseText)
-			  if(entity)
-			  {
-// 				showSuccessMessage("Successfully opened new account.");
-				//simply show the new account in the table listing
-				window.location.href = "dashboard.jsp";
-			  }
-		    }else{
-		    	showErrorMessage(" Unable to create account.");
+			  if(xmlhttp.status==200)
+				{
+				  var entity = JSON.parse(xmlhttp.responseText)
+				  if(entity)
+				  {
+					//simply show the new account in the table listing
+					window.location.href = "dashboard.jsp";
+				  }
+				}
+			 
+			  showErrorMessage(" Unable to create account.");
 		    }
 		  }
 		xmlhttp.send(json);
