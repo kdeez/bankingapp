@@ -29,19 +29,22 @@
 				<h3 class="panel-title">New Account</h3>
 			</div>
 			<div class="panel-body">
-				<form id="new-account-form" class="form-horizontal" method="POST"
-					action="rest/account">
+				<form id="new-account-form" method="POST" action="rest/account">
 					<div class="form-group">
-						<label>Account Type</label> <select name="accountType">
-							<option value="0">Checking</option>
-							<option value="1">Savings</option>
-						</select>
+						<div class="input-group">
+						<label>Account Type</label> 
+							<select name="accountType" class="form-control" >
+								<option value="0">Checking</option>
+								<option value="1">Savings</option>
+							</select>
+						</div>
 					</div>
-					<br>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<div class="modal-footer">
+						<a href="dashboard.jsp" class="btn btn-default" role="button">Cancel</a>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
 				</form>
 			</div>
-			<div id="response-element"></div>
 		</div>
 	</div>
 
