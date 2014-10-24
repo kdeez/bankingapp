@@ -36,7 +36,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">I Want To... <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Open Account</a></li>
+                <li><a href="createAccount.jsp">Open Account</a></li>
                 <li><a href="#">Deposit Funds</a></li>
                 <li><a href="#">Withdraw Funds</a></li>
                 <li><a href="#">Transfer Funds</a></li>

@@ -20,6 +20,7 @@ public class Account implements Serializable {
 	private int userId;
 	private int accountNumber;
 	private int balance;
+	private String type;
 	private Date created;
 
 	public Account() {
@@ -77,5 +78,15 @@ public class Account implements Serializable {
 	public void setCreated(Date created) {
 		this.created = created;
 	}
-
+	
+	@Column(name = "type")
+	public String getType()
+	{
+		return type;
+	}
+	
+	public void setType(String type)
+	{
+		this.type = type;
+	}
 }
