@@ -44,4 +44,10 @@ public class HibernateUserDao implements UserDao {
 		return sessionFactory.getCurrentSession().save(user) != null;
 	}
 
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public User getUser(String username) {
+		return (User) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("username", username)).add(Restrictions.eq("active", true)).uniqueResult();
+	}
+
 }

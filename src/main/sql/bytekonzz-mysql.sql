@@ -31,6 +31,7 @@ INSERT INTO users (id,username,password,active,roleId,deletable) VALUES (1,'admi
 CREATE TABLE account(
 	id INT NOT NULL AUTO_INCREMENT,
 	userId INT NOT NULL,
+	accountType INT NOT NULL,
 	accountNumber INT UNIQUE NOT NULL,
 	balance INT DEFAULT 0,
 	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

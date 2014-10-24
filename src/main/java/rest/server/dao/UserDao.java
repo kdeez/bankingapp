@@ -25,5 +25,13 @@ public interface UserDao {
 	 */
 	public boolean saveUser(User user);
 	
+	
+	/**
+	 * Look up the User by username
+	 * @param username
+	 * @return
+	 */
+	public User getUser(String username);
+	
 
 }

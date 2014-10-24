@@ -37,4 +37,5 @@ public class HibernateAccountDao implements AccountDao
 	public boolean saveAccount(Account account) {
 		return sessionFactory.getCurrentSession().save(account) != null;
 	}
+	
 }

@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "account")
@@ -17,14 +18,33 @@ import javax.persistence.Table;
 public class Account implements Serializable {
 	private static final long serialVersionUID = 2395215592820350575L;
 	private long id;
-	private int userId;
+	private long userId;
 	private int accountNumber;
 	private int balance;
-	private String type;
+	private int accountType;
 	private Date created;
 
 	public Account() {
 		super();
+	}
+	
+	public enum AccountType{
+		CHECKING("Checking"),
+		SAVINGS("Savings");
+		
+		private String description;
+		
+		AccountType(String description) {
+			this.description = description;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
+		}
 	}
 
 	/**
@@ -44,11 +64,11 @@ public class Account implements Serializable {
 	}
 
 	@Column(name = "userId")
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 
@@ -79,14 +99,26 @@ public class Account implements Serializable {
 		this.created = created;
 	}
 	
-	@Column(name = "type")
-	public String getType()
+	@Column(name = "accountType")
+	public int getAccountType()
 	{
-		return type;
+		return accountType;
 	}
 	
-	public void setType(String type)
+	public void setAccountType(int type)
 	{
-		this.type = type;
+		this.accountType = type;
 	}
+	
+	@Transient
+	public AccountType getType()
+	{
+		return AccountType.values()[accountType];
+	}
+	
+	public void setType(AccountType type)
+	{
+		this.accountType = type.ordinal();
+	}
+	
 }

@@ -19,4 +19,5 @@ public interface AccountDao
 	 */
 	public boolean saveAccount(Account account);
 	
+	
 }

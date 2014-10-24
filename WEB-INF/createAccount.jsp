@@ -25,18 +25,18 @@
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="panel panel-default">
-			<form method="POST" action="rest/user">
-				<!--<label>Username</label><input type="text" name="username">
-				<label>Password</label><input type="password" name="password"> -->
-				<label>Email</label><input type="text" name="email"><br>
-				<label>First Name</label><input type="text" name="firstName"><br>
-				<label>Last Name</label><input type="text" name="lastname"><br>
-				<input type="radio" name="type" value="Saving">Saving
-				<input type="radio" name="type" value="Checking">Checking<br>
-				<input type="hidden" name="roleId" value="3">
-				<input type="submit">
+			<form class="navbar-form navbar-left" method="POST" action="rest/account">
+				<div class="form-group">
+				 	<label>Account Type</label>
+					<select name="accountType">
+						<option value="0">Checking</option>
+						<option value="1">Savings</option>
+					</select>
+				</div>
+				<br>
+				<button type="submit" class="btn btn-default">Submit</button>
 			</form>
-	
+
 			<div id="response-element"></div>
 	</div>
 </div>
