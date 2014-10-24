@@ -70,6 +70,7 @@ $(function() {
 				  {
 					//simply show the new account in the table listing
 					window.location.href = "dashboard.jsp";
+					return;
 				  }
 				}
 			 
