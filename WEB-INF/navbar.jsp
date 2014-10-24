@@ -51,7 +51,7 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="logout.jsp">Sign out</a></li>
+            <li><a href="logout.jsp">Logged in as <%=user %> (Sign Out)</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
