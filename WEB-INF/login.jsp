@@ -18,23 +18,29 @@
 	<!-- Custom styles for this template -->
 	<style>
 	body {
-		padding-top: 40px;
-		padding-bottom: 40px;
-		background-color: #eee;
+		background-color: #191007;
+		padding-top: 200px;
+		padding-bottom: 200px;
+		
 	}
 	
 	.form-signin {
 		max-width: 330px;
 		padding: 15px;
 		margin: 0 auto;
+		color:white;
 	}
 	
 	.form-signin .form-signin-heading, .form-signin .checkbox {
-		margin-bottom: 10px;
+		margin-bottom: 2px;
+	    
 	}
 	
 	.form-signin .checkbox {
 		font-weight: normal;
+		text-align:left;
+		left:22px
+	 
 	}
 	
 	.form-signin .form-control {
@@ -100,7 +106,7 @@ if(username != null && password != null)
  
   <div class="container">
 		<form class="form-signin" role="form" method="post" action="login.jsp">
-			<h2 class="form-signin-heading">Please sign in</h2>
+			<h2 class="form-signin-heading"><b>Bytekonzz Banking</b> </h2>
 			<input type="text" class="form-control" placeholder="Username" value="<%=username != null ? username : "" %>" name="username"> 
 			<input type="password"class="form-control" placeholder="Password" name="password"> 
 			<label class="checkbox"><input type="checkbox" value="remember-me">Remember me</label>
