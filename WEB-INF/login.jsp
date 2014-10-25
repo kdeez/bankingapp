@@ -105,6 +105,7 @@ if(username != null && password != null)
 			<input type="password"class="form-control" placeholder="Password" name="password"> 
 			<label class="checkbox"><input type="checkbox" value="remember-me">Remember me</label>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+			<li><a href = "createUserAccount.jsp" class="btn btn-lg btn-primary btn-block" role="button">New User</a></li>
 		</form>
 	</div>
   </body>
