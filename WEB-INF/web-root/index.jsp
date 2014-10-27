@@ -28,32 +28,13 @@
 			<!-- Default panel contents -->
 			<div class="panel-heading">Accounts Summary</div>
 			<div class="panel-body">
-				<!-- Table -->
-				<table id="accounts-table" class="table">
-					<tr>
-						<th>Name</th>
-						<th>Account Number</th>
-						<th>Type</th>
-						<th>Balance</th>
-					</tr>
-					<tr>
-						<td>Everyday Checking</td>
-						<td>000012356</td>
-						<td>Checking</td>
-						<td>$25,235</td>
-					</tr>
-					<tr>
-						<td>Fluffer Savings</td>
-						<td>000012500</td>
-						<td>Savings</td>
-						<td>$100,000</td>
-					</tr>
-				</table>
+				<!-- table where user accounts are displayed-->
+				<table id="accounts-table" class="table"></table>
 			</div>
-			
 		</div>
-
     </div>
+    
+    <!-- AJAX for loading the user's accounts -->
     <script>
     function getAccounts(){
     	xmlhttp= new XMLHttpRequest();
