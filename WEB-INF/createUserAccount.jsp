@@ -16,7 +16,7 @@
 	<!-- Custom styles for this template -->
 	<style>
 	body {
-		background-color: #191007;
+		background-color: #A4A4A4;
 		padding-top: 200px;
 		padding-bottom: 200px;
 		
