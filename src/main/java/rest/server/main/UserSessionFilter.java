@@ -30,7 +30,7 @@ public class UserSessionFilter extends OncePerRequestFilter
 			Object user = req.getSession().getAttribute(SESSION_USERNAME);
 			if(user == null)
 			{
-				res.sendRedirect("/login.jsp");
+				res.sendRedirect("/user/login.jsp");
 			}
 		}
 		
