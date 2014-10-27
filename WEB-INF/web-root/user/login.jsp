@@ -56,23 +56,23 @@ if(username != null && password != null)
   <body>
    <!-- login form -->
   	<div class="container">
-		<form class="form-signin" role="form" method="post" action="login.jsp">
+		<form class="form-signin" role="form" method="post" action="/user/login.jsp">
 			<h2 class="form-signin-heading">Bytekonzz Banking</h2>
 			<input type="text" class="form-control" placeholder="Username" value="<%=username != null ? username : "" %>" name="username"> 
 			<input type="password"class="form-control" placeholder="Password" name="password"> 
 			<label class="checkbox"><input type="checkbox" value="remember-me">Remember me</label>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-			<a data-toggle="modal" data-target="#myModal" style="cursor:pointer;">Not a member? (create new account)</a>
+			<a data-toggle="modal" data-target="#create-user-modal" style="cursor:pointer;">Not a member? (create new account)</a>
 		</form>
 	</div>
 
 	<!-- new user account modal(popup) window -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="create-user-modal" tabindex="-1" role="dialog" aria-labelledby="create-user-modal-Label" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Create Account</h4>
+	        <h4 class="modal-title" id="create-user-modal-Label">Create Account</h4>
 	      </div>
 	      <div class="modal-body">
 	       	<form id="new-user-form" method="POST" action="rest/user">
@@ -85,7 +85,7 @@ if(username != null && password != null)
 					<input type="hidden" name="roleId" value="3">
 				</div>
 				<div class="modal-footer">
-					<a href="login.jsp" class="btn btn-default" role="button">Cancel</a>
+					<a href="/user/login.jsp" class="btn btn-default" role="button">Cancel</a>
 					<button type="submit" class="btn btn-primary">Submit</button>
 				</div>
 			</form>
