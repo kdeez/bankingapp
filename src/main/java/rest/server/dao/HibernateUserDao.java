@@ -1,5 +1,7 @@
 package rest.server.dao;
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import rest.server.model.Account;
 import rest.server.model.User;
 
 /**
@@ -35,7 +38,9 @@ public class HibernateUserDao implements UserDao {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 	public User getUser(long id) {
-		return (User) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("id", id)).add(Restrictions.eq("active", true)).uniqueResult();
+		return (User) sessionFactory.getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.eq("id", id))
+				.add(Restrictions.eq("active", true)).uniqueResult();
 	}
 
 	@Override
@@ -47,7 +52,17 @@ public class HibernateUserDao implements UserDao {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 	public User getUser(String username) {
-		return (User) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("username", username)).add(Restrictions.eq("active", true)).uniqueResult();
+		return (User) sessionFactory.getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.eq("username", username))
+				.add(Restrictions.eq("active", true)).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public List<Account> getAccounts(User user) {
+		return sessionFactory.getCurrentSession().createCriteria(Account.class)
+				.add(Restrictions.eq("userId", user.getId())).list();
 	}
 
 }

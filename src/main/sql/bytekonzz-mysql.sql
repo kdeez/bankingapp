@@ -8,7 +8,7 @@ CREATE TABLE role(
 
 CREATE TABLE users(
 	id INT NOT NULL AUTO_INCREMENT,
-	active TINYINT DEFAULT 0,
+	active TINYINT DEFAULT 1,
 	deletable TINYINT DEFAULT 1,
 	roleId INT DEFAULT 3,
 	username VARCHAR(255) UNIQUE NOT NULL,
@@ -30,6 +30,7 @@ INSERT INTO users (id,username,password,active,roleId,deletable) VALUES (1,'admi
 
 CREATE TABLE account(
 	accountNumber INT NOT NULL AUTO_INCREMENT,
+	description VARCHAR(255) NOT NULL,
 	userId INT NOT NULL,
 	accountType INT NOT NULL,
 	balance INT DEFAULT 0,

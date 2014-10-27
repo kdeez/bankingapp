@@ -18,6 +18,7 @@ import javax.persistence.Transient;
 public class Account implements Serializable {
 	private static final long serialVersionUID = 2395215592820350575L;
 	private long accountNumber;
+	private String description;
 	private long userId;
 	private int balance;
 	private int accountType;
@@ -60,6 +61,15 @@ public class Account implements Serializable {
 
 	public void setAccountNumber(long accountNumber) {
 		this.accountNumber = accountNumber;
+	}
+	
+	@Column(name = "description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Column(name = "userId")

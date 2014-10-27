@@ -29,7 +29,7 @@
 			<div class="panel-heading">Accounts Summary</div>
 			<div class="panel-body">
 				<!-- Table -->
-				<table class="table">
+				<table id="accounts-table" class="table">
 					<tr>
 						<th>Name</th>
 						<th>Account Number</th>
@@ -53,6 +53,35 @@
 			
 		</div>
 
-    </div> <!-- /container -->
+    </div>
+    <script>
+    function getAccounts(){
+    	xmlhttp= new XMLHttpRequest();
+		xmlhttp.open("GET", "/rest/user/accounts/", true);
+		xmlhttp.setRequestHeader("Content-Type","application/json");
+		xmlhttp.onreadystatechange=function()
+		  {
+		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		    {
+			  var table = document.getElementById("accounts-table");
+			  var content = "<tr><th>Name</th><th>Account Number</th><th>Type</th><th>Balance</th></tr>";
+			  var accounts = JSON.parse(xmlhttp.responseText)
+			  if(accounts)
+			  {
+				  for(i = 0; i < accounts.length; i++)
+				  {
+					  content += "<tr><td>"+accounts[i].description+"</td><td>"+accounts[i].accountNumber+"</td><td>"+(accounts[i].accountType == 0 ? "Checking" : "Savings")+"</td><td>"+accounts[i].balance+"</td></td>";
+				  }
+			  }
+			  table.innerHTML = content;
+		    }
+		  }
+		xmlhttp.send();
+    }
+    
+    window.onload = function(){
+    	getAccounts();
+    }
+	</script>
   </body>
 </html>

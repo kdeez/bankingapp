@@ -1,5 +1,8 @@
 package rest.server.dao;
 
+import java.util.List;
+
+import rest.server.model.Account;
 import rest.server.model.User;
 
 /**
@@ -33,5 +36,12 @@ public interface UserDao {
 	 */
 	public User getUser(String username);
 	
+	
+	/**
+	 * Returns all Account's for the user
+	 * @param user
+	 * @return
+	 */
+	public List<Account> getAccounts(User user);
 
 }

@@ -122,6 +122,6 @@ if(username != null && password != null)
 	        return false;
 	    });
 	});
-</script>
+	</script>
   </body>
 </html>
