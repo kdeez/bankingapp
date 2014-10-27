@@ -21,7 +21,7 @@
 <body>
 
 <!--include directive to import the navigation bar so it is not copy and pasted into every page -->
-	<%@include file="navbar.jsp" %>
+	<%@include file="/frame/navbar.jsp" %>
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
 		<div class="panel panel-default">
@@ -40,7 +40,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a href="dashboard.jsp" class="btn btn-default" role="button">Cancel</a>
+						<a href="/index.jsp" class="btn btn-default" role="button">Cancel</a>
 						<button type="submit" class="btn btn-primary">Submit</button>
 					</div>
 				</form>
@@ -66,7 +66,7 @@ $(function() {
 				  if(entity)
 				  {
 					//simply show the new account in the table listing
-					window.location.href = "dashboard.jsp";
+					window.location.href = "/index.jsp";
 					return;
 				  }
 				}

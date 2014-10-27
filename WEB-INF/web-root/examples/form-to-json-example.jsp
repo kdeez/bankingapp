@@ -20,8 +20,8 @@
 	
 	<div id="response-element"></div>
 	
-<script src="../../js/jquery.js"></script>
-<script src="../../js/form2json.js"></script>
+<script src="/asset//js/jquery.js"></script>
+<script src="/assets/js/form2json.js"></script>
 <script>
 $(function() {
     $('#new-user-form').submit(function(evt) {

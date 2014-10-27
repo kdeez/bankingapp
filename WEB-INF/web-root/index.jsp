@@ -21,7 +21,7 @@
 
 <body>
 	<!--include directive to import the navigation bar so it is not copy and pasted into every page -->
-	<%@include file="navbar.jsp" %>
+	<%@include file="/frame/navbar.jsp" %>
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="panel panel-default">

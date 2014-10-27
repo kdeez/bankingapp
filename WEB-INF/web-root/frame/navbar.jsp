@@ -6,14 +6,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Bytekonzz Banking</title>
 <!-- Bootstrap core CSS -->
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <%
 	//check for user session
 	Object user = session.getAttribute("user-name");
 	if (user == null) {
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("/user/login.jsp");
 	}
 %>
 <!-- Fixed navbar -->
@@ -36,7 +36,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">I Want To... <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="createAccount.jsp">Open Account</a></li>
+                <li><a href="/account/create.jsp">Open Account</a></li>
                 <li><a href="#">Deposit Funds</a></li>
                 <li><a href="#">Withdraw Funds</a></li>
                 <li><a href="#">Transfer Funds</a></li>
@@ -45,7 +45,7 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="logout.jsp">Logged in as <%=user %> (Sign Out)</a></li>
+            <li><a href="/user/logout.jsp">Logged in as <%=user %> (Sign Out)</a></li>
           </ul>
         </div><!--/.nav-collapse -->
          <!--User feedback messages can be displayed here... -->
@@ -55,8 +55,8 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../js/jquery.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-	<script src="../js/form2json.js"></script>
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+	<script src="../assets/js/form2json.js"></script>
 </body>
 </html>

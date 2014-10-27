@@ -13,10 +13,10 @@
     <title>Bytekonzz Banking</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
-	<link href="../css/login-form.css" rel="stylesheet">
+	<link href="../assets/css/login-form.css" rel="stylesheet">
 
   </head>
   
@@ -48,7 +48,7 @@ if(username != null && password != null)
 	{
 		//logged in... use the session attribute from now on
 	    session.setAttribute("user-name", username);
-	    response.sendRedirect("dashboard.jsp");
+	    response.sendRedirect("/index.jsp");
 	}
 }
 %>
@@ -97,9 +97,9 @@ if(username != null && password != null)
 	<!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../js/jquery.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-	<script src="../js/form2json.js"></script>
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+	<script src="../assets/js/form2json.js"></script>
 	<!-- AJAX for creating a new user -->
 	<script>
 	$(function() {
@@ -114,7 +114,7 @@ if(username != null && password != null)
 			  {
 			  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 			    {
-				  window.location.href = "login.jsp";
+				  window.location.href = "/user/login.jsp";
 				return;
 			    }
 			  }
