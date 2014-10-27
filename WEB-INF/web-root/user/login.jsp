@@ -31,7 +31,7 @@ String password = request.getParameter("password");
 if(username != null && password != null)
 {
 	//grab the database connection properties from our Java Properties file
-	InputStream stream = new FileInputStream("config.properties");
+	InputStream stream = new FileInputStream("WEB-INF/config.properties");
 	Properties props = new Properties();
 	props.load(stream);
 

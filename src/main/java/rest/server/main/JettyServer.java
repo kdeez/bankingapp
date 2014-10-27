@@ -23,7 +23,7 @@ import org.eclipse.jetty.xml.XmlConfiguration;
  */
 public class JettyServer
 {
-	public static final String JETTY_CONFIG = "jetty.xml";
+	public static final String JETTY_CONFIG = "WEB-INF/jetty.xml";
 	public static final String DESCRIPTOR_PATH = "WEB-INF/web.xml";
 	public static final String RESOURCE_BASE = "WEB-INF/web-root/";
 	public static final String ROOT_CONTEXT = "/";
