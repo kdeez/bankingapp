@@ -14,7 +14,7 @@ if(user != null){
 	session.removeAttribute("user-name");
 	session.invalidate();
 }
-response.sendRedirect("login.jsp");
+response.sendRedirect("/user/login.jsp");
 %>
 
 </body>
