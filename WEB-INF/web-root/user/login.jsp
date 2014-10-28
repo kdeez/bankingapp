@@ -75,11 +75,11 @@ if(username != null && password != null)
 	        <h4 class="modal-title" id="create-user-modal-Label">Create Account</h4>
 	      </div>
 	      <div class="modal-body">
-	       	<form id="new-user-form" method="POST" action="rest/user">
+	       	<form id="new-user-form" method="POST" action="/rest/user">
 				<div class="form-group">
 					<input type="text" class="form-control" placeholder="Username" name="username"><br>
 					<input type="password"class="form-control" placeholder="Password" name="password"><br>
-					<input type="text" class="form-control" placeholder= "E-mail" name="email"><br>
+					<input type="email" class="form-control" placeholder= "E-mail" name="email"><br>
 					<input type="text" class="form-control" placeholder= "First Name" name="firstName"><br>
 					<input type="text" class="form-control" placeholder= "Last Name" name="lastname"><br>
 					<input type="hidden" name="roleId" value="3">
