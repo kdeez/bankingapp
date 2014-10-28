@@ -53,6 +53,8 @@ public class UserResource {
 	@Consumes(MediaType.APPLICATION_JSON_VALUE)
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public Response addUser(User user){
+		user.setActive(true);
+		user.setDeletable(true);
 		boolean saved = userDao.saveUser(user);
 		if(!saved){
 			return Response.serverError().build();
