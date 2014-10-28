@@ -60,7 +60,7 @@ if(username != null && password != null)
 			<h2 class="form-signin-heading">Bytekonzz Banking</h2>
 			<input type="text" class="form-control" placeholder="Username" value="<%=username != null ? username : "" %>" name="username"> 
 			<input type="password"class="form-control" placeholder="Password" name="password"> 
-			<label class="checkbox"><input type="checkbox" value="remember-me">Remember me</label>
+<!-- 			<label class="checkbox"><input type="checkbox" value="remember-me">Remember me</label> -->
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 			<a data-toggle="modal" data-target="#create-user-modal" style="cursor:pointer;">Not a member? (create new account)</a>
 		</form>

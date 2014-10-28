@@ -45,7 +45,7 @@
 		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		    {
 			  var table = document.getElementById("accounts-table");
-			  var content = "<tr><th>Name</th><th>Account Number</th><th>Type</th><th>Balance</th></tr>";
+			  var content = "<tr><th>Name</th><th>Account</th><th>Type</th><th>Balance</th></tr>";
 			  var accounts = JSON.parse(xmlhttp.responseText)
 			  if(accounts)
 			  {
