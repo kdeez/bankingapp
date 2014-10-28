@@ -35,31 +35,31 @@
 							<input type="text" class="form-control" placeholder="Account Name" name="description">
 						</div>
 					</div>
-<!-- 					<div class="btn-group"> -->
-<!-- 						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> -->
-<!-- 							<span data-bind="label">Account Type</span> <span class="caret"></span> -->
-<!-- 						</button> -->
-<!-- 						<ul class="dropdown-menu" role="menu" > -->
-<!-- 							<li value="0"><a>Checking</a></li> -->
-<!-- 							<li value="1"><a>Savings</a></li> -->
-<!-- 						</ul> -->
-<!-- 					</div> -->
 					<div class="form-group">
 						<div class="input-group">
-							<select name="accountType" class="form-control" >
-								<option value="0">Checking</option>
-								<option value="1">Savings</option>
-							</select>
+							<div class="btn-group">
+								<input type="hidden" name="accountType">
+								<button type="button" class="btn btn-default dropdown-toggle"
+									data-toggle="dropdown">
+									<span data-bind="label">Account Type </span><span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu" style="cursor:pointer">
+									<li value="0"><a>Checking </a></li>
+									<li value="1"><a>Savings </a></li>
+								</ul>
+							</div>
 						</div>
 					</div>
-				<div class="modal-footer">
-					<a href="/index.jsp" class="btn btn-default" role="button">Cancel</a>
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</div>
+					<div class="modal-footer">
+						<a href="/index.jsp" class="btn btn-default" role="button">Cancel</a>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+	
+<!-- AJAX for creating a new bank account -->
 <script>
 $(function() {
     $('#new-account-form').submit(function(evt) {
@@ -92,12 +92,15 @@ $(function() {
     });
 });
 </script>
+
+<!-- This is the jquery code for making a Bootstrap dropdown widget behave like a native "select" element -->
 <script>
-	$(document.body).on('click', '.dropdown-menu li', function(event) {
-		var $target = $(event.currentTarget);
-		$target.closest('.btn-group').find('[data-bind="label"]').text($target.text()).end().children('.dropdown-toggle').dropdown('toggle');
-		return false;
-	});
+$(document.body).on('click', '.dropdown-menu li', function(event) {
+	var $target = $(event.currentTarget);
+	$target.closest('.btn-group').find('[data-bind="label"]').text($target.text()).end().children('.dropdown-toggle').dropdown('toggle');
+	$target.closest('.btn-group').find('input[type=hidden]').attr('value', $target.val());
+	return false;
+});
 </script>
 </body>
 </html>
