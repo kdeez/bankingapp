@@ -38,9 +38,8 @@
 					<div class="form-group">
 						<div class="input-group">
 							<div class="btn-group">
-								<input type="hidden" name="accountType">
-								<button type="button" class="btn btn-default dropdown-toggle"
-									data-toggle="dropdown">
+								<input type="hidden" name="accountType" value="0">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Defaults to Checking">
 									<span data-bind="label">Account Type </span><span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu" style="cursor:pointer">
@@ -58,41 +57,69 @@
 			</div>
 		</div>
 	</div>
-	
-<!-- AJAX for creating a new bank account -->
+
+<!-- form validation for new account http://bootstrapvalidator.com/getting-started/-->
 <script>
-$(function() {
-    $('#new-account-form').submit(function(evt) {
-    	var form = $(this);
-        var json = form.toJSONString();
-        var action = this.getAttribute("action");
-        xmlhttp= new XMLHttpRequest();
-		xmlhttp.open("POST", action, true);
-		xmlhttp.setRequestHeader("Content-Type","application/json");
-		xmlhttp.onreadystatechange=function()
-		  {
-		  if (xmlhttp.readyState==4)
-		    {
-			  if(xmlhttp.status==200)
-				{
-				  var entity = JSON.parse(xmlhttp.responseText)
-				  if(entity)
-				  {
-					//simply show the new account in the table listing
-					window.location.href = "/index.jsp";
-					return;
-				  }
-				}else{
-					showErrorMessage(" Unable to create account.");
-				}
-		    }
-		  }
-		xmlhttp.send(json);
-        return false;
+$(document).ready(function() {
+    $('#new-account-form')
+    .bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+        	description: {
+                message: 'The account name is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The account name is required and cannot be empty'
+                    },
+                    stringLength: {
+                        min: 6,
+                        max: 20,
+                        message: 'The account name must be more than 6 and less than 20 characters long'
+                    },
+                }
+            },
+            accountType: {
+            	message: 'You must choose an account type',
+            	validators: {
+            		between: {
+            		    min: 0,
+            		    max: 1,
+            		    message: 'You must choose an account type'
+            		}
+                }
+            }
+        }
+    })
+    .on('success.form.bv', function(e) {
+        // Prevent form submission
+        e.preventDefault();
+
+        // Get the form instance
+        var $form = $(e.target);
+
+        // Get the BootstrapValidator instance
+        var bv = $form.data('bootstrapValidator');
+
+        // Use Ajax to submit form data
+        $.ajax({
+  			url:$form.attr('action'),
+  			type:"POST",
+  			data:$form.toJSONString(),
+  			contentType:"application/json; charset=utf-8",
+  			dataType:"json",
+  			success: function(){
+  				window.location.href = "/index.jsp";
+  			}
+		});
     });
 });
 </script>
-
+	
 <!-- This is the jquery code for making a Bootstrap dropdown widget behave like a native "select" element -->
 <script>
 $(document.body).on('click', '.dropdown-menu li', function(event) {

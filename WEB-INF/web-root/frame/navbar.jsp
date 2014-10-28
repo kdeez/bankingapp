@@ -1,6 +1,7 @@
 
 <!-- Bootstrap core CSS -->
 <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="../assets/css/bootstrapValidator.min.css" rel="stylesheet">
 <%
 	//check for user session
 	Object user = session.getAttribute("user-name");
@@ -44,3 +45,4 @@
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 <script src="../assets/js/form2json.js"></script>
+<script src="../assets/js/bootstrapValidator.min.js"></script>
