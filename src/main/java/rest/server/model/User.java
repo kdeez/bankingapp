@@ -83,7 +83,7 @@ public class User implements Serializable {
 		this.firstName = firstName;
 	}
 
-	@Column(name = "lastname")
+	@Column(name = "lastName")
 	public String getLastname() {
 		return lastname;
 	}

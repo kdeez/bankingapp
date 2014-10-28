@@ -14,6 +14,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/bootstrapValidator.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
 	<link href="../assets/css/login-form.css" rel="stylesheet">
@@ -99,27 +100,87 @@ if(username != null && password != null)
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../assets/js/jquery.js"></script>
     <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/bootstrapValidator.min.js"></script>
 	<script src="../assets/js/form2json.js"></script>
-	<!-- AJAX for creating a new user -->
+	<!-- form validation for new account http://bootstrapvalidator.com/getting-started/-->
 	<script>
-	$(function() {
-	    $('#new-user-form').submit(function(evt) {
-	    	var form = $(this);
-	        var json = form.toJSONString();
-	        var action = this.getAttribute("action");
-	        xmlhttp= new XMLHttpRequest();
-			xmlhttp.open("POST", action, true);
-			xmlhttp.setRequestHeader("Content-Type","application/json");
-			xmlhttp.onreadystatechange=function()
-			  {
-			  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-			    {
-				  window.location.href = "/user/login.jsp";
-				return;
-			    }
-			  }
-			xmlhttp.send(json);
-	        return false;
+	$(document).ready(function() {
+    	$('#new-user-form').bootstrapValidator({
+		        fields: {
+		            username: {
+		                validators: {
+		                    notEmpty: {
+		                        message: 'The username is required'
+		                    },
+		                    stringLength: {
+		                        min: 5,
+		                        max: 30,
+		                        message: 'The username must be more than 6 and less than 30 characters long'
+		                    }
+		                }
+		            },
+		            password: {
+		                validators: {
+		                    notEmpty: {
+		                        message: 'The password is required'
+		                    },
+		                    stringLength: {
+		                        min: 5,
+		                        max: 30,
+		                        message: 'The username must be more than 6 and less than 30 characters long'
+		                    }
+		                }
+		            },
+		            email: {
+		                validators: {
+		                    notEmpty: {
+		                        message: 'The email is required and cannot be empty'
+		                    },
+		                    emailAddress: {
+		                        message: 'The input is not a valid email address'
+		                    }
+		                }
+		            },
+		            firstName: {
+		                validators: {
+		                    notEmpty: {
+		                        message: 'The first name is required'
+		                    },
+		                }
+		            },
+		            lastname: {
+		                validators: {
+		                    notEmpty: {
+		                        message: 'The last name is required'
+		                    },
+		                }
+		            },
+		        }
+		})
+	    .on('success.form.bv', function(e) {
+	        // Prevent form submission
+	        e.preventDefault();
+	
+	        // Get the form instance
+	        var $form = $(e.target);
+	
+	        // Get the BootstrapValidator instance
+	        var bv = $form.data('bootstrapValidator');
+	
+	        // Use JQuery Ajax to submit form data
+	        $.ajax({
+	  			url:$form.attr('action'),
+	  			type:"POST",
+	  			data:$form.toJSONString(),
+	  			contentType:"application/json; charset=utf-8",
+	  			dataType:"json",
+	  			success: function(){
+	  				window.location.href = "/user/login.jsp";
+	  			},
+	  			error: function(xhr, status, error){
+	  				window.location.href = "/user/login.jsp";  			
+	  			}
+			});
 	    });
 	});
 	</script>
