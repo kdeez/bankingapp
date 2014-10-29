@@ -51,7 +51,7 @@
 			  {
 				  for(i = 0; i < accounts.length; i++)
 				  {
-					  content += "<tr><td>"+accounts[i].description+"</td><td>"+accounts[i].accountNumber+"</td><td>"+(accounts[i].accountType == 0 ? "Checking" : "Savings")+"</td><td>"+accounts[i].balance+"</td></td>";
+					  content += "<tr><td>"+accounts[i].description+"</td><td>"+accounts[i].accountNumber+"</td><td>"+(accounts[i].accountType == 0 ? "Checking" : "Savings")+"</td><td>"+accounts[i].balance+"</td></tr>";
 				  }
 			  }
 			  table.innerHTML = content;
