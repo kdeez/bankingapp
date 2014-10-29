@@ -29,7 +29,9 @@
 			<div class="panel-heading">Account Transactions</div>
 			<div class="panel-body">
 				<!-- table where transactions are displayed-->
-				<table id="transaction-table" class="table"></table>
+				<div class="table-responsive">
+					<table id="transaction-table" class="table table-striped"></table>
+				</div>
 			</div>
 		</div>
     </div>

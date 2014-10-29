@@ -29,7 +29,9 @@
 			<div class="panel-heading">Accounts Summary</div>
 			<div class="panel-body">
 				<!-- table where user accounts are displayed-->
-				<table id="accounts-table" class="table"></table>
+				<div class="table-responsive">
+					<table id="accounts-table" class="table table-striped"></table>
+				</div>
 			</div>
 		</div>
     </div>
