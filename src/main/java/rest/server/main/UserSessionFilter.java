@@ -21,6 +21,11 @@ public class UserSessionFilter extends OncePerRequestFilter
 {	
 	public static final String SESSION_USERNAME = "user-name";
 	
+	private boolean isCreateUser(HttpServletRequest req)
+	{
+		return req.getMethod().equals("POST") && req.getPathInfo().equals("/user");
+	}
+	
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException
 	{	
 		HttpSession session = req.getSession();
@@ -28,7 +33,7 @@ public class UserSessionFilter extends OncePerRequestFilter
 		if (session != null)
 		{
 			Object user = req.getSession().getAttribute(SESSION_USERNAME);
-			if(user == null)
+			if(user == null && !this.isCreateUser(req))
 			{
 				res.sendRedirect("/user/login.jsp");
 			}
