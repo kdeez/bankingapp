@@ -1,5 +1,10 @@
 package rest.server.resources;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -20,6 +25,7 @@ import rest.server.dao.AccountDao;
 import rest.server.dao.UserDao;
 import rest.server.main.UserSessionFilter;
 import rest.server.model.Account;
+import rest.server.model.Transaction;
 import rest.server.model.User;
 
 @Controller("accountResource")
@@ -60,4 +66,29 @@ public class AccountResource
 		}
 		return Response.ok(account).build();
 	}
+	
+	@GET
+	@Path("/transactions")
+	@Produces(MediaType.APPLICATION_JSON_VALUE)
+	public Response getTransactions(@Context HttpServletRequest request, @QueryParam("id") long id){
+		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
+		User user = userDao.getUser(username);
+		if(user == null){
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Invalid user session!")).build();
+		}
+		
+		Account account = accountDao.getAccount(id);
+		if(account == null || (account.getUserId() != user.getId())){
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
+		}
+		
+		Calendar calendar = GregorianCalendar.getInstance();
+		Date to = calendar.getTime();
+		calendar.roll(Calendar.MONTH, -1);
+		Date from = calendar.getTime();
+		
+		List<Transaction> transactions = accountDao.getTransactions(account, from, to);
+		return Response.ok(transactions).build();
+	}
+	
 }

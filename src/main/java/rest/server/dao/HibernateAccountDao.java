@@ -1,5 +1,8 @@
 package rest.server.dao;
 
+import java.util.Date;
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import rest.server.model.Account;
+import rest.server.model.Transaction;
 
 /* author: Bradley Furman, Kevin Dang, Roger*/
 
@@ -36,6 +40,17 @@ public class HibernateAccountDao implements AccountDao
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 	public boolean saveAccount(Account account) {
 		return sessionFactory.getCurrentSession().save(account) != null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public List<Transaction> getTransactions(Account account, Date from, Date to) {
+		return sessionFactory.getCurrentSession().createCriteria(Transaction.class)
+				.add(Restrictions.eq("accountId", account.getAccountNumber()))
+				.add(Restrictions.ge("dateTime", from))
+				.add(Restrictions.le("dateTime", to))
+				.list();
 	}
 	
 }

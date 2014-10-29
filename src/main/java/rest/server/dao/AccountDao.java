@@ -1,6 +1,10 @@
 package rest.server.dao;
 
+import java.util.Date;
+import java.util.List;
+
 import rest.server.model.Account;
+import rest.server.model.Transaction;
 
 
 public interface AccountDao 
@@ -19,5 +23,13 @@ public interface AccountDao
 	 */
 	public boolean saveAccount(Account account);
 	
+	/**
+	 * 
+	 * @param account
+	 * @param from
+	 * @param to
+	 * @return
+	 */
+	public List<Transaction> getTransactions(Account account, Date from, Date to);
 	
 }

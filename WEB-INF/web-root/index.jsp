@@ -44,17 +44,22 @@
 		  {
 		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		    {
-			  var table = document.getElementById("accounts-table");
 			  var content = "<tr><th>Name</th><th>Account</th><th>Type</th><th>Balance</th></tr>";
 			  var accounts = JSON.parse(xmlhttp.responseText)
 			  if(accounts)
 			  {
 				  for(i = 0; i < accounts.length; i++)
-				  {
-					  content += "<tr><td>"+accounts[i].description+"</td><td>"+accounts[i].accountNumber+"</td><td>"+(accounts[i].accountType == 0 ? "Checking" : "Savings")+"</td><td>"+accounts[i].balance+"</td></tr>";
+				  {	
+					  var zerofilled = ('000000000'+ accounts[i].accountNumber).slice(-9);
+					  content += "<tr>";
+					  content += "<td><a href='/account/details.jsp?id="+accounts[i].accountNumber+"'>"+accounts[i].description+"</a></td>";
+					  content += "<td>" + zerofilled + "</td>";
+					  content += "<td>" + (accounts[i].accountType == 0 ? "Checking" : "Savings") + "</td>";
+					  content += "<td>$" + accounts[i].balance.toFixed(2) + "</td>";
+					  content += "</tr>";
 				  }
 			  }
-			  table.innerHTML = content;
+			  document.getElementById("accounts-table").innerHTML = content;
 		    }
 		  }
 		xmlhttp.send();
