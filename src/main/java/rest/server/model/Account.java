@@ -22,7 +22,7 @@ public class Account implements Serializable {
 	private long accountNumber;
 	private String description;
 	private long userId;
-	private int balance;
+	private double balance;
 	private int accountType;
 	private Date created;
 
@@ -70,11 +70,11 @@ public class Account implements Serializable {
 	}
 
 	@Column(name = "balance")
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 
@@ -110,9 +110,9 @@ public class Account implements Serializable {
 	}
 	
 	@Transient
-	public void debit(int amount) throws TransactionException
+	public void debit(double amount) throws TransactionException
 	{
-		int tmp = this.balance - amount;
+		double tmp = this.balance - amount;
 		if(tmp < 0)
 		{
 			throw new TransactionException("Insufficient funds");
@@ -127,9 +127,9 @@ public class Account implements Serializable {
 	}
 	
 	@Transient
-	public void credit(int amount) throws TransactionException
+	public void credit(double amount) throws TransactionException
 	{
-		int tmp = this.balance + amount;
+		double tmp = this.balance + amount;
 		if(tmp < balance)
 		{
 			throw new TransactionException("Invalid operation");

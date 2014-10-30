@@ -20,8 +20,8 @@ public class Transaction implements Serializable{
 	private long id;
 	private long accountId;
 	private int transactionType;
-	private int amount;
-	private int balance;
+	private double amount;
+	private double balance;
 	private String description;
 	private Date dateTime;
 	
@@ -65,7 +65,7 @@ public class Transaction implements Serializable{
 	}
 
 	@Column(name = "amount")
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
@@ -74,11 +74,11 @@ public class Transaction implements Serializable{
 	}
 
 	@Column(name = "balance")
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 
