@@ -70,7 +70,7 @@
 							content += "<tr>";
 							content += "<td>" + date.toLocaleFormat('%d-%b-%Y')+ "</td>";
 							content += "<td>" + transactions[i].description + "</td>";
-							content += "<td>" + transactions[i].amount + "</td>";
+							content += "<td>$" + transactions[i].amount.toFixed(2) + "</td>";
 							content += "<td>$" + transactions[i].balance.toFixed(2) + "</td>";
 							content += "</tr>";
 						}

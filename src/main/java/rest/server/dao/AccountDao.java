@@ -21,7 +21,7 @@ public interface AccountDao
 	 * @param account
 	 * @return
 	 */
-	public boolean saveAccount(Account account);
+	public void saveUpdate(Account account);
 	
 	/**
 	 * Returns a list of Transactions that occurred for the Account between the two Dates

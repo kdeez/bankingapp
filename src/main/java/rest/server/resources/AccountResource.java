@@ -56,15 +56,13 @@ public class AccountResource
 	{
 		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
 		User user = userDao.getUser(username);
-		if(user == null){
+		if(user == null)
+		{
 			return Response.status(Status.BAD_REQUEST).entity(new String("Invalid user session!")).build();
 		}
 
 		account.setUserId(user.getId());
-		boolean saved = accountDao.saveAccount(account);
-		if(!saved){
-			return Response.serverError().build();
-		}
+		accountDao.saveUpdate(account);
 		return Response.ok(account).build();
 	}
 	
@@ -131,6 +129,7 @@ public class AccountResource
 		transaction.setAccountId(account.getAccountNumber());
 		transaction.setBalance(account.getBalance());
 		accountDao.saveTransaction(transaction);
+		accountDao.saveUpdate(account);
 		
 		return Response.ok(transaction).build();
 	}

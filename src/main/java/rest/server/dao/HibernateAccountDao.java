@@ -39,9 +39,9 @@ public class HibernateAccountDao implements AccountDao
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-	public boolean saveAccount(Account account) 
+	public void saveUpdate(Account account) 
 	{
-		return sessionFactory.getCurrentSession().save(account) != null;
+		sessionFactory.getCurrentSession().saveOrUpdate(account);
 	}
 
 	@SuppressWarnings("unchecked")
