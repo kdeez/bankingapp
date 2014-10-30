@@ -22,8 +22,7 @@
 <%String accountId = request.getParameter("id"); %>
 <!--include directive to import the navigation bar so it is not copy and pasted into every page -->
 <%@include file="/components/navbar.jsp" %>
-<div class="container">
-	
+	<div class="container">
 		<!-- Main component for a primary marketing message or call to action -->
       <div class="panel panel-default">
 			<!-- Default panel contents -->
@@ -31,10 +30,84 @@
 				<h4>Withdraw Funds</h4>
 			</div>
 			<div class="panel-body">
-				
+				<form id="deposit-funds-form" method="POST" action="/rest/account/transactions">
+				<div class="form-group">
+					<input type="hidden" class="form-control" name="accountId" value="<%=accountId%>">
+					<input type="hidden" class="form-control" name="transactionType" value="0">
+					<div class="input-group">
+  						<span class="input-group-addon">$</span>
+  						<input type="text" class="form-control" placeholder= "Enter Amount" name="amount"><br>
+					</div>
+					<br>
+					<div class="input-group">
+  						<span class="input-group-addon"></span>
+  						<input type="text" class="form-control" placeholder= "Enter Description" name="description"><br>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="/account/details.jsp?id=<%=accountId%>" class="btn btn-default" role="button">Cancel</a>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</form>
 			</div>
 		</div>
     </div>
-
+ <!-- form validation for new account http://bootstrapvalidator.com/getting-started/-->
+	<script>
+	$(document).ready(function() {
+    	$('#deposit-funds-form').bootstrapValidator({
+		        fields: {
+		        	amount: {
+		                validators: {
+		                    notEmpty: {
+		                        message: 'The amount field is required'
+		                    },
+		                    regexp: {
+		                        regexp: /^[0-9]+\.[0-9]{2}$/,
+		                        message: 'Invalid amount'
+		                    }
+		                }
+		            },
+		            description: {
+		                validators: {
+		                    notEmpty: {
+		                        message: 'The description is required'
+		                    },
+		                    stringLength: {
+		                        min: 5,
+		                        max: 30,
+		                        message: 'You must enter a description for the transaction'
+		                    }
+		                }
+		            },
+		        }
+		})
+	    .on('success.form.bv', function(e) {
+	        // Prevent form submission
+	        e.preventDefault();
+	
+	        // Get the form instance
+	        var $form = $(e.target);
+	
+	        // Get the BootstrapValidator instance
+	        var bv = $form.data('bootstrapValidator');
+	
+	        // Use JQuery Ajax to submit form data
+	        $.ajax({
+	  			url:$form.attr('action'),
+	  			type:"POST",
+	  			data:$form.toJSONString(),
+	  			contentType:"application/json; charset=utf-8",
+	  			dataType:"json",
+	  			success: function(){
+	  				window.location.href = "/account/details.jsp?id=" + <%=accountId%>;
+	  			},
+	  			error: function(xhr, status, error){
+	  				showErrorMessage(" Unable to complete transaction"); 			
+	  			}
+			});
+	    });
+	});
+	</script>
 </body>
 </html>

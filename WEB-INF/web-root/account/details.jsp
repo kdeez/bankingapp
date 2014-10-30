@@ -67,10 +67,11 @@
 					if (transactions) {
 						for (i = 0; i < transactions.length; i++) {
 							var date = new Date(transactions[i].dateTime);
+							var style = transactions[i].transactionType == 0 ? " style='color:red' " : " style='color:green' ";
 							content += "<tr>";
 							content += "<td>" + date.toLocaleFormat('%d-%b-%Y')+ "</td>";
 							content += "<td>" + transactions[i].description + "</td>";
-							content += "<td>$" + transactions[i].amount.toFixed(2) + "</td>";
+							content += "<td"+style+">$" + transactions[i].amount.toFixed(2) + "</td>";
 							content += "<td>$" + transactions[i].balance.toFixed(2) + "</td>";
 							content += "</tr>";
 						}
