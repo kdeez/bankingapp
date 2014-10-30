@@ -128,6 +128,8 @@ public class AccountResource
 			e.printStackTrace();
 		}
 		
+		transaction.setAccountId(account.getAccountNumber());
+		transaction.setBalance(account.getBalance());
 		accountDao.saveTransaction(transaction);
 		
 		return Response.ok(transaction).build();

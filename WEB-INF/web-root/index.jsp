@@ -26,7 +26,7 @@
       <!-- Main component for a primary marketing message or call to action -->
       <div class="panel panel-default">
 			<!-- Default panel contents -->
-			<div class="panel-heading">Accounts Summary</div>
+			<div class="panel-heading"><h4>Accounts Summary</h4></div>
 			<div class="panel-body">
 				<!-- table where user accounts are displayed-->
 				<div class="table-responsive">

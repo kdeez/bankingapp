@@ -69,7 +69,7 @@ public class Transaction implements Serializable{
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 

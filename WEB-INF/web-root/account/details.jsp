@@ -34,13 +34,13 @@
 						<li><h4>Account Summary</h4></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
+						<li class="dropdown"><a href="" class="dropdown-toggle"
 							data-toggle="dropdown">I Want To... <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Deposit Funds</a></li>
-								<li><a href="#">Withdraw Funds</a></li>
-								<li><a href="#">Transfer Funds</a></li>
-								<li><a href="#">Close Account</a></li>
+								<li><a href="/account/deposit.jsp?id=<%=accountId%>">Deposit Funds</a></li>
+								<li><a href="/account/debit.jsp?id=<%=accountId%>">Withdraw Funds</a></li>
+								<li><a href="/account/transfer.jsp?id=<%=accountId%>">Transfer Funds</a></li>
+								<li><a href="/account/close.jsp?id=<%=accountId%>">Close Account</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -54,7 +54,7 @@
 			</div>
 		</div>
     </div>
- <!-- AJAX for loading the transactions -->
+ <!-- AJAX for loading the transactions table-->
 	<script>
 		function getTransactions() {
 			$.ajax({
