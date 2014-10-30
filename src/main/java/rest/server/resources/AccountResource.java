@@ -91,4 +91,41 @@ public class AccountResource
 		return Response.ok(transactions).build();
 	}
 	
+	
+	//Will this work for debit? Will it update the account with the new balance? 
+	//Was thinking for the path it would be /account/debit/debit.jsp and credit would be /credit/credit.jsp?
+	//Was also thinking having buttons on the home page one for credit and one for debit so they dont have to go to another page to pick the account they want to credit/debit
+	@POST
+	@Path("/debit")
+	@Produces(MediaType.APPLICATION_JSON_VALUE)
+	public Response debit(@Context HttpServletRequest request, @QueryParam("id") long id, @QueryParam("amount") int amount){
+		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
+		User user = userDao.getUser(username);
+		if(user == null){
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Invalid user session!")).build();
+		}
+		
+		Account account = accountDao.getAccount(id);
+		if(account == null || (account.getUserId() != user.getId())){
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
+		}
+		
+		int currentBalance = account.getBalance();
+		if(currentBalance == 0)
+		{
+			//return error account has a balance of zero
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Current Balance of Account is $0")).build();
+		}
+		
+		if(amount > currentBalance)
+		{
+			//return an error insufficient funds
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Insufficient funds within the Account")).build();
+		}
+		
+		account.setBalance(currentBalance-amount);
+		
+		return Response.ok(account).build();
+	}
+	
 }
