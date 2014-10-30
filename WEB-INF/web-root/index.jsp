@@ -58,8 +58,6 @@
 					  content += "<td>" + zerofilled + "</td>";
 					  content += "<td>" + (accounts[i].accountType == 0 ? "Checking" : "Savings") + "</td>";
 					  content += "<td>$" + accounts[i].balance.toFixed(2) + "</td>";
-					  //will eventually go to debit page
-					  content += "<td><a href='/account/details.jsp?id="+accounts[i].accountNumber+"'>"+ "Debit" +"</a></td>"; // not active button but prototype to see if it will work for credit/debit
 					  content += "</tr>";
 				  }
 			  }
