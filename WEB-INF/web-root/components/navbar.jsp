@@ -25,11 +25,7 @@
 				<li><a href="#contact">Contact</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">I Want To... <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="/account/create.jsp">Open Account</a></li>
-						<li><a href="#">Deposit Funds</a></li>
-						<li><a href="#">Withdraw Funds</a></li>
-						<li><a href="#">Transfer Funds</a></li>
-						<li><a href="#">Close Account</a></li>
+						<li><a href="/account/create.jsp">Create New Account</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

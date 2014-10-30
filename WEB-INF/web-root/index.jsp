@@ -52,10 +52,9 @@
 			  {
 				  for(i = 0; i < accounts.length; i++)
 				  {	
-					  var zerofilled = ('000000000'+ accounts[i].accountNumber).slice(-9);
 					  content += "<tr>";
 					  content += "<td><a href='/account/details.jsp?id="+accounts[i].accountNumber+"'>"+accounts[i].description+"</a></td>";
-					  content += "<td>" + zerofilled + "</td>";
+					  content += "<td>" + ('000000000'+ accounts[i].accountNumber).slice(-9) + "</td>";
 					  content += "<td>" + (accounts[i].accountType == 0 ? "Checking" : "Savings") + "</td>";
 					  content += "<td>$" + accounts[i].balance.toFixed(2) + "</td>";
 					  content += "</tr>";

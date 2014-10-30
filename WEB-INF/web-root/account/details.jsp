@@ -22,11 +22,30 @@
 <%String accountId = request.getParameter("id"); %>
 <!--include directive to import the navigation bar so it is not copy and pasted into every page -->
 	<%@include file="/components/navbar.jsp" %>
-    <div class="container">
-      <!-- Main component for a primary marketing message or call to action -->
+	<div class="container">
+	
+		<!-- Main component for a primary marketing message or call to action -->
       <div class="panel panel-default">
 			<!-- Default panel contents -->
-			<div class="panel-heading">Account Transactions</div>
+			<div class="panel-heading">
+				<div class="collapse navbar-collapse"
+					id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-left">
+						<li><h4>Account Summary</h4></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown">I Want To... <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Deposit Funds</a></li>
+								<li><a href="#">Withdraw Funds</a></li>
+								<li><a href="#">Transfer Funds</a></li>
+								<li><a href="#">Close Account</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
 			<div class="panel-body">
 				<!-- table where transactions are displayed-->
 				<div class="table-responsive">
