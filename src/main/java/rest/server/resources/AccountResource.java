@@ -123,7 +123,8 @@ public class AccountResource
 			}
 		} catch (TransactionException e) 
 		{
-			e.printStackTrace();
+			//TODO: RLH, need to return the correct response
+			throw e;
 		}
 		
 		transaction.setAccountId(account.getAccountNumber());
