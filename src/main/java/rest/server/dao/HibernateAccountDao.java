@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -53,6 +54,7 @@ public class HibernateAccountDao implements AccountDao
 				.add(Restrictions.eq("accountId", account.getAccountNumber()))
 				.add(Restrictions.ge("dateTime", from))
 				.add(Restrictions.le("dateTime", to))
+				.addOrder(Order.desc("id"))
 				.list();
 	}
 
