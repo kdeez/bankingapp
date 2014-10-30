@@ -34,8 +34,15 @@
 				<div class="form-group">
 					<input type="hidden" class="form-control" name="accountId" value="<%=accountId%>">
 					<input type="hidden" class="form-control" name="transactionType" value="1">
-					<input type="text" class="form-control" placeholder= "Enter Amount" name="amount"><br>
-					<input type="text" class="form-control" placeholder= "Enter Description" name="description"><br>
+					<div class="input-group">
+  						<span class="input-group-addon">$</span>
+  						<input type="text" class="form-control" placeholder= "Enter Amount" name="amount"><br>
+					</div>
+					<br>
+					<div class="input-group">
+  						<span class="input-group-addon"></span>
+  						<input type="text" class="form-control" placeholder= "Enter Description" name="description"><br>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<a href="/account/details.jsp?id=<%=accountId%>" class="btn btn-default" role="button">Cancel</a>
