@@ -24,12 +24,16 @@ public interface AccountDao
 	public boolean saveAccount(Account account);
 	
 	/**
-	 * 
+	 * Returns a list of Transactions that occurred for the Account between the two Dates
 	 * @param account
 	 * @param from
 	 * @param to
 	 * @return
 	 */
 	public List<Transaction> getTransactions(Account account, Date from, Date to);
+	
+	
+	public void saveTransaction(Transaction transaction);
+	
 	
 }

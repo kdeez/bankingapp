@@ -27,6 +27,7 @@ import rest.server.main.UserSessionFilter;
 import rest.server.model.Account;
 import rest.server.model.Transaction;
 import rest.server.model.User;
+import rest.server.resources.exceptions.TransactionException;
 
 @Controller("accountResource")
 @Path("/account")
@@ -91,41 +92,45 @@ public class AccountResource
 		return Response.ok(transactions).build();
 	}
 	
-	
-	//Will this work for debit? Will it update the account with the new balance? 
-	//Was thinking for the path it would be /account/debit/debit.jsp and credit would be /credit/credit.jsp?
-	//Was also thinking having buttons on the home page one for credit and one for debit so they dont have to go to another page to pick the account they want to credit/debit
 	@POST
-	@Path("/debit")
+	@Path("/transactions")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public Response debit(@Context HttpServletRequest request, @QueryParam("id") long id, @QueryParam("amount") int amount){
+	public Response executeTransaction(@Context HttpServletRequest request, Transaction transaction)
+	{
 		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
 		User user = userDao.getUser(username);
-		if(user == null){
+		if(user == null)
+		{
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Invalid user session!")).build();
 		}
 		
-		Account account = accountDao.getAccount(id);
-		if(account == null || (account.getUserId() != user.getId())){
+		Account account = accountDao.getAccount(transaction.getAccountId());
+		if(account == null || (account.getUserId() != user.getId()))
+		{
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
 		}
 		
-		int currentBalance = account.getBalance();
-		if(currentBalance == 0)
+		try 
 		{
-			//return error account has a balance of zero
-			return Response.status(Status.UNAUTHORIZED).entity(new String("Current Balance of Account is $0")).build();
+			Transaction.Type type = Transaction.Type.values()[transaction.getTransactionType()];
+			switch(type)
+			{
+				case DEBIT:
+					account.debit(transaction.getAmount());
+					break;
+				case CREDIT:
+					account.credit(transaction.getAmount());
+					break;
+				default:	
+			}
+		} catch (TransactionException e) 
+		{
+			e.printStackTrace();
 		}
 		
-		if(amount > currentBalance)
-		{
-			//return an error insufficient funds
-			return Response.status(Status.UNAUTHORIZED).entity(new String("Insufficient funds within the Account")).build();
-		}
+		accountDao.saveTransaction(transaction);
 		
-		account.setBalance(currentBalance-amount);
-		
-		return Response.ok(account).build();
+		return Response.ok(transaction).build();
 	}
 	
 }

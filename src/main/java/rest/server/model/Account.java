@@ -12,6 +12,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import rest.server.resources.exceptions.TransactionException;
+
 @Entity
 @Table(name = "account")
 @SequenceGenerator(name = "account_seq", sequenceName = "account_seq")
@@ -28,23 +30,9 @@ public class Account implements Serializable {
 		super();
 	}
 	
-	public enum AccountType{
-		CHECKING("Checking"),
-		SAVINGS("Savings");
-		
-		private String description;
-		
-		AccountType(String description) {
-			this.description = description;
-		}
-
-		public String getDescription() {
-			return description;
-		}
-
-		public void setDescription(String description) {
-			this.description = description;
-		}
+	public enum Type{
+		CHECKING,
+		SAVINGS;
 	}
 
 	/**
@@ -111,14 +99,43 @@ public class Account implements Serializable {
 	}
 	
 	@Transient
-	public AccountType getType()
+	public Type getType()
 	{
-		return AccountType.values()[accountType];
+		return Type.values()[accountType];
 	}
 	
-	public void setType(AccountType type)
+	public void setType(Type type)
 	{
 		this.accountType = type.ordinal();
+	}
+	
+	@Transient
+	public void debit(int amount) throws TransactionException
+	{
+		int tmp = this.balance - amount;
+		if(tmp < 0)
+		{
+			throw new TransactionException("Insufficient funds");
+		}
+		
+		if(tmp > balance)
+		{
+			throw new TransactionException("Invalid operation");
+		}
+		
+		this.balance -= amount;
+	}
+	
+	@Transient
+	public void credit(int amount) throws TransactionException
+	{
+		int tmp = this.balance + amount;
+		if(tmp < balance)
+		{
+			throw new TransactionException("Invalid operation");
+		}
+		
+		this.balance += amount;
 	}
 	
 }

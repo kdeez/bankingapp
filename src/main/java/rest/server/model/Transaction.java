@@ -28,6 +28,12 @@ public class Transaction implements Serializable{
 	public Transaction() {
 		super();
 	}
+	
+	public enum Type
+	{
+		DEBIT,
+		CREDIT
+	}
 
 	@Id
 	@Column(name = "id")

@@ -32,25 +32,35 @@ public class HibernateAccountDao implements AccountDao
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-	public Account getAccount(long id) {
+	public Account getAccount(long id) 
+	{
 		return (Account) sessionFactory.getCurrentSession().createCriteria(Account.class).add(Restrictions.eq("id", id)).uniqueResult();
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-	public boolean saveAccount(Account account) {
+	public boolean saveAccount(Account account) 
+	{
 		return sessionFactory.getCurrentSession().save(account) != null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-	public List<Transaction> getTransactions(Account account, Date from, Date to) {
+	public List<Transaction> getTransactions(Account account, Date from, Date to) 
+	{
 		return sessionFactory.getCurrentSession().createCriteria(Transaction.class)
 				.add(Restrictions.eq("accountId", account.getAccountNumber()))
 				.add(Restrictions.ge("dateTime", from))
 				.add(Restrictions.le("dateTime", to))
 				.list();
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public void saveTransaction(Transaction transaction) 
+	{
+		sessionFactory.getCurrentSession().save(transaction);
 	}
 	
 }
