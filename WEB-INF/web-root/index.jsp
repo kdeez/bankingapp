@@ -46,16 +46,29 @@
 		  {
 		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		    {
-			  var content = "<tr><th>Name</th><th>Account</th><th>Type</th><th>Balance</th></tr>";
+			  var content = "<tr><th>Account</th><th></th><th>Actions</th><th>Balance</th></tr>";
 			  var accounts = JSON.parse(xmlhttp.responseText)
 			  if(accounts)
 			  {
 				  for(i = 0; i < accounts.length; i++)
 				  {	
 					  content += "<tr>";
-					  content += "<td><a href='/account/details.jsp?id="+accounts[i].accountNumber+"'>"+accounts[i].description+"</a></td>";
-					  content += "<td>" + ('000000000'+ accounts[i].accountNumber).slice(-9) + "</td>";
-					  content += "<td>" + (accounts[i].accountType == 0 ? "Checking" : "Savings") + "</td>";
+					  content += "<td><a href='/account/details.jsp?id=" + accounts[i].accountNumber + "'>" + accounts[i].description + "</a>" + "</td>";
+					  content += "<td><span class='label label-default'>"+ (accounts[i].accountType == 0 ? "Checking (" : "Savings (") + ('******000'+ accounts[i].accountNumber).slice(-9) + ")</span></td>";
+					  content += "<td><div class='input-group'>" +
+					  		"<div class='btn-group'>" +
+								"<input type='hidden' name='accountType' value='0'>" +
+								"<button type='button' class='btn btn-default btn-xs dropdown-toggle' data-toggle='dropdown' title='Defaults to Checking'>" +
+									"<span data-bind='label'>I Want To... </span><span class='caret'></span>" +
+								"</button>" +
+								"<ul class='dropdown-menu' role='menu' style='cursor:pointer'>" +
+									"<li><a href='/account/details.jsp?id=" + accounts[i].accountNumber + "'>View Transactions</a></li>" +
+									"<li><a href='/account/deposit.jsp?id=" + accounts[i].accountNumber + "'>Deposit Funds</a></li>" +
+									"<li><a href='/account/debit.jsp?id=" + accounts[i].accountNumber + "'>Withdraw Funds</a></li>" +
+									"<li><a href='/account/transfer.jsp?id=" + accounts[i].accountNumber + "'>Transfer Funds</a></li>" +
+								"</ul>" +
+							"</div>" +
+						"</div></td>";
 					  content += "<td>$" + accounts[i].balance.toFixed(2) + "</td>";
 					  content += "</tr>";
 				  }
