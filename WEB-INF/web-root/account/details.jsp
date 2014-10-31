@@ -31,7 +31,7 @@
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-left">
-						<li><h4>Account Summary</h4></li>
+						<li><h4 id="account-title">Account Summary</h4></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown"><a href="" class="dropdown-toggle"
@@ -82,7 +82,23 @@
 		}
 
 		window.onload = function() {
+			getAccount();
 			getTransactions();
+		}
+	</script>
+	<script>
+		function getAccount(){
+			$.ajax({
+				url : "/rest/account?id=<%=accountId%>",
+				type : "GET",
+				dataType : "json",
+				success : function(data, status, xhr) {
+					var account = JSON.parse(xhr.responseText)
+					if (account) {
+						document.getElementById("account-title").innerHTML = account.description + " Summary ";
+					}
+				}
+			});
 		}
 	</script>
 </body>

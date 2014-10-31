@@ -54,7 +54,7 @@
 				  {	
 					  content += "<tr>";
 					  content += "<td><a href='/account/details.jsp?id=" + accounts[i].accountNumber + "'>" + accounts[i].description + "</a>" + "</td>";
-					  content += "<td><span class='label label-default'>"+ (accounts[i].accountType == 0 ? "Checking (" : "Savings (") + ('******000'+ accounts[i].accountNumber).slice(-9) + ")</span></td>";
+					  content += "<td><span class='label label-default'>"+ (accounts[i].accountType == 0 ? "Checking (" : "Savings (") + ('000000000'+ accounts[i].accountNumber).slice(-9) + ")</span></td>";
 					  content += "<td><div class='input-group'>" +
 					  		"<div class='btn-group'>" +
 								"<input type='hidden' name='accountType' value='0'>" +
