@@ -63,6 +63,22 @@ public class UserResource {
 		return Response.ok(user).build();
 	}
 	
+	@POST
+	@Path("/login")
+	@Consumes(MediaType.APPLICATION_JSON_VALUE)
+	@Produces(MediaType.APPLICATION_JSON_VALUE)
+	public Response login(@Context HttpServletRequest request, User unverified)
+	{
+		boolean authorized = userDao.authorized(unverified);
+		if(authorized)
+		{
+			//create a HTTPSession to use for this session
+			request.getSession().setAttribute(UserSessionFilter.SESSION_USERNAME, unverified.getUsername());
+		}
+		
+		return Response.ok(new BootstrapRemoteValidator(authorized)).build();
+	}
+	
 	@GET
 	@Path("/validate")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)

@@ -22,7 +22,8 @@ import rest.server.model.User;
  *
  */
 @Repository("userDao")
-public class HibernateUserDao implements UserDao {
+public class HibernateUserDao implements UserDao 
+{
 	
 	/**
 	 * @Autowired means that Spring will automatically inject this dependency at runtime
@@ -30,6 +31,18 @@ public class HibernateUserDao implements UserDao {
 	 */
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public boolean authorized(User unverified) 
+	{
+		User user = this.getUser(unverified.getUsername());
+		if(user != null)
+		{
+			return user.getPassword().equals(unverified.getPassword());
+		}
+		return false;
+	}
 
 	/**
 	 * @Transactionl annotation allows Spring to manage the database transaction 

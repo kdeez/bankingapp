@@ -28,6 +28,7 @@ public class UserSessionFilter extends OncePerRequestFilter
 	{
 		unprotected.add(new Resource("POST", "/user"));
 		unprotected.add(new Resource("GET", "/user/validate"));
+		unprotected.add(new Resource("POST", "/user/login"));
 	}
 	
 	public UserSessionFilter()

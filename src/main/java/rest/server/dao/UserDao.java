@@ -12,8 +12,14 @@ import rest.server.model.User;
  * @author roger.hagen
  *
  */
-public interface UserDao {
-	
+public interface UserDao 
+{
+	/**
+	 * Returns true if the user is authorized
+	 * @param unverified
+	 * @return
+	 */
+	public boolean authorized(User unverified);
 	/**
 	 * Returns a User
 	 * @param id is the unique identifier for the user i.e. primary key of database

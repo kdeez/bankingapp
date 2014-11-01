@@ -26,42 +26,29 @@
 <%@ page import="java.io.InputStream" %>
 <%@ page import="java.io.FileInputStream" %>
 <%@ page import="java.util.Properties" %>
+<%@ page import="java.net.URLEncoder" %>
 <% 
-String username = request.getParameter("username");
-String password = request.getParameter("password");
-if(username != null && password != null)
+String success = request.getParameter("success");
+if(success != null)
 {
-	//grab the database connection properties from our Java Properties file
-	InputStream stream = new FileInputStream("WEB-INF/config.properties");
-	Properties props = new Properties();
-	props.load(stream);
-
-	Class.forName(props.getProperty("db.jdbcdriver", "com.mysql.jdbc.Driver"));
-	Connection connection = DriverManager.getConnection(props.getProperty("db.jdbcurl"), props.getProperty("db.userid"), props.getProperty("db.userpwd"));
-	
-	//always use PreparedStatements to protect against SQL injection
-	PreparedStatement statement = connection.prepareStatement("select * from users where username = ? and password = ?");
-	statement.setString(1, username);
-	statement.setString(2, password);
-	
-	ResultSet result = statement.executeQuery();
-	if (result.next()) 
-	{
-		//logged in... use the session attribute from now on
-	    session.setAttribute("user-name", username);
-	    response.sendRedirect("/index.jsp");
-	}
+	out.print("<div class='alert alert-success'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Success!</strong> " + success + "</div>");
 }
+
+String error = request.getParameter("error");
+if(error != null)
+{
+	out.print("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> " + error + "</div>");
+}
+
 %>
 
   <body>
    <!-- login form -->
   	<div class="container">
-		<form class="form-signin" role="form" method="post" action="/user/login.jsp">
+		<form id="signin-form" class="form-signin" role="form" method="post" action="/rest/user/login">
 			<h2 class="form-signin-heading">Bytekonzz Banking</h2>
-			<input type="text" class="form-control" placeholder="Username" value="<%=username != null ? username : "" %>" name="username"> 
+			<input type="text" class="form-control" placeholder="Username" name="username"> 
 			<input type="password"class="form-control" placeholder="Password" name="password"> 
-<!-- 			<label class="checkbox"><input type="checkbox" value="remember-me">Remember me</label> -->
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 			<a data-toggle="modal" data-target="#create-user-modal" style="cursor:pointer;">Not a member? (create new account)</a>
 		</form>
@@ -103,6 +90,41 @@ if(username != null && password != null)
     <script src="../assets/js/bootstrapValidator.min.js"></script>
 	<script src="../assets/js/form2json.js"></script>
 	<!-- form validation for new account http://bootstrapvalidator.com/getting-started/-->
+	<script>
+	$(document).ready(function() {
+    	$('#signin-form').bootstrapValidator({
+	        fields: {
+
+	        }
+	})
+	    .on('success.form.bv', function(e) {
+	        // Prevent form submission
+	        e.preventDefault();
+	
+	        // Get the form instance
+	        var $form = $(e.target);
+	
+	        // Get the BootstrapValidator instance
+	        var bv = $form.data('bootstrapValidator');
+	
+	        // Use JQuery Ajax to submit form data
+	        $.ajax({
+	  			url:$form.attr('action'),
+	  			type:"POST",
+	  			data:$form.toJSONString(),
+	  			contentType:"application/json; charset=utf-8",
+	  			dataType:"json",
+	  			success: function(){
+	  				window.location.href = "/index.jsp";
+	  			},
+	  			error: function(xhr, status, error){
+	  				window.location.href = "/user/login.jsp?error="+ encodeURIComponent("Invalid username or password");  			
+	  			}
+			});
+	    });
+	});
+	</script>
+	<!-- New user form scripts -->
 	<script>
 	$(document).ready(function() {
     	$('#new-user-form').bootstrapValidator({
@@ -179,10 +201,10 @@ if(username != null && password != null)
 	  			contentType:"application/json; charset=utf-8",
 	  			dataType:"json",
 	  			success: function(){
-	  				window.location.href = "/user/login.jsp";
+	  				window.location.href = "/user/login.jsp?success=" + encodeURIComponent("Account creation successful, please login to get started!");
 	  			},
 	  			error: function(xhr, status, error){
-	  				window.location.href = "/user/login.jsp";  			
+	  				window.location.href = "/user/login.jsp?error="+ encodeURIComponent("Unable to create account, server was unable to process request");  			
 	  			}
 			});
 	    });
