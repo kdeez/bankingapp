@@ -137,4 +137,13 @@ public class User implements Serializable {
 		this.created = created;
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password="
+				+ password + ", firstName=" + firstName + ", lastname="
+				+ lastname + ", email=" + email + ", active=" + active
+				+ ", deletable=" + deletable + ", roleId=" + roleId
+				+ ", created=" + created + "]";
+	}
+
 }

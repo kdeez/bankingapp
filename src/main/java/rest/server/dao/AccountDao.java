@@ -33,10 +33,18 @@ public interface AccountDao
 	 */
 	public List<Transaction> getTransactions(Account account, Date from, Date to);
 	
-	
+	/**
+	 * Saves the transaction to the persistent store (database, cache, etc)
+	 * @param transaction
+	 */
 	public void saveTransaction(Transaction transaction);
 	
-	
+	/**
+	 * Performs the business logic on an account when given a transaction
+	 * @param account
+	 * @param transaction
+	 * @throws TransactionException
+	 */
 	public void performTransaction(Account account, Transaction transaction) throws TransactionException;
 	
 	

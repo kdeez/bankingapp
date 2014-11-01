@@ -53,7 +53,11 @@ public class Role implements Serializable{
 	public void setCreated(Date created) {
 		this.created = created;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Role [id=" + id + ", name=" + name + ", created=" + created
+				+ "]";
+	}
 
 }

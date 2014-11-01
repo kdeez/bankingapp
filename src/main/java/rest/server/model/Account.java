@@ -137,5 +137,13 @@ public class Account implements Serializable {
 		
 		this.balance += amount;
 	}
+
+	@Override
+	public String toString() {
+		return "Account [accountNumber=" + accountNumber + ", description="
+				+ description + ", userId=" + userId + ", balance=" + balance
+				+ ", accountType=" + accountType + ", created=" + created + "]";
+	}
+	
 	
 }

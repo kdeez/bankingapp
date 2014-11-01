@@ -30,6 +30,11 @@ import rest.server.model.Transaction.Type;
 import rest.server.model.json.BootstrapRemoteValidator;
 import rest.server.model.User;
 
+/**
+ * 
+ * Controller for Account transactions and business logic
+ *
+ */
 @Controller("accountResource")
 @Path("/account")
 public class AccountResource 

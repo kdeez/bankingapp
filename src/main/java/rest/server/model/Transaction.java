@@ -37,7 +37,6 @@ public class Transaction implements Serializable{
 		this.accountId = accountId;
 		this.transactionType = transactionType;
 		this.amount = amount;
-		this.balance = balance;
 		this.description = description;
 	}
 
@@ -112,5 +111,16 @@ public class Transaction implements Serializable{
 	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Transaction [id=" + id + ", accountId=" + accountId
+				+ ", transactionType=" + transactionType + ", amount=" + amount
+				+ ", balance=" + balance + ", description=" + description
+				+ ", dateTime=" + dateTime + "]";
+	}
+	
+	
 	
 }
