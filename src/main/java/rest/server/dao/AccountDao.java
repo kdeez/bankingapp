@@ -5,6 +5,7 @@ import java.util.List;
 
 import rest.server.model.Account;
 import rest.server.model.Transaction;
+import rest.server.resources.exceptions.TransactionException;
 
 
 public interface AccountDao 
@@ -34,6 +35,9 @@ public interface AccountDao
 	
 	
 	public void saveTransaction(Transaction transaction);
+	
+	
+	public void performTransaction(Account account, Transaction transaction) throws TransactionException;
 	
 	
 }

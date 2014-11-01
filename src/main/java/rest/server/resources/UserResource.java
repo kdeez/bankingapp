@@ -66,7 +66,7 @@ public class UserResource {
 	@GET
 	@Path("/validate")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public Response userExists(@QueryParam("username") String username)
+	public Response isUserAvailable(@QueryParam("username") String username)
 	{
 		User user = userDao.getUser(username);
 		return Response.ok(new BootstrapRemoteValidator(user == null)).build();

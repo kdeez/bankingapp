@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rest.server.model.Account;
 import rest.server.model.Transaction;
+import rest.server.resources.exceptions.TransactionException;
 
 /* author: Bradley Furman, Kevin Dang, Roger*/
 
@@ -64,5 +65,35 @@ public class HibernateAccountDao implements AccountDao
 	{
 		sessionFactory.getCurrentSession().save(transaction);
 	}
-	
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public void performTransaction(Account account, Transaction transaction)
+			throws TransactionException {
+		try 
+		{
+			Transaction.Type type = Transaction.Type.values()[transaction.getTransactionType()];
+			switch(type)
+			{
+				case DEBIT:
+					account.debit(transaction.getAmount());
+					break;
+				case CREDIT:
+					account.credit(transaction.getAmount());
+					break;
+				default:	
+			}
+		} catch (TransactionException e) 
+		{
+			//TODO: RLH, need to return the correct response
+			throw e;
+		}
+		
+		transaction.setAccountId(account.getAccountNumber());
+		transaction.setBalance(account.getBalance());
+		this.saveTransaction(transaction);
+		this.saveUpdate(account);
+	}
+
+
 }

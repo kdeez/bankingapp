@@ -31,10 +31,96 @@
 				<h4>Transfer Funds</h4>
 			</div>
 			<div class="panel-body">
-				
+				<form id="transfer-funds-form" method="POST" action="/rest/account/transfer?id=<%=accountId%>">
+				<div class="form-group">
+					<input type="hidden" class="form-control" name="transactionType" value="1">
+					<div class="input-group">
+  						<span class="input-group-addon"></span>
+  						<input type="text" class="form-control" placeholder= "Account Number" name="accountId"><br>
+					</div>
+					<br>
+					<div class="input-group">
+  						<span class="input-group-addon"></span>
+  						<input type="text" class="form-control" placeholder= "Enter Description" name="description"><br>
+					</div>
+					<br>
+					<div class="input-group">
+  						<span class="input-group-addon">$</span>
+  						<input type="text" class="form-control" placeholder= "Enter Amount" name="amount"><br>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="/account/details.jsp?id=<%=accountId%>" class="btn btn-default" role="button">Cancel</a>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</form>
 			</div>
 		</div>
     </div>
-
+<!-- form validation for new account http://bootstrapvalidator.com/getting-started/-->
+	<script>
+	$(document).ready(function() {
+    	$('#transfer-funds-form').bootstrapValidator({
+		        fields: {
+		        	accountId: {
+			                validators: {
+			                    remote: {
+			                        url: '/rest/account/validate',
+			                        message: 'The account does not exist'
+			                    }
+			                }
+			            },
+		        	amount: {
+		                validators: {
+		                    notEmpty: {
+		                        message: 'The amount field is required'
+		                    },
+		                    regexp: {
+		                        regexp: /^[0-9]+\.[0-9]{2}$/,
+		                        message: 'Invalid amount'
+		                    }
+		                }
+		            },
+		            description: {
+		                validators: {
+		                    notEmpty: {
+		                        message: 'The description is required'
+		                    },
+		                    stringLength: {
+		                        min: 5,
+		                        max: 30,
+		                        message: 'You must enter a description for the transaction'
+		                    }
+		                }
+		            },
+		        }
+		})
+	    .on('success.form.bv', function(e) {
+	        // Prevent form submission
+	        e.preventDefault();
+	
+	        // Get the form instance
+	        var $form = $(e.target);
+	
+	        // Get the BootstrapValidator instance
+	        var bv = $form.data('bootstrapValidator');
+	
+	        // Use JQuery Ajax to submit form data
+	        $.ajax({
+	  			url:$form.attr('action'),
+	  			type:"POST",
+	  			data:$form.toJSONString(),
+	  			contentType:"application/json; charset=utf-8",
+	  			dataType:"json",
+	  			success: function(){
+	  				window.location.href = "/account/details.jsp?id=" + <%=accountId%>;
+	  			},
+	  			error: function(xhr, status, error){
+	  				showErrorMessage(" Unable to complete transaction"); 			
+	  			}
+			});
+	    });
+	});
+	</script>
 </body>
 </html>

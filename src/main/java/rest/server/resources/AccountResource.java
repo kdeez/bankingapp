@@ -26,8 +26,9 @@ import rest.server.dao.UserDao;
 import rest.server.main.UserSessionFilter;
 import rest.server.model.Account;
 import rest.server.model.Transaction;
+import rest.server.model.Transaction.Type;
+import rest.server.model.json.BootstrapRemoteValidator;
 import rest.server.model.User;
-import rest.server.resources.exceptions.TransactionException;
 
 @Controller("accountResource")
 @Path("/account")
@@ -41,6 +42,7 @@ public class AccountResource
 	@Autowired
 	@Qualifier("userDao")
 	private UserDao userDao;
+	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
@@ -64,6 +66,14 @@ public class AccountResource
 		account.setUserId(user.getId());
 		accountDao.saveUpdate(account);
 		return Response.ok(account).build();
+	}
+	
+	@GET
+	@Path("/validate")
+	@Produces(MediaType.APPLICATION_JSON_VALUE)
+	public Response accountExists(@QueryParam("accountId") long accountId)
+	{
+		return Response.ok(new BootstrapRemoteValidator(accountDao.getAccount(accountId) != null)).build();
 	}
 	
 	@GET
@@ -108,31 +118,47 @@ public class AccountResource
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
 		}
 		
-		try 
-		{
-			Transaction.Type type = Transaction.Type.values()[transaction.getTransactionType()];
-			switch(type)
-			{
-				case DEBIT:
-					account.debit(transaction.getAmount());
-					break;
-				case CREDIT:
-					account.credit(transaction.getAmount());
-					break;
-				default:	
-			}
-		} catch (TransactionException e) 
-		{
-			//TODO: RLH, need to return the correct response
-			throw e;
-		}
-		
-		transaction.setAccountId(account.getAccountNumber());
-		transaction.setBalance(account.getBalance());
-		accountDao.saveTransaction(transaction);
-		accountDao.saveUpdate(account);
+		accountDao.performTransaction(account, transaction);
 		
 		return Response.ok(transaction).build();
+	}
+
+	
+	@POST
+	@Path("/transfer")
+	@Consumes(MediaType.APPLICATION_JSON_VALUE)
+	@Produces(MediaType.APPLICATION_JSON_VALUE)
+	public Response transfer(@Context HttpServletRequest request, @QueryParam("id") long id, Transaction credit)
+	{
+		if(credit.getTransactionType() != Type.CREDIT.ordinal())
+		{
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to execute transaction!")).build();
+		}
+		
+		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
+		User user = userDao.getUser(username);
+		if(user == null)
+		{
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Invalid user session!")).build();
+		}
+		
+		Account from = accountDao.getAccount(id);
+		if(from == null || (from.getUserId() != user.getId()))
+		{
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
+		}
+		
+		Account to = accountDao.getAccount(credit.getAccountId());
+		if(to == null)
+		{
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
+		}
+		
+		Transaction debit = new Transaction(id, Type.DEBIT.ordinal(), credit.getAmount(), "Transfer to account: " + credit.getAccountId());
+		accountDao.performTransaction(from, debit);
+		accountDao.performTransaction(to, credit);
+		
+		return Response.ok(credit).build();
 	}
 	
 }

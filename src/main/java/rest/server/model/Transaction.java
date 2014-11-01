@@ -25,10 +25,23 @@ public class Transaction implements Serializable{
 	private String description;
 	private Date dateTime;
 	
-	public Transaction() {
+	public Transaction() 
+	{
 		super();
 	}
 	
+	
+	public Transaction(long accountId, int transactionType, double amount, String description) 
+	{
+		super();
+		this.accountId = accountId;
+		this.transactionType = transactionType;
+		this.amount = amount;
+		this.balance = balance;
+		this.description = description;
+	}
+
+
 	public enum Type
 	{
 		DEBIT,
