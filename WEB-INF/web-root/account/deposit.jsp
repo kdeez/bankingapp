@@ -76,7 +76,7 @@
 		                    stringLength: {
 		                        min: 5,
 		                        max: 30,
-		                        message: 'You must enter a description for the transaction'
+		                        message: 'Description must be between 5 and 30 characters long'
 		                    }
 		                }
 		            },

@@ -5,6 +5,8 @@ import java.io.Serializable;
 /**
  * 
  * Used for returning responses for Boostrap remote validation
+ * 
+ * http://bootstrapvalidator.com/validators/remote/
  *
  */
 @SuppressWarnings("serial")

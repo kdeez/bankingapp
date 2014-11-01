@@ -21,12 +21,7 @@
 
   </head>
   
- <!-- JSP server-side code for logging in the user -->
-<%@ page import ="java.sql.*" %>
-<%@ page import="java.io.InputStream" %>
-<%@ page import="java.io.FileInputStream" %>
-<%@ page import="java.util.Properties" %>
-<%@ page import="java.net.URLEncoder" %>
+ <!-- JSP server-side code -->
 <% 
 String success = request.getParameter("success");
 if(success != null)
