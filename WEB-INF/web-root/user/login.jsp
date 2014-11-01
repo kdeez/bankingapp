@@ -116,6 +116,10 @@ if(username != null && password != null)
 		                        min: 5,
 		                        max: 30,
 		                        message: 'The username must be more than 6 and less than 30 characters long'
+		                    },
+		                    remote: {
+		                        url: '/rest/user/validate',
+		                        message: 'The username is not available'
 		                    }
 		                }
 		            },

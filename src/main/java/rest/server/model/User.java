@@ -40,7 +40,7 @@ public class User implements Serializable {
 	public User() {
 		super();
 	}
-
+	
 	/**
 	 * Unique primary key for this class.
 	 * @return

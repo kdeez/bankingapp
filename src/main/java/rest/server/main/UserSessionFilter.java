@@ -23,7 +23,8 @@ public class UserSessionFilter extends OncePerRequestFilter
 	
 	private boolean isCreateUser(HttpServletRequest req)
 	{
-		return req.getMethod().equals("POST") && req.getPathInfo().equals("/user");
+		return req.getMethod().equals("POST") && req.getPathInfo().equals("/user") 
+				|| req.getMethod().equals("GET") && req.getPathInfo().equals("/user/validate");
 	}
 	
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException

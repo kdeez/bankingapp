@@ -23,6 +23,7 @@ import rest.server.dao.UserDao;
 import rest.server.main.UserSessionFilter;
 import rest.server.model.Account;
 import rest.server.model.User;
+import rest.server.model.json.BootstrapRemoteValidator;
 
 /**
  *
@@ -60,6 +61,15 @@ public class UserResource {
 			return Response.serverError().build();
 		}
 		return Response.ok(user).build();
+	}
+	
+	@GET
+	@Path("/validate")
+	@Produces(MediaType.APPLICATION_JSON_VALUE)
+	public Response userExists(@QueryParam("username") String username)
+	{
+		User user = userDao.getUser(username);
+		return Response.ok(new BootstrapRemoteValidator(user == null)).build();
 	}
 	
 	@GET
