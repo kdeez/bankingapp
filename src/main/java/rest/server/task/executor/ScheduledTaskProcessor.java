@@ -44,7 +44,7 @@ public class ScheduledTaskProcessor extends ThreadPoolTaskExecutor implements Ta
 	}
 
 	@Override
-	//@Scheduled(cron="*/5 * * * * MON-FRI")
+	//@Scheduled(cron="* 0 1 * * ")
 	@Scheduled(fixedDelay=60000)
 	public void executeTasks() 
 	{
