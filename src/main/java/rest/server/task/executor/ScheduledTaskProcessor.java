@@ -6,6 +6,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import javax.annotation.PostConstruct;
 
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.SmartLifecycle;
@@ -23,6 +25,7 @@ import rest.server.task.CompoundInterestTask;
 @SuppressWarnings("serial")
 public class ScheduledTaskProcessor extends ThreadPoolTaskExecutor implements TaskProcessor, SmartLifecycle
 {
+	private Logger logger = LoggerFactory.getLogger(ScheduledTaskProcessor.class);
 	private boolean started;
 	
 	@Autowired
