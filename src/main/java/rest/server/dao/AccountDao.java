@@ -48,4 +48,7 @@ public interface AccountDao
 	public void performTransaction(Account account, Transaction transaction) throws TransactionException;
 	
 	
+	public List<Account> getAccounts(int firstResult, int maxResults);
+	
+	
 }

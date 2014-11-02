@@ -95,5 +95,15 @@ public class HibernateAccountDao implements AccountDao
 		this.saveUpdate(account);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public List<Account> getAccounts(int firstResult, int maxResults) 
+	{
+		return sessionFactory.getCurrentSession().createCriteria(Account.class)
+				.setFirstResult(firstResult)
+				.setMaxResults(maxResults).list();
+	}
+
 
 }
