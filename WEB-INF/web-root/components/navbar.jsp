@@ -5,8 +5,7 @@
 <%
 	//check for user session
 	Object user = session.getAttribute("user-name");
-	Object role = session.getAttribute("user-role");
-	if (user == null || role == null) 
+	if (user == null) 
 	{
 		response.sendRedirect("/user/login.jsp");
 	}
