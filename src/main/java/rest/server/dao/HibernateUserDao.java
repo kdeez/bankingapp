@@ -2,6 +2,7 @@ package rest.server.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,8 +75,13 @@ public class HibernateUserDao implements UserDao
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 	public List<Account> getAccounts(User user) {
-		return sessionFactory.getCurrentSession().createCriteria(Account.class)
-				.add(Restrictions.eq("userId", user.getId())).list();
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Account.class);
+		if( !(user.getRole().getName().equals("Admin") || user.getRole().getName().equals("Employee")))
+		{
+			criteria.add(Restrictions.eq("userId", user.getId()));
+		}
+		
+		return criteria.list();
 	}
 
 }
