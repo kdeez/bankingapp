@@ -3,6 +3,7 @@ package rest.server.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rest.server.model.Account;
 import rest.server.model.Transaction;
+import rest.server.model.User;
 import rest.server.resources.exceptions.TransactionException;
 
 /* author: Bradley Furman, Kevin Dang, Roger*/
@@ -27,6 +29,14 @@ public class HibernateAccountDao implements AccountDao
 	 */
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public Account getAccount(long accountId) 
+	{
+		return (Account) sessionFactory.getCurrentSession().createCriteria(Account.class)
+				.add(Restrictions.eq("id", accountId)).uniqueResult();
+	}
 
 	/**
 	 * @Transactionl annotation allows Spring to manage the database transaction 
@@ -34,9 +44,14 @@ public class HibernateAccountDao implements AccountDao
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-	public Account getAccount(long id) 
+	public Account getAccount(User user, long id) 
 	{
-		return (Account) sessionFactory.getCurrentSession().createCriteria(Account.class).add(Restrictions.eq("id", id)).uniqueResult();
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Account.class).add(Restrictions.eq("id", id));
+		if( !(user.getRole().getName().equals("Admin") || user.getRole().getName().equals("Employee")))
+		{
+			criteria.add(Restrictions.eq("userId", user.getId()));
+		}
+		return (Account) criteria.uniqueResult();
 	}
 
 	@Override

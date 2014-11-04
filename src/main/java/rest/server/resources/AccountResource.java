@@ -51,8 +51,16 @@ public class AccountResource
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public Response getAccount(@QueryParam("id") Long id){
-		Account account = accountDao.getAccount(id);
+	public Response getAccount(@Context HttpServletRequest request, @QueryParam("id") Long id)
+	{
+		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
+		User user = userDao.getUser(username);
+		if(user == null)
+		{
+			return Response.status(Status.BAD_REQUEST).entity(new String("Invalid user session!")).build();
+		}
+		
+		Account account = accountDao.getAccount(user, id);
 		return Response.ok(account).build();
 	}
 	
@@ -91,8 +99,9 @@ public class AccountResource
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Invalid user session!")).build();
 		}
 		
-		Account account = accountDao.getAccount(id);
-		if(account == null || (account.getUserId() != user.getId())){
+		Account account = accountDao.getAccount(user, id);
+		if(account == null)
+		{
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
 		}
 		
@@ -117,8 +126,8 @@ public class AccountResource
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Invalid user session!")).build();
 		}
 		
-		Account account = accountDao.getAccount(transaction.getAccountId());
-		if(account == null || (account.getUserId() != user.getId()))
+		Account account = accountDao.getAccount(user, transaction.getAccountId());
+		if(account == null)
 		{
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
 		}
@@ -147,8 +156,8 @@ public class AccountResource
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Invalid user session!")).build();
 		}
 		
-		Account from = accountDao.getAccount(id);
-		if(from == null || (from.getUserId() != user.getId()))
+		Account from = accountDao.getAccount(user, id);
+		if(from == null)
 		{
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
 		}
@@ -157,6 +166,11 @@ public class AccountResource
 		if(to == null)
 		{
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
+		}
+		
+		if(from.getAccountNumber() == to.getAccountNumber())
+		{
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Cannot transfer funds to same account")).build();
 		}
 		
 		Transaction debit = new Transaction(id, Type.DEBIT.ordinal(), credit.getAmount(), "Transfer to account: " + credit.getAccountId());

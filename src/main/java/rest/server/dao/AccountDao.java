@@ -5,17 +5,22 @@ import java.util.List;
 
 import rest.server.model.Account;
 import rest.server.model.Transaction;
+import rest.server.model.User;
 import rest.server.resources.exceptions.TransactionException;
 
 
 public interface AccountDao 
 {
+	
+	public Account getAccount(long accountId);
+	
 	/**
-	 * Returns a Account
-	 * @param id is the unique identifier for the user i.e. primary key of database
+	 * Returns an account if the user has access
+	 * @param user
+	 * @param id is the account number
 	 * @return
 	 */
-	public Account getAccount(long id);
+	public Account getAccount(User user, long id);
 	
 	/**
 	 * Persists (stores) the Account to the databases
