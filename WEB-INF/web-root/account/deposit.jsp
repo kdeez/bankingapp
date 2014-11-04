@@ -19,7 +19,15 @@
 	</style>
   </head>
 <body>
-<%String accountId = request.getParameter("id"); %>
+<%	
+	String accountId = request.getParameter("id"); 
+	//this prevents Customers from accessing page via trial and error
+	Object role = session.getAttribute("user-role");
+	if(role == null || !(role.equals("Admin") && role.equals("Employee")))
+	{
+		response.sendRedirect("/index.jsp");
+	}
+%>
 <!--include directive to import the navigation bar so it is not copy and pasted into every page -->
 <%@include file="/components/navbar.jsp" %>
 	<div class="container">
