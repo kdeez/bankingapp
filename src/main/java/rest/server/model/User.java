@@ -3,11 +3,14 @@ package rest.server.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -34,7 +37,7 @@ public class User implements Serializable {
 	private String email;
 	private boolean active;
 	private boolean deletable;
-	private int roleId;
+	private Role role;
 	private Date created;
 
 	public User() {
@@ -54,6 +57,16 @@ public class User implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "roleId")
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	@Column(name = "username")
@@ -119,15 +132,6 @@ public class User implements Serializable {
 		this.deletable = deletable;
 	}
 
-	@Column(name = "roleId")
-	public int getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
-	}
-
 	@Column(name = "created")
 	public Date getCreated() {
 		return created;
@@ -142,8 +146,7 @@ public class User implements Serializable {
 		return "User [id=" + id + ", username=" + username + ", password="
 				+ password + ", firstName=" + firstName + ", lastname="
 				+ lastname + ", email=" + email + ", active=" + active
-				+ ", deletable=" + deletable + ", roleId=" + roleId
-				+ ", created=" + created + "]";
+				+ ", deletable=" + deletable + ", created=" + created + "]";
 	}
 
 }
