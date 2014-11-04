@@ -132,6 +132,11 @@ public class AccountResource
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
 		}
 		
+		if(!(user.getRole().getName().equals("Admin") || user.getRole().getName().equals("Employee")) && transaction.getTransactionType() == Transaction.Type.CREDIT.ordinal())
+		{
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to complete transaction!")).build();
+		}
+		
 		accountDao.performTransaction(account, transaction);
 		
 		return Response.ok(transaction).build();
