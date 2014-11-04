@@ -120,5 +120,11 @@ public class HibernateAccountDao implements AccountDao
 				.setMaxResults(maxResults).list();
 	}
 
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public void deleteAccount(Account account) {
+		sessionFactory.getCurrentSession().delete(account);
+	}
+
 
 }

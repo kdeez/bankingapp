@@ -55,5 +55,8 @@ public interface AccountDao
 	
 	public List<Account> getAccounts(int firstResult, int maxResults);
 	
+	public void deleteAccount(Account account);
+	
+	
 	
 }

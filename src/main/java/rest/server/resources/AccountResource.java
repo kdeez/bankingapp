@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -80,6 +81,28 @@ public class AccountResource
 		accountDao.saveUpdate(account);
 		return Response.ok(account).build();
 	}
+	
+	@DELETE
+	public Response delete(@Context HttpServletRequest request, @QueryParam("id") Long id)
+	{
+		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
+		User user = userDao.getUser(username);
+		if(user == null)
+		{
+			return Response.status(Status.BAD_REQUEST).entity(new String("Invalid user session!")).build();
+		}
+		
+		Account account = accountDao.getAccount(user, id);
+		try {
+			accountDao.deleteAccount(account);
+		}
+		catch (Exception ex) 
+		{
+			return Response.status(Status.BAD_REQUEST).entity(new String("Account cannot be deleted!")).build();
+		}
+		return Response.ok().build();
+	}
+	
 	
 	@GET
 	@Path("/validate")
