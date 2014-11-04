@@ -19,6 +19,9 @@
 	</style>
   </head>
 
+<%
+	Object role = session.getAttribute("user-role");
+%>
 <body>
 	<!--include directive to import the navigation bar so it is not copy and pasted into every page -->
 	<%@include file="/components/navbar.jsp" %>
@@ -38,7 +41,7 @@
     
     <!-- AJAX for loading the user's accounts -->
     <script>
-    function getAccounts(){
+    function getAccounts(userRole){
     	xmlhttp= new XMLHttpRequest();
 		xmlhttp.open("GET", "/rest/user/accounts/", true);
 		xmlhttp.setRequestHeader("Content-Type","application/json");
@@ -63,7 +66,7 @@
 								"</button>" +
 								"<ul class='dropdown-menu' role='menu' style='cursor:pointer'>" +
 									"<li><a href='/account/details.jsp?id=" + accounts[i].accountNumber + "'>View Transactions</a></li>" +
-									"<li><a href='/account/deposit.jsp?id=" + accounts[i].accountNumber + "'>Deposit Funds</a></li>" +
+									((userRole == "Admin" || userRole == "Employee") ? ("<li><a href='/account/deposit.jsp?id=" + accounts[i].accountNumber + "'>Deposit Funds</a></li>") : "") +
 									"<li><a href='/account/debit.jsp?id=" + accounts[i].accountNumber + "'>Withdraw Funds</a></li>" +
 									"<li><a href='/account/transfer.jsp?id=" + accounts[i].accountNumber + "'>Transfer Funds</a></li>" +
 								"</ul>" +
@@ -80,7 +83,7 @@
     }
     
     window.onload = function(){
-    	getAccounts();
+    	getAccounts("<%=role%>");
     }
 	</script>
   </body>
