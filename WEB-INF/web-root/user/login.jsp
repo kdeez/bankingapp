@@ -65,7 +65,6 @@ if(error != null)
 					<input type="email" class="form-control" placeholder= "E-mail" name="email"><br>
 					<input type="text" class="form-control" placeholder= "First Name" name="firstName"><br>
 					<input type="text" class="form-control" placeholder= "Last Name" name="lastname"><br>
-					<input type="hidden" name="roleId" value="3">
 				</div>
 				<div class="modal-footer">
 					<a href="/user/login.jsp" class="btn btn-default" role="button">Cancel</a>
