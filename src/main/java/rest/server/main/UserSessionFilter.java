@@ -22,6 +22,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class UserSessionFilter extends OncePerRequestFilter
 {	
 	public static final String SESSION_USERNAME = "user-name";
+	public static final String SESSION_ROLE = "user-role";
 	private static Set<Resource> unprotected = new HashSet<Resource>();
 	
 	private static final void addResources()

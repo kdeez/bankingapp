@@ -19,7 +19,10 @@
 	</style>
   </head>
 <body>
-<%String accountId = request.getParameter("id"); %>
+<%
+	String accountId = request.getParameter("id");
+	Object role = session.getAttribute("user-role");
+%>
 <!--include directive to import the navigation bar so it is not copy and pasted into every page -->
 	<%@include file="/components/navbar.jsp" %>
 	<div class="container">
@@ -37,7 +40,12 @@
 						<li class="dropdown"><a href="" class="dropdown-toggle"
 							data-toggle="dropdown">I Want To... <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="/account/deposit.jsp?id=<%=accountId%>">Deposit Funds</a></li>
+							<%
+								if(role.equals("Admin") || role.equals("Employee"))
+								{
+									out.write("<li><a href='/account/deposit.jsp?id=" + accountId + "'>Deposit Funds</a></li>");
+								} 
+							%>
 								<li><a href="/account/debit.jsp?id=<%=accountId%>">Withdraw Funds</a></li>
 								<li><a href="/account/transfer.jsp?id=<%=accountId%>">Transfer Funds</a></li>
 								<li><a href="/account/close.jsp?id=<%=accountId%>">Close Account</a></li>

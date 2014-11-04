@@ -22,6 +22,7 @@ import rest.server.dao.AccountDao;
 import rest.server.dao.UserDao;
 import rest.server.main.UserSessionFilter;
 import rest.server.model.Account;
+import rest.server.model.Role;
 import rest.server.model.User;
 import rest.server.model.json.BootstrapRemoteValidator;
 
@@ -53,9 +54,12 @@ public class UserResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON_VALUE)
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public Response addUser(User user){
+	public Response addUser(User user)
+	{
 		user.setActive(true);
 		user.setDeletable(true);
+		user.setRole(userDao.getRole("Customer"));
+		
 		boolean saved = userDao.saveUser(user);
 		if(!saved){
 			return Response.serverError().build();
@@ -74,6 +78,8 @@ public class UserResource {
 		{
 			//create a HTTPSession to use for this session
 			request.getSession().setAttribute(UserSessionFilter.SESSION_USERNAME, unverified.getUsername());
+			Role role = userDao.getUser(unverified.getUsername()).getRole();
+			request.getSession().setAttribute(UserSessionFilter.SESSION_ROLE, role.getName());
 		}
 		
 		return Response.ok(new BootstrapRemoteValidator(authorized)).build();

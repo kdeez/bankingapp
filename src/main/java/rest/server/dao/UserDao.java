@@ -3,6 +3,7 @@ package rest.server.dao;
 import java.util.List;
 
 import rest.server.model.Account;
+import rest.server.model.Role;
 import rest.server.model.User;
 
 /**
@@ -49,5 +50,7 @@ public interface UserDao
 	 * @return
 	 */
 	public List<Account> getAccounts(User user);
+	
+	public Role getRole(String name);
 
 }

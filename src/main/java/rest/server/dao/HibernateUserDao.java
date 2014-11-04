@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import rest.server.model.Account;
+import rest.server.model.Role;
 import rest.server.model.User;
 
 /**
@@ -82,6 +83,12 @@ public class HibernateUserDao implements UserDao
 		}
 		
 		return criteria.list();
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public Role getRole(String name) {
+		return (Role) sessionFactory.getCurrentSession().createCriteria(Role.class).add(Restrictions.eq("name", name)).uniqueResult();
 	}
 
 }
