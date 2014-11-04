@@ -23,7 +23,7 @@
 	String accountId = request.getParameter("id"); 
 	//this prevents Customers from accessing page via trial and error
 	Object role = session.getAttribute("user-role");
-	if(role == null || !(role.equals("Admin") && role.equals("Employee")))
+	if(role == null || !(role.equals("Admin") || role.equals("Employee")))
 	{
 		response.sendRedirect("/index.jsp");
 	}
