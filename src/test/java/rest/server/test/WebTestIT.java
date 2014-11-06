@@ -16,8 +16,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.junit.AfterClass;
@@ -38,9 +40,11 @@ public class WebTestIT
 	@BeforeClass
 	public static void sysProp() throws Exception 
 	{
-		//starts the web server
+		//starts the web server using properties that were created for testing
 		String properties = System.getProperty("user.dir") + "/src/test/resources/config.properties";
 		rest.server.main.JettyServer.main(new String[]{properties});
+		
+		//TODO: RLH, first need to run the db.sql script on startup
 	}
 	
 	@Before
@@ -99,8 +103,19 @@ public class WebTestIT
 	}
 	
 	@Test
-	public void testLoginSuccess()
+	public void testLoginSuccess() throws Exception
 	{
+		HttpClient client = HttpClients.createDefault();
+		HttpClientContext context = HttpClientContext.create();
+		HttpPost request = new HttpPost(JETTY_HOME + "/user/login.jsp");
+		request.setHeader("Content-Type", "application/json");
+		
+		StringEntity json = new StringEntity("{'username':admin, 'password':password}");
+		request.setEntity(json);
+		
+		HttpResponse httpResponse = client.execute( request , context);
+		String response = EntityUtils.toString( httpResponse.getEntity() );
+		logger.info("RESPONSE: " + response);
 		
 	}
 	
