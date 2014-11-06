@@ -47,7 +47,6 @@ public class JettyServer
 		server.setHandler(context);
 
 		server.start();
-		server.join();
 	}
 
 }
