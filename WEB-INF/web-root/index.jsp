@@ -21,10 +21,12 @@
 
 <%
 	Object role = session.getAttribute("user-role");
+	String accountId = request.getParameter("id");
 %>
 <body>
 	<!--include directive to import the navigation bar so it is not copy and pasted into every page -->
 	<%@include file="/components/navbar.jsp" %>
+	<%@include file="/components/deleteAccountModal.jsp" %>
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="panel panel-default">
@@ -37,8 +39,8 @@
 				</div>
 			</div>
 		</div>
-    </div>
-    
+    </div>	
+	
     <!-- AJAX for loading the user's accounts -->
     <script>
     function getAccounts(userRole){
@@ -69,6 +71,7 @@
 									((userRole == "Admin" || userRole == "Employee") ? ("<li><a href='/account/deposit.jsp?id=" + accounts[i].accountNumber + "'>Deposit Funds</a></li>") : "") +
 									"<li><a href='/account/debit.jsp?id=" + accounts[i].accountNumber + "'>Withdraw Funds</a></li>" +
 									"<li><a href='/account/transfer.jsp?id=" + accounts[i].accountNumber + "'>Transfer Funds</a></li>" +
+									"<li><a data-toggle=\"modal\" data-target=\"#close-account-modal\" style=\"cursor:pointer;\">Close Account</a></li>" +
 								"</ul>" +
 							"</div>" +
 						"</div></td>";
@@ -86,5 +89,7 @@
     	getAccounts("<%=role%>");
     }
 	</script>
+	
+	
   </body>
 </html>

@@ -93,6 +93,11 @@ public class AccountResource
 		}
 		
 		Account account = accountDao.getAccount(user, id);
+		
+		if (account.getBalance() != 0) {
+			return Response.status(Status.BAD_REQUEST).entity(new String("Account needs to be empty!")).build();
+		}
+		
 		try {
 			accountDao.deleteAccount(account);
 		}
