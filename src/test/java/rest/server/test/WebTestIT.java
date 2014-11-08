@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.URI;
 import java.sql.Connection;
 import java.util.List;
@@ -29,9 +28,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.ibatis.jdbc.ScriptRunner;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.hibernate.SessionFactory;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -138,9 +134,26 @@ public class WebTestIT
 	}
 	
 	@Test
-	public void testLoginFailure()
+	public void testLoginFailure() throws Exception
 	{
+		HttpClient client = HttpClients.createDefault();
+		HttpClientContext context = HttpClientContext.create();
+		HttpPost request = new HttpPost(JETTY_HOME + "rest/user/login");
+		request.setHeader("Content-Type", "application/json");
 		
+		User user = new User("admin","bogus");
+		String json = JSON.serialize(user);
+		StringEntity body = new StringEntity(json);
+		request.setEntity(body);
+		
+		HttpResponse httpResponse = client.execute( request , context);
+		assertTrue("Should have recieved a HTTP 200 response", httpResponse.getStatusLine().getStatusCode() == Status.OK.getStatusCode());
+		String response = EntityUtils.toString( httpResponse.getEntity() );
+		
+		BootstrapRemoteValidator validator = (BootstrapRemoteValidator) JSON.deserialize(response, BootstrapRemoteValidator.class);
+		
+		assertTrue("The user should have been authenticated", !validator.isValid());
+		logger.info("RESPONSE: " + response);
 	}
 	
 	@Test
