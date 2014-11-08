@@ -34,6 +34,14 @@ public class JettyServer
 	 */
 	public static void main(String[] args) throws Exception
 	{
+		String properties = System.getProperty("user.dir") + "/WEB-INF/config.properties";
+		if(args.length > 0)
+		{
+			properties = args[0];
+		}
+		
+		System.setProperty("application.properties", properties);
+		
 		Resource jettyConfig = Resource.newResource(JETTY_CONFIG);
 		XmlConfiguration configuration = new XmlConfiguration(jettyConfig.getInputStream());
 		Server server = (Server) configuration.configure();
