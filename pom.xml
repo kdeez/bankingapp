@@ -16,6 +16,7 @@
 		<http-client.version>4.3.3</http-client.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>1.7.7</slf4j.version>
+		<build.plugins.plugin.version>3.2</build.plugins.plugin.version>
 	</properties>
 	<dependencies>
 		<!-- jax-rs -->
@@ -177,6 +178,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${build.plugins.plugin.version}</version>
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
