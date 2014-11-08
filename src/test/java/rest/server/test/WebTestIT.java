@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URI;
 import java.sql.Connection;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -40,10 +41,17 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import rest.server.dao.UserDao;
 import rest.server.model.User;
 import rest.server.model.json.BootstrapRemoteValidator;
 import rest.server.utils.JSON;
 
+/**
+ * 
+ * This test uses Hibernate H2 database and not MySQL. 
+ * The database is created dynamically at runtime by scanning the JPA annotations.
+ *
+ */
 public class WebTestIT 
 {
 	private static final Logger logger = LoggerFactory.getLogger(WebTestIT.class);
@@ -51,6 +59,7 @@ public class WebTestIT
 	private String JETTY_HOME = "http://localhost:" + JETTY_PORT + "/";
 	private static DataSource dataSource;
 	private static SessionFactory sessionFactory;
+	private static UserDao userDao;
 	
 	@BeforeClass
 	public static void sysProp() throws Exception 
@@ -62,6 +71,7 @@ public class WebTestIT
 		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
 		dataSource = (DataSource) context.getBean("dataSource");
 		sessionFactory = (SessionFactory) context.getBean("sessionFactory");
+		userDao = context.getBean(UserDao.class);
 		
 		InputStream is = WebTestIT.class.getResourceAsStream("/db.sql");
 		Connection conn = null;
@@ -141,19 +151,25 @@ public class WebTestIT
 		HttpPost request = new HttpPost(JETTY_HOME + "rest/user/login");
 		request.setHeader("Content-Type", "application/json");
 		
-		User user = new User("admin","bogus");
-		String json = JSON.serialize(user);
-		StringEntity body = new StringEntity(json);
-		request.setEntity(body);
+		List<User> users = Arrays.asList(new User("admin","bogus"), new User("bogus","password"), new User("bogus","bogus"));
 		
-		HttpResponse httpResponse = client.execute( request , context);
-		assertTrue("Should have recieved a HTTP 200 response", httpResponse.getStatusLine().getStatusCode() == Status.OK.getStatusCode());
-		String response = EntityUtils.toString( httpResponse.getEntity() );
+		for(User user: users)
+		{
+			String json = JSON.serialize(user);
+			StringEntity body = new StringEntity(json);
+			request.setEntity(body);
+			
+			HttpResponse httpResponse = client.execute( request , context);
+			assertTrue("Should have recieved a HTTP 200 response", httpResponse.getStatusLine().getStatusCode() == Status.OK.getStatusCode());
+			String response = EntityUtils.toString( httpResponse.getEntity() );
+			
+			BootstrapRemoteValidator validator = (BootstrapRemoteValidator) JSON.deserialize(response, BootstrapRemoteValidator.class);
+			
+			assertTrue("The user should have been rejected", !validator.isValid());
+			
+			Thread.sleep(1000);
+		}
 		
-		BootstrapRemoteValidator validator = (BootstrapRemoteValidator) JSON.deserialize(response, BootstrapRemoteValidator.class);
-		
-		assertTrue("The user should have been authenticated", !validator.isValid());
-		logger.info("RESPONSE: " + response);
 	}
 	
 	@Test
@@ -177,6 +193,38 @@ public class WebTestIT
 		
 		assertTrue("The user should have been authenticated", validator.isValid());
 		logger.info("RESPONSE: " + response);
+	}
+	
+	@Test
+	public void testAddUser() throws Exception
+	{
+		HttpClient client = HttpClients.createDefault();
+		HttpClientContext context = HttpClientContext.create();
+		HttpPost request = new HttpPost(JETTY_HOME + "rest/user");
+		request.setHeader("Content-Type", "application/json");
+		
+		User user = new User("admin","password");
+		user.setFirstName("Roger");
+		user.setLastname("Hagen");
+		user.setEmail("your@mom.com");
+		String json = JSON.serialize(user);
+		StringEntity body = new StringEntity(json);
+		request.setEntity(body);
+		
+		HttpResponse httpResponse = client.execute( request , context);
+		assertTrue("Should have recieved a HTTP 200 response", httpResponse.getStatusLine().getStatusCode() == Status.OK.getStatusCode());
+		String response = EntityUtils.toString( httpResponse.getEntity() );
+		
+		//response from Server
+		user = (User) JSON.deserialize(response, User.class);
+		//retrieve the user from the database
+		User persisted = userDao.getUser(user.getId());
+		
+		assertTrue("User returned in response should be same a persisted", user.equals(persisted));
+		assertTrue("A valid user should have been returned", user != null);
+		assertTrue("User should be active", user.isActive());
+		assertTrue("User should have a valid role", user.getRole() != null);
+		assertTrue("User should have a valid customer role", user.getRole().getName().equals("Customer"));
 		
 	}
 	
