@@ -13,6 +13,11 @@ import java.io.Serializable;
 public class BootstrapRemoteValidator implements Serializable
 {
 	private boolean valid;
+	
+	public BootstrapRemoteValidator()
+	{
+		super();
+	}
 
 	public BootstrapRemoteValidator(boolean valid) 
 	{

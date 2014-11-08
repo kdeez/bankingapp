@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URI;
 import java.sql.Connection;
 import java.util.List;
@@ -28,9 +29,9 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.ibatis.jdbc.ScriptRunner;
-import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.eclipse.jetty.util.ajax.JSON;
 import org.hibernate.SessionFactory;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,6 +45,8 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import rest.server.model.User;
+import rest.server.model.json.BootstrapRemoteValidator;
+import rest.server.utils.JSON;
 
 public class WebTestIT 
 {
@@ -148,12 +151,8 @@ public class WebTestIT
 		HttpPost request = new HttpPost(JETTY_HOME + "rest/user/login");
 		request.setHeader("Content-Type", "application/json");
 		
-		User user = new User();
-		user.setUsername("admin");
-		user.setPassword("password");
-		
-		//TODO:RLH, use a Java JSON parser such as Jackson
-		String json = "{'username':'admin','password':'password'}".replace("'", "\"");
+		User user = new User("admin","password");
+		String json = JSON.serialize(user);
 		StringEntity body = new StringEntity(json);
 		request.setEntity(body);
 		
@@ -161,7 +160,9 @@ public class WebTestIT
 		assertTrue("Should have recieved a HTTP 200 response", httpResponse.getStatusLine().getStatusCode() == Status.OK.getStatusCode());
 		String response = EntityUtils.toString( httpResponse.getEntity() );
 		
-		assertTrue("The user should have been authenticated", response.equals("{\"valid\":true}"));
+		BootstrapRemoteValidator validator = (BootstrapRemoteValidator) JSON.deserialize(response, BootstrapRemoteValidator.class);
+		
+		assertTrue("The user should have been authenticated", validator.isValid());
 		logger.info("RESPONSE: " + response);
 		
 	}

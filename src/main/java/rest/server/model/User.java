@@ -40,10 +40,18 @@ public class User implements Serializable {
 	private Role role;
 	private Date created;
 
-	public User() {
+	public User() 
+	{
 		super();
 	}
 	
+	
+	public User(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+
 	/**
 	 * Unique primary key for this class.
 	 * @return
