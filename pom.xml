@@ -19,6 +19,12 @@
 		<build.plugins.plugin.version>3.2</build.plugins.plugin.version>
 	</properties>
 	<dependencies>
+		<!-- google guava -->
+		<dependency>
+  	      <groupId>com.google.guava</groupId>
+	      <artifactId>guava</artifactId>
+	      <version>18.0</version>
+        </dependency>
 		<!-- jax-rs -->
 		<dependency>
 			<groupId>com.sun.jersey</groupId>

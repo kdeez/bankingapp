@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import rest.server.model.Account;
 import rest.server.model.Role;
 import rest.server.model.User;
+import rest.server.security.KeyAuthenticator;
 
 /**
  * Hibernate ORM mplementation of User DAO 
@@ -41,7 +42,8 @@ public class HibernateUserDao implements UserDao
 		User user = this.getUser(unverified.getUsername());
 		if(user != null)
 		{
-			return user.getPassword().equals(unverified.getPassword());
+			KeyAuthenticator keyAuth = new KeyAuthenticator(unverified.getPassword(),user.getPassword());
+			return keyAuth.verifyKey();
 		}
 		return false;
 	}

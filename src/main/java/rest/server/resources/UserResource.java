@@ -25,6 +25,7 @@ import rest.server.model.Account;
 import rest.server.model.Role;
 import rest.server.model.User;
 import rest.server.model.json.BootstrapRemoteValidator;
+import rest.server.security.KeyAuthenticator;
 
 /**
  *
@@ -59,6 +60,7 @@ public class UserResource {
 		user.setActive(true);
 		user.setDeletable(true);
 		user.setRole(userDao.getRole("Customer"));
+		user.setPassword(new KeyAuthenticator(user.getPassword(),"").getHashCode());
 		
 		boolean saved = userDao.saveUser(user);
 		if(!saved){
@@ -107,6 +109,4 @@ public class UserResource {
 		List<Account> accounts =  userDao.getAccounts(user);
 		return Response.ok(accounts).build();
 	}
-	
- 
 }
