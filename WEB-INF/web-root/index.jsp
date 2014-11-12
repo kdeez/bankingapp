@@ -69,7 +69,7 @@
 								"<ul class='dropdown-menu' role='menu' style='cursor:pointer'>" +
 									"<li><a href='/account/details.jsp?id=" + accounts[i].accountNumber + "'>View Transactions</a></li>" +
 									((userRole == "Admin" || userRole == "Employee") ? ("<li><a href='/account/deposit.jsp?id=" + accounts[i].accountNumber + "'>Deposit Funds</a></li>") : "") +
-									"<li><a href='/account/debit.jsp?id=" + accounts[i].accountNumber + "'>Withdraw Funds</a></li>" +
+									((userRole == "Admin" || userRole == "Employee") ? ("<li><a href='/account/debit.jsp?id=" + accounts[i].accountNumber + "'>Withdraw Funds</a></li>") :"") +
 									"<li><a href='/account/transfer.jsp?id=" + accounts[i].accountNumber + "'>Transfer Funds</a></li>" +
 									"<li class=\"divider\"></li>" +
 									"<li><a href='/account/close.jsp?id=" + accounts[i].accountNumber + "'>Close Account</a></li>" +
