@@ -71,7 +71,8 @@
 									((userRole == "Admin" || userRole == "Employee") ? ("<li><a href='/account/deposit.jsp?id=" + accounts[i].accountNumber + "'>Deposit Funds</a></li>") : "") +
 									"<li><a href='/account/debit.jsp?id=" + accounts[i].accountNumber + "'>Withdraw Funds</a></li>" +
 									"<li><a href='/account/transfer.jsp?id=" + accounts[i].accountNumber + "'>Transfer Funds</a></li>" +
-									"<li><a data-toggle=\"modal\" data-target=\"#close-account-modal\" style=\"cursor:pointer;\">Close Account</a></li>" +
+									"<li><a href='/account/close.jsp?id=" + accounts[i].accountNumber + "'>Close Account</a></li>" +
+									//"<li><a data-toggle=\"modal\" data-target=\"#close-account-modal\" data-id=\"" + accounts[i].accountNumber +"\" style=\"cursor:pointer;\">Close Account</a></li>" +
 								"</ul>" +
 							"</div>" +
 						"</div></td>";
