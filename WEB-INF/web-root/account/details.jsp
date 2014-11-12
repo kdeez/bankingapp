@@ -49,6 +49,7 @@
 							%>
 								<li><a href="/account/debit.jsp?id=<%=accountId%>">Withdraw Funds</a></li>
 								<li><a href="/account/transfer.jsp?id=<%=accountId%>">Transfer Funds</a></li>
+								<li class="divider"></li>
 								<li><a data-toggle="modal" data-target="#close-account-modal" style="cursor:pointer;">Close Account</a></li>
 							</ul>
 						</li>

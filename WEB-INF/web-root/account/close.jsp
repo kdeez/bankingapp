@@ -20,7 +20,6 @@
 </head>
 
 <%
-	Object role = session.getAttribute("user-role");
 	String accountId = request.getParameter("id");
 %>
 <body>
@@ -29,17 +28,18 @@
 	<%@include file="/components/navbar.jsp" %>
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
-		<div class="panel panel-default">
+		<div class="panel panel-danger">
 			<div class="panel-heading">
 				<h3 class="panel-title">Close Account</h3>
 			</div>
 			<div class="panel-body">
-			<p>Are you sure you would like to close the account?</p>
-			<p>Please remove all funds before proceeding</p>
+				<p>Are you sure you would like to close the account?</p>
+				<p>Please remove all funds before proceeding</p>
+				<p class="text-danger"><strong>WARNING: This cannot be undone</strong></p>
 				<form id="close-account-form">
 					<div class="modal-footer">
 						<a href="/index.jsp" class="btn btn-default" role="button">Cancel</a>
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<button type="submit" class="btn btn-danger">Submit</button>
 					</div>
 				</form>
 			</div>
