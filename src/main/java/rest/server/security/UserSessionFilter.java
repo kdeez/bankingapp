@@ -1,4 +1,4 @@
-package rest.server.main;
+package rest.server.security;
 
 import java.io.IOException;
 import java.util.HashSet;

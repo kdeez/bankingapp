@@ -24,12 +24,12 @@ import org.springframework.stereotype.Controller;
 
 import rest.server.dao.AccountDao;
 import rest.server.dao.UserDao;
-import rest.server.main.UserSessionFilter;
 import rest.server.model.Account;
 import rest.server.model.Transaction;
 import rest.server.model.Transaction.Type;
 import rest.server.model.json.BootstrapRemoteValidator;
 import rest.server.model.User;
+import rest.server.security.UserSessionFilter;
 
 /**
  * 

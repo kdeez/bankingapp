@@ -57,6 +57,6 @@ public interface AccountDao
 	
 	public void deleteAccount(Account account);
 	
-	
+	public double getMinBalance(Account account, Date from, Date to);
 	
 }

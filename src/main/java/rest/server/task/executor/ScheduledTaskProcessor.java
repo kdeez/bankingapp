@@ -8,8 +8,11 @@ import javax.annotation.PostConstruct;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,14 +21,15 @@ import org.springframework.stereotype.Component;
 
 import rest.server.dao.AccountDao;
 import rest.server.model.Account;
-import rest.server.task.CompoundInterestTask;
+import rest.server.task.PenaltyInterestTask;
 
 @EnableScheduling
 @Component("scheduledTaskProcessor")
 @SuppressWarnings("serial")
-public class ScheduledTaskProcessor extends ThreadPoolTaskExecutor implements TaskProcessor, SmartLifecycle
+public class ScheduledTaskProcessor extends ThreadPoolTaskExecutor implements TaskProcessor, ApplicationContextAware, SmartLifecycle
 {
 	private Logger logger = LoggerFactory.getLogger(ScheduledTaskProcessor.class);
+	private static ApplicationContext context;
 	private boolean started;
 	
 	@Autowired
@@ -51,13 +55,13 @@ public class ScheduledTaskProcessor extends ThreadPoolTaskExecutor implements Ta
 	@Scheduled(fixedDelay=60000)
 	public void executeTasks() 
 	{
-		int firstResult = 1, maxResults = 500;
+		int firstResult = 0, maxResults = 500;
 		List<Account> accounts = null;
 		while((accounts = accountDao.getAccounts(firstResult, maxResults)).isEmpty() == false)
 		{
 			for(Account account: accounts)
 			{
-				this.submit(new CompoundInterestTask(account));
+				this.submit(new PenaltyInterestTask(account));
 			}
 			
 			firstResult += maxResults;
@@ -113,6 +117,18 @@ public class ScheduledTaskProcessor extends ThreadPoolTaskExecutor implements Ta
 		stop();
 		callback.run();
 		
+	}
+	
+	public static ApplicationContext getContext() 
+	{
+		return context;
+	}
+
+	@Override
+	public void setApplicationContext(ApplicationContext context)
+			throws BeansException 
+	{
+		ScheduledTaskProcessor.context = context;
 	}
 
 }
