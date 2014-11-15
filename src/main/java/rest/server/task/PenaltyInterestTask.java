@@ -18,13 +18,13 @@ public class PenaltyInterestTask implements RunnableTask
 {
 	private Logger logger = LoggerFactory.getLogger(ScheduledTaskProcessor.class);
 	private AccountDao accountDao;
-	private Account account;
+	private Account customerAccount;
 	
 	
 	public PenaltyInterestTask(Account account) 
 	{
 		super();
-		this.account = account;
+		this.customerAccount = account;
 		this.accountDao = ScheduledTaskProcessor.getContext().getBean(AccountDao.class);
 	}
 
@@ -36,12 +36,16 @@ public class PenaltyInterestTask implements RunnableTask
 		calendar.roll(Calendar.MONTH, -1);
 		Date from = calendar.getTime();
 		
-		double minBalance = accountDao.getMinBalance(account, from, to);
+		double minBalance = accountDao.getMinBalance(customerAccount, from, to);
+		if(minBalance < 100)
+		{
+			
+		}
 		
 		//TODO:1. need to calculate interest and penalties
 		//TODO:2. save a transaction that has "Interest" or "Penalty" as the description
 		//TODO:3. update the account balance
-		logger.info("Running task for account=" + account);
+		logger.info("Running task for account=" + customerAccount);
 		return Result.SUCCESS;
 	}
 

@@ -55,3 +55,6 @@ CREATE TABLE transaction(
 	CONSTRAINT FK_ACCOUNT2TRANSACTION_1 FOREIGN KEY (accountId) REFERENCES account (accountNumber) ON DELETE CASCADE,
 	PRIMARY KEY(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO account (accountNumber,description, userId, accountType, balance) VALUES (1,'Bank Capitol', 1, 2, 1000000);
+

@@ -32,7 +32,8 @@ public class Account implements Serializable {
 	
 	public enum Type{
 		CHECKING,
-		SAVINGS;
+		SAVINGS,
+		CAPITOL;
 	}
 
 	/**
