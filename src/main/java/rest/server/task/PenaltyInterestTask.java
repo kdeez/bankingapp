@@ -6,9 +6,6 @@ import java.util.GregorianCalendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 import rest.server.dao.AccountDao;
 import rest.server.model.Account;
@@ -18,16 +15,16 @@ public class PenaltyInterestTask implements RunnableTask
 {
 	private Logger logger = LoggerFactory.getLogger(ScheduledTaskProcessor.class);
 	private AccountDao accountDao;
-	private Account customerAccount;
+	private Account account;
 	
 	
 	public PenaltyInterestTask(Account account) 
 	{
 		super();
-		this.customerAccount = account;
+		this.account = account;
 		this.accountDao = ScheduledTaskProcessor.getContext().getBean(AccountDao.class);
 	}
-
+	
 	@Override
 	public Result call() throws Exception 
 	{
@@ -36,16 +33,38 @@ public class PenaltyInterestTask implements RunnableTask
 		calendar.roll(Calendar.MONTH, -1);
 		Date from = calendar.getTime();
 		
-		double minBalance = accountDao.getMinBalance(customerAccount, from, to);
+		double minBalance = accountDao.getMinBalance(account, from, to);
 		if(minBalance < 100)
 		{
-			
+			accountDao.applyPenalty(account, 25);
+			logger.info("Applied penalty to " + account);
 		}
 		
-		//TODO:1. need to calculate interest and penalties
-		//TODO:2. save a transaction that has "Interest" or "Penalty" as the description
-		//TODO:3. update the account balance
-		logger.info("Running task for account=" + customerAccount);
+		if(account.getType() == Account.Type.SAVINGS)
+		{
+			double amount = 0;
+			if(minBalance > 3000)
+			{
+				amount = minBalance * 0.04;
+			}
+			else
+			if(minBalance > 2000)
+			{
+				amount = minBalance * 0.03;
+			}
+			else
+			if(minBalance > 1000)
+			{
+				amount = minBalance * 0.02;
+			}
+			
+			if(amount > 0)
+			{
+				accountDao.applyInterest(account, amount);
+			}
+		}
+		
+		logger.info("Running task for account=" + account);
 		return Result.SUCCESS;
 	}
 

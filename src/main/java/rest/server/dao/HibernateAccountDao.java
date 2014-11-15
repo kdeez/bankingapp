@@ -1,6 +1,5 @@
 package rest.server.dao;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -16,9 +15,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import rest.server.model.Account;
+import rest.server.model.Account.Type;
 import rest.server.model.Transaction;
 import rest.server.model.User;
-import rest.server.model.Account.Type;
 import rest.server.resources.exceptions.TransactionException;
 
 /* author: Bradley Furman, Kevin Dang, Roger*/
@@ -116,9 +115,10 @@ public class HibernateAccountDao implements AccountDao
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-	public List<Account> getAccounts(int firstResult, int maxResults) 
+	public List<Account> getCustomerAccounts(int firstResult, int maxResults) 
 	{
 		return sessionFactory.getCurrentSession().createCriteria(Account.class)
+				.add(Restrictions.ne("accountType", Type.CAPITOL.ordinal()))
 				.setFirstResult(firstResult)
 				.setMaxResults(maxResults).list();
 	}
@@ -134,12 +134,47 @@ public class HibernateAccountDao implements AccountDao
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 	public double getMinBalance(Account account, Date from, Date to) 
 	{
+		List<Transaction> transactions = this.getTransactions(account, from, to);
+		if(transactions.isEmpty())
+		{
+			return account.getBalance();
+		}
+		
 		return (double) sessionFactory.getCurrentSession().createCriteria(Transaction.class)
 				.setProjection(Projections.min("balance"))
 				.add(Restrictions.eq("accountId", account.getAccountNumber()))
 				.add(Restrictions.ge("dateTime", from))
 				.add(Restrictions.le("dateTime", to))
 				.uniqueResult();
+	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public void transfer(Account from, Account to, double amount, String description) 
+	{
+		Transaction debit = new Transaction(from.getAccountNumber(), Transaction.Type.DEBIT.ordinal(), amount, description);
+		Transaction credit = new Transaction(to.getAccountNumber(), Transaction.Type.CREDIT.ordinal(), amount, description);
+		this.performTransaction(from, debit);
+		this.performTransaction(to, credit);
+		
+		this.saveUpdate(from);
+		this.saveUpdate(to);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public void applyPenalty(Account account, double amount) 
+	{
+		Account capitolAccount = this.getAccount( (long) 1);
+		this.transfer(account, capitolAccount, amount, "Penalty for account: " + account.getAccountNumber());
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public void applyInterest(Account account, double amount) 
+	{
+		Account capitolAccount = this.getAccount( (long) 1);
+		this.transfer(capitolAccount, account, amount, "Interest for account: " + account.getAccountNumber());
 	}
 
 

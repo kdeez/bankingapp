@@ -57,7 +57,7 @@ public class ScheduledTaskProcessor extends ThreadPoolTaskExecutor implements Ta
 	{
 		int firstResult = 0, maxResults = 500;
 		List<Account> accounts = null;
-		while((accounts = accountDao.getAccounts(firstResult, maxResults)).isEmpty() == false)
+		while((accounts = accountDao.getCustomerAccounts(firstResult, maxResults)).isEmpty() == false)
 		{
 			for(Account account: accounts)
 			{

@@ -53,10 +53,16 @@ public interface AccountDao
 	public void performTransaction(Account account, Transaction transaction) throws TransactionException;
 	
 	
-	public List<Account> getAccounts(int firstResult, int maxResults);
+	public List<Account> getCustomerAccounts(int firstResult, int maxResults);
 	
 	public void deleteAccount(Account account);
 	
+	public void transfer(Account from, Account to, double amount, String description);
+	
 	public double getMinBalance(Account account, Date from, Date to);
+	
+	public void applyPenalty(Account account, double amount);
+	
+	public void applyInterest(Account account, double amount);
 	
 }
