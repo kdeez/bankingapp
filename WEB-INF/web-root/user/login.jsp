@@ -65,6 +65,12 @@ if(error != null)
 					<input type="email" class="form-control" placeholder= "E-mail" name="email"><br>
 					<input type="text" class="form-control" placeholder= "First Name" name="firstName"><br>
 					<input type="text" class="form-control" placeholder= "Last Name" name="lastname"><br>
+					<input type="text" class="form-control" placeholder= "Phone" name="phone"><br>
+					
+					<input type="text" class="form-control" placeholder= "Street Address" name="street"><br>
+					<input type="text" class="form-control" placeholder= "City" name="city"><br>
+					<input type="text" class="form-control" placeholder= "State" name="state"><br>
+					<input type="text" class="form-control" placeholder= "Zipcode" name="zipCode"><br>
 				</div>
 				<div class="modal-footer">
 					<a href="/user/login.jsp" class="btn btn-default" role="button">Cancel</a>
@@ -173,6 +179,14 @@ if(error != null)
 		                    notEmpty: {
 		                        message: 'The last name is required'
 		                    },
+		                }
+		            },
+		            zipCode: {
+		                validators: {
+		                    regexp: {
+		                        regexp: /^\d{5}$/,
+		                        message: 'The US zipcode must contain 5 digits'
+		                    }
 		                }
 		            },
 		        }

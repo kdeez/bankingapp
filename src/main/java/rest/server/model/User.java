@@ -30,14 +30,19 @@ import javax.persistence.Table;
 public class User implements Serializable {
 	private static final long serialVersionUID = -417647809423596323L;
 	private long id;
+	private Role role;
 	private String username;
 	private String password;
-	private String firstName;
-	private String lastname;
-	private String email;
 	private boolean active;
 	private boolean deletable;
-	private Role role;
+	private String firstName;
+	private String lastname;
+	private String street;
+	private String city;
+	private String state;
+	private int zipCode;
+	private String email;
+	private String phone;
 	private Date created;
 
 	public User() 
@@ -94,7 +99,7 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
 	@Column(name = "firstName")
 	public String getFirstName() {
 		return firstName;
@@ -111,6 +116,51 @@ public class User implements Serializable {
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+	}
+	
+	@Column(name = "street")
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	@Column(name = "city")
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	@Column(name = "state")
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	@Column(name = "zipcode")
+	public int getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(int zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	@Column(name = "phone")
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	@Column(name = "email")
@@ -148,89 +198,7 @@ public class User implements Serializable {
 	public void setCreated(Date created) {
 		this.created = created;
 	}
+
+
 	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (active ? 1231 : 1237);
-		result = prime * result + ((created == null) ? 0 : created.hashCode());
-		result = prime * result + (deletable ? 1231 : 1237);
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result
-				+ ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result
-				+ ((lastname == null) ? 0 : lastname.hashCode());
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		result = prime * result
-				+ ((username == null) ? 0 : username.hashCode());
-		return result;
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (active != other.active)
-			return false;
-		if (created == null) {
-			if (other.created != null)
-				return false;
-		} else if (!created.equals(other.created))
-			return false;
-		if (deletable != other.deletable)
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (firstName == null) {
-			if (other.firstName != null)
-				return false;
-		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (id != other.id)
-			return false;
-		if (lastname == null) {
-			if (other.lastname != null)
-				return false;
-		} else if (!lastname.equals(other.lastname))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (role == null) {
-			if (other.role != null)
-				return false;
-		} else if (!role.equals(other.role))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
-	}
-
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password="
-				+ password + ", firstName=" + firstName + ", lastname="
-				+ lastname + ", email=" + email + ", active=" + active
-				+ ", deletable=" + deletable + ", created=" + created + "]";
-	}
-
 }
