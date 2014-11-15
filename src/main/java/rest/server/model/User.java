@@ -40,7 +40,7 @@ public class User implements Serializable {
 	private String street;
 	private String city;
 	private String state;
-	private int zipCode;
+	private Integer zipCode;
 	private String email;
 	private String phone;
 	private Date created;
@@ -146,11 +146,11 @@ public class User implements Serializable {
 	}
 
 	@Column(name = "zipcode")
-	public int getZipCode() {
+	public Integer getZipCode() {
 		return zipCode;
 	}
 
-	public void setZipCode(int zipCode) {
+	public void setZipCode(Integer zipCode) {
 		this.zipCode = zipCode;
 	}
 
