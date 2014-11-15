@@ -156,9 +156,6 @@ public class HibernateAccountDao implements AccountDao
 		Transaction credit = new Transaction(to.getAccountNumber(), Transaction.Type.CREDIT.ordinal(), amount, description);
 		this.performTransaction(from, debit);
 		this.performTransaction(to, credit);
-		
-		this.saveUpdate(from);
-		this.saveUpdate(to);
 	}
 
 	@Override

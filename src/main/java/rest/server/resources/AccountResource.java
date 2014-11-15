@@ -206,9 +206,8 @@ public class AccountResource
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Cannot transfer funds to same account")).build();
 		}
 		
-		Transaction debit = new Transaction(id, Type.DEBIT.ordinal(), credit.getAmount(), "Transfer to account: " + credit.getAccountId());
-		accountDao.performTransaction(from, debit);
-		accountDao.performTransaction(to, credit);
+		double amount = credit.getAmount();
+		accountDao.transfer(from, to, amount, "Transfer to account: " + credit.getAccountId());
 		
 		return Response.ok(credit).build();
 	}
