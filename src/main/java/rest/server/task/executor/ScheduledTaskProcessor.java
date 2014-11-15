@@ -51,8 +51,7 @@ public class ScheduledTaskProcessor extends ThreadPoolTaskExecutor implements Ta
 	}
 
 	@Override
-	//@Scheduled(cron="* 0 1 * * ")
-	@Scheduled(fixedDelay=60000)
+	@Scheduled(cron="* 0 1 * * ")
 	public void executeTasks() 
 	{
 		int firstResult = 0, maxResults = 500;
