@@ -26,42 +26,49 @@ public class PenaltyInterestTask implements RunnableTask
 	}
 	
 	@Override
-	public Result call() throws Exception 
+	public Result call()
 	{
-		Calendar calendar = GregorianCalendar.getInstance();
-		Date to = calendar.getTime();
-		calendar.roll(Calendar.MONTH, -1);
-		Date from = calendar.getTime();
-		
-		double minBalance = accountDao.getMinBalance(account, from, to);
-		if(minBalance < 100)
+		try 
 		{
-			accountDao.applyPenalty(account, 25);
-			logger.info("Applied penalty to " + account);
-		}
-		
-		if(account.getType() == Account.Type.SAVINGS)
-		{
-			double amount = 0;
-			if(minBalance > 3000)
+			Calendar calendar = GregorianCalendar.getInstance();
+			Date to = calendar.getTime();
+			calendar.roll(Calendar.MONTH, -1);
+			Date from = calendar.getTime();
+			
+			double minBalance = accountDao.getMinBalance(account, from, to);
+			if(minBalance < 100)
 			{
-				amount = minBalance * 0.04;
-			}
-			else
-			if(minBalance > 2000)
-			{
-				amount = minBalance * 0.03;
-			}
-			else
-			if(minBalance > 1000)
-			{
-				amount = minBalance * 0.02;
+				accountDao.applyPenalty(account, 25);
+				logger.info("Applied penalty to " + account);
 			}
 			
-			if(amount > 0)
+			if(account.getType() == Account.Type.SAVINGS)
 			{
-				accountDao.applyInterest(account, amount);
+				double amount = 0;
+				if(minBalance > 3000)
+				{
+					amount = minBalance * 0.04;
+				}
+				else
+				if(minBalance > 2000)
+				{
+					amount = minBalance * 0.03;
+				}
+				else
+				if(minBalance > 1000)
+				{
+					amount = minBalance * 0.02;
+				}
+				
+				if(amount > 0)
+				{
+					accountDao.applyInterest(account, amount);
+				}
 			}
+		} catch (Exception e) 
+		{
+			logger.warn("task failed for account=" + account, e);
+			return Result.FAILED;
 		}
 		
 		logger.info("Running task for account=" + account);
