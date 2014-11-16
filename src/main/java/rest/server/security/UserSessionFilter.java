@@ -1,7 +1,11 @@
 package rest.server.security;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.FilterChain;
@@ -14,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import rest.server.model.Role;
 import rest.server.model.User;
 
 /**
@@ -24,9 +29,10 @@ import rest.server.model.User;
 public class UserSessionFilter extends OncePerRequestFilter
 {	
 	private Logger logger = LoggerFactory.getLogger(UserSessionFilter.class);
-	public static final String SESSION_USER = "user-name";
+	private static final List<Role> BANK_EMPLOYEES = Arrays.asList(new Role("Admin"), new Role("Employee"));
 	private static Set<Resource> unprotected = new HashSet<Resource>();
-	private static Set<Resource> restricted = new HashSet<Resource>();
+	private static Map<Resource, List<Role>> restricted = new HashMap<Resource, List<Role>>();
+	public static final String SESSION_USER = "user-name";
 	
 	private static final void addResources()
 	{
@@ -35,8 +41,8 @@ public class UserSessionFilter extends OncePerRequestFilter
 		unprotected.add(new Resource("GET", "/rest/user/validate"));
 		unprotected.add(new Resource("POST", "/rest/user/login"));
 		
-		restricted.add(new Resource("GET", "/account/deposit.jsp"));
-		restricted.add(new Resource("GET", "/account/debit.jsp"));
+		restricted.put(new Resource("GET", "/account/deposit.jsp"), BANK_EMPLOYEES);
+		restricted.put(new Resource("GET", "/account/debit.jsp"), BANK_EMPLOYEES);
 	}
 	
 	public UserSessionFilter()
@@ -51,16 +57,20 @@ public class UserSessionFilter extends OncePerRequestFilter
 		
 		String path = (req.getServletPath() != null ? req.getServletPath() : "/") + (req.getPathInfo() != null ? req.getPathInfo() : "");
 		logger.info("Intercepted =" + path);
+		
+		String resourcePath = req.getServletPath().equals("/rest") ? req.getPathInfo() : req.getServletPath();
+		Resource resource = new Resource(req.getMethod(), resourcePath);
+		
 		if (session != null)
 		{
 			Object user = req.getSession().getAttribute(SESSION_USER);
-			if(user == null && this.isProtected(req))
+			if(user == null && this.isProtected(resource))
 			{
 				logger.info("Protected content, redirecting to user login...");
 				res.sendRedirect("/user/login.jsp");
 			}
 			
-			if(user != null && this.isRestricted(req) && !((User) user).getRole().getName().equals("Admin"))
+			if(user != null && this.isRestricted(resource) && !restricted.get(resource).contains(((User)user).getRole()))
 			{
 				logger.info("Restricted content, redirecting to dashboard...");
 				res.sendRedirect("/index.jsp");
@@ -129,15 +139,13 @@ public class UserSessionFilter extends OncePerRequestFilter
 	 * @param req
 	 * @return
 	 */
-	private boolean isProtected(HttpServletRequest req)
+	private boolean isProtected(Resource resource)
 	{
-		String resource = req.getServletPath().equals("/rest") ? req.getPathInfo() : req.getServletPath();
-		return !UserSessionFilter.unprotected.contains(new Resource(req.getMethod(), resource));
+		return !UserSessionFilter.unprotected.contains(resource);
 	}
 	
-	private boolean isRestricted(HttpServletRequest req)
+	private boolean isRestricted(Resource resource)
 	{
-		String resource = req.getServletPath().equals("/rest") ? req.getPathInfo() : req.getServletPath();
-		return UserSessionFilter.restricted.contains(new Resource(req.getMethod(), resource));
+		return restricted.containsKey(resource);
 	}
 }

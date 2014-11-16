@@ -24,6 +24,12 @@ public class Role implements Serializable{
 	public Role() {
 		super();
 	}
+	
+	public Role(String name) 
+	{
+		super();
+		this.name = name;
+	}
 
 	@Id
 	@Column(name = "id")
@@ -54,12 +60,12 @@ public class Role implements Serializable{
 		this.created = created;
 	}
 	
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((created == null) ? 0 : created.hashCode());
-		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -73,13 +79,6 @@ public class Role implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Role other = (Role) obj;
-		if (created == null) {
-			if (other.created != null)
-				return false;
-		} else if (!created.equals(other.created))
-			return false;
-		if (id != other.id)
-			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
