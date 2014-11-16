@@ -61,6 +61,8 @@ public interface AccountDao
 	
 	public double getMinBalance(Account account, Date from, Date to);
 	
+	public double getMaxBalance(Account account, Date from, Date to);
+	
 	public void applyPenalty(Account account, double amount);
 	
 	public void applyInterest(Account account, double amount);

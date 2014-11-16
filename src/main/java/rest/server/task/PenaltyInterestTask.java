@@ -35,8 +35,8 @@ public class PenaltyInterestTask implements RunnableTask
 			calendar.roll(Calendar.MONTH, -1);
 			Date from = calendar.getTime();
 			
-			double minBalance = accountDao.getMinBalance(account, from, to);
-			if(minBalance < 100)
+			double maxBalance = accountDao.getMaxBalance(account, from, to);
+			if(maxBalance < 100)
 			{
 				accountDao.applyPenalty(account, 25);
 				logger.info("Applied penalty to " + account);
@@ -45,6 +45,7 @@ public class PenaltyInterestTask implements RunnableTask
 			if(account.getType() == Account.Type.SAVINGS)
 			{
 				double amount = 0;
+				double minBalance = accountDao.getMinBalance(account, from, to);
 				if(minBalance > 3000)
 				{
 					amount = minBalance * 0.04;

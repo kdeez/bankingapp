@@ -150,6 +150,23 @@ public class HibernateAccountDao implements AccountDao
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public double getMaxBalance(Account account, Date from, Date to) {
+		List<Transaction> transactions = this.getTransactions(account, from, to);
+		if(transactions.isEmpty())
+		{
+			return account.getBalance();
+		}
+		
+		return (double) sessionFactory.getCurrentSession().createCriteria(Transaction.class)
+				.setProjection(Projections.max("balance"))
+				.add(Restrictions.eq("accountId", account.getAccountNumber()))
+				.add(Restrictions.ge("dateTime", from))
+				.add(Restrictions.le("dateTime", to))
+				.uniqueResult();
+	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 	public void transfer(Account from, Account to, double amount, String description) 
 	{
 		Transaction debit = new Transaction(from.getAccountNumber(), Transaction.Type.DEBIT.ordinal(), amount, description);
@@ -173,6 +190,7 @@ public class HibernateAccountDao implements AccountDao
 		Account capitolAccount = this.getAccount( (long) 1);
 		this.transfer(capitolAccount, account, amount, "Interest for account: " + account.getAccountNumber());
 	}
+
 
 
 }
