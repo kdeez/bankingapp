@@ -23,7 +23,6 @@ public class UserSessionFilter extends OncePerRequestFilter
 {	
 	private Logger logger = LoggerFactory.getLogger(UserSessionFilter.class);
 	public static final String SESSION_USER = "user-name";
-	public static final String SESSION_ROLE = "user-role";
 	private static Set<Resource> unprotected = new HashSet<Resource>();
 	
 	private static final void addResources()

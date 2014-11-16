@@ -89,7 +89,7 @@
     }
     
     window.onload = function(){
-    	getAccounts("<%=role%>");
+    	getAccounts("<%=role.getName()%>");
     }
 	</script>
 	
