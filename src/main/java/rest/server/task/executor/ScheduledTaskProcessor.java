@@ -23,6 +23,11 @@ import rest.server.dao.AccountDao;
 import rest.server.model.Account;
 import rest.server.task.PenaltyInterestTask;
 
+/**
+ * 
+ * Bean/Component that is a Thread Pool that can execute any task
+ *
+ */
 @EnableScheduling
 @Component("scheduledTaskProcessor")
 @SuppressWarnings("serial")
@@ -54,6 +59,7 @@ public class ScheduledTaskProcessor extends ThreadPoolTaskExecutor implements Ta
 	@Scheduled(cron="0 0 0 1 * ?")
 	public void executeTasks() 
 	{
+		logger.info("Running scheduled tasks...");
 		int firstResult = 0, maxResults = 500;
 		List<Account> accounts = null;
 		while((accounts = accountDao.getCustomerAccounts(firstResult, maxResults)).isEmpty() == false)
@@ -65,6 +71,7 @@ public class ScheduledTaskProcessor extends ThreadPoolTaskExecutor implements Ta
 			
 			firstResult += maxResults;
 		}
+		logger.info("Scheduled tasks execution is complete.");
 	}
 
 	@Override

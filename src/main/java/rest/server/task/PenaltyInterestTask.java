@@ -11,6 +11,11 @@ import rest.server.dao.AccountDao;
 import rest.server.model.Account;
 import rest.server.task.executor.ScheduledTaskProcessor;
 
+/**
+ * 
+ * A Callable (Thread) that can be ran to calculate penalty and interest for an account
+ *
+ */
 public class PenaltyInterestTask implements RunnableTask
 {
 	private Logger logger = LoggerFactory.getLogger(ScheduledTaskProcessor.class);

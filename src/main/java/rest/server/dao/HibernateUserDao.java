@@ -18,7 +18,6 @@ import rest.server.security.KeyAuthenticator;
 
 /**
  * Hibernate ORM mplementation of User DAO 
- * @author roger.hagen
  * 
  * @Repository annotation is a flag for Spring to instantiate this class as
  * a Singleton (single instance) when this application starts

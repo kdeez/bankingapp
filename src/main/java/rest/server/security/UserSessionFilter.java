@@ -14,8 +14,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * 
- * @author roger.hagen
- * 
  * HTTP Filter that protects our REST web services and requires a valid HTTP Session in order to access WEB services
  *
  */

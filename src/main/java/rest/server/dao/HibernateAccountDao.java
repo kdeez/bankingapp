@@ -20,7 +20,6 @@ import rest.server.model.Account.Type;
 import rest.server.model.Transaction;
 import rest.server.model.User;
 
-/* author: Bradley Furman, Kevin Dang, Roger*/
 
 @Repository("accountDao")
 public class HibernateAccountDao implements AccountDao

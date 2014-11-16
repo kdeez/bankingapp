@@ -51,6 +51,11 @@ public interface UserDao
 	 */
 	public List<Account> getAccounts(User user);
 	
+	/**
+	 * Returns the role by name
+	 * @param name
+	 * @return
+	 */
 	public Role getRole(String name);
 
 }
