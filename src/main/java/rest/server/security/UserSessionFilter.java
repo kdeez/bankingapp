@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import rest.server.model.User;
+
 /**
  * 
  * HTTP Filter that protects our REST web services and requires a valid HTTP Session in order to access WEB services
@@ -24,14 +26,17 @@ public class UserSessionFilter extends OncePerRequestFilter
 	private Logger logger = LoggerFactory.getLogger(UserSessionFilter.class);
 	public static final String SESSION_USER = "user-name";
 	private static Set<Resource> unprotected = new HashSet<Resource>();
+	private static Set<Resource> restricted = new HashSet<Resource>();
 	
 	private static final void addResources()
 	{
 		unprotected.add(new Resource("GET", "/user/login.jsp"));
-		
 		unprotected.add(new Resource("POST", "/rest/user"));
 		unprotected.add(new Resource("GET", "/rest/user/validate"));
 		unprotected.add(new Resource("POST", "/rest/user/login"));
+		
+		restricted.add(new Resource("GET", "/account/deposit.jsp"));
+		restricted.add(new Resource("GET", "/account/debit.jsp"));
 	}
 	
 	public UserSessionFilter()
@@ -51,9 +56,16 @@ public class UserSessionFilter extends OncePerRequestFilter
 			Object user = req.getSession().getAttribute(SESSION_USER);
 			if(user == null && this.isProtected(req))
 			{
-				logger.info("Redirecting to user login...");
+				logger.info("Protected content, redirecting to user login...");
 				res.sendRedirect("/user/login.jsp");
 			}
+			
+			if(user != null && this.isRestricted(req) && !((User) user).getRole().getName().equals("Admin"))
+			{
+				logger.info("Restricted content, redirecting to dashboard...");
+				res.sendRedirect("/index.jsp");
+			}
+			
 		}
 		else
 		{
@@ -121,5 +133,11 @@ public class UserSessionFilter extends OncePerRequestFilter
 	{
 		String resource = req.getServletPath().equals("/rest") ? req.getPathInfo() : req.getServletPath();
 		return !UserSessionFilter.unprotected.contains(new Resource(req.getMethod(), resource));
+	}
+	
+	private boolean isRestricted(HttpServletRequest req)
+	{
+		String resource = req.getServletPath().equals("/rest") ? req.getPathInfo() : req.getServletPath();
+		return UserSessionFilter.restricted.contains(new Resource(req.getMethod(), resource));
 	}
 }

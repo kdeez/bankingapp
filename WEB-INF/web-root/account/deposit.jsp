@@ -19,16 +19,7 @@
 	</style>
   </head>
 <body>
-
-<%@ page import="rest.server.model.User, rest.server.model.Role" %>
 <%
-	Role role = ((User) session.getAttribute("user-name")).getRole();
-	//this prevents Customers from accessing page via trial and error
-	if(!(role.getName().equals("Admin") || role.getName().equals("Employee")))
-	{
-		response.sendRedirect("/index.jsp");
-	}
-	
 	String accountId = request.getParameter("id");
 %>
 <!--include directive to import the navigation bar so it is not copy and pasted into every page -->
