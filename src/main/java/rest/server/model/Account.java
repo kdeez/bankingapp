@@ -12,7 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import rest.server.resources.exceptions.TransactionException;
+import rest.server.exceptions.TransactionException;
 
 @Entity
 @Table(name = "account")

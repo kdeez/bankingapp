@@ -1,4 +1,4 @@
-package rest.server.resources;
+package rest.server.controller;
 
 import java.util.Calendar;
 import java.util.Date;

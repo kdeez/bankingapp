@@ -3,10 +3,10 @@ package rest.server.dao;
 import java.util.Date;
 import java.util.List;
 
+import rest.server.exceptions.TransactionException;
 import rest.server.model.Account;
 import rest.server.model.Transaction;
 import rest.server.model.User;
-import rest.server.resources.exceptions.TransactionException;
 
 
 public interface AccountDao 

@@ -1,4 +1,4 @@
-package rest.server.resources.exceptions;
+package rest.server.exceptions;
 
 public class TransactionException extends RuntimeException
 {
