@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
@@ -19,15 +21,18 @@ import org.springframework.web.filter.OncePerRequestFilter;
  */
 public class UserSessionFilter extends OncePerRequestFilter
 {	
-	public static final String SESSION_USERNAME = "user-name";
+	private Logger logger = LoggerFactory.getLogger(UserSessionFilter.class);
+	public static final String SESSION_USER = "user-name";
 	public static final String SESSION_ROLE = "user-role";
 	private static Set<Resource> unprotected = new HashSet<Resource>();
 	
 	private static final void addResources()
 	{
-		unprotected.add(new Resource("POST", "/user"));
-		unprotected.add(new Resource("GET", "/user/validate"));
-		unprotected.add(new Resource("POST", "/user/login"));
+		unprotected.add(new Resource("GET", "/user/login.jsp"));
+		
+		unprotected.add(new Resource("POST", "/rest/user"));
+		unprotected.add(new Resource("GET", "/rest/user/validate"));
+		unprotected.add(new Resource("POST", "/rest/user/login"));
 	}
 	
 	public UserSessionFilter()
@@ -40,15 +45,23 @@ public class UserSessionFilter extends OncePerRequestFilter
 	{	
 		HttpSession session = req.getSession();
 		
+		String path = (req.getServletPath() != null ? req.getServletPath() : "/") + (req.getPathInfo() != null ? req.getPathInfo() : "");
+		logger.info("Intercepted =" + path);
 		if (session != null)
 		{
-			Object user = req.getSession().getAttribute(SESSION_USERNAME);
+			Object user = req.getSession().getAttribute(SESSION_USER);
 			if(user == null && this.isProtected(req))
 			{
+				logger.info("Redirecting to user login...");
 				res.sendRedirect("/user/login.jsp");
 			}
 		}
+		else
+		{
+			logger.info("No valid user session");
+		}
 		
+		logger.info("Authorized =" + path);
 		chain.doFilter(req, res);
 	}
 	
@@ -107,6 +120,7 @@ public class UserSessionFilter extends OncePerRequestFilter
 	 */
 	private boolean isProtected(HttpServletRequest req)
 	{
-		return !UserSessionFilter.unprotected.contains(new Resource(req.getMethod(), req.getPathInfo()));
+		String resource = req.getServletPath().equals("/rest") ? req.getPathInfo() : req.getServletPath();
+		return !UserSessionFilter.unprotected.contains(new Resource(req.getMethod(), resource));
 	}
 }

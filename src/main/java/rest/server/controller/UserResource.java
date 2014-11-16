@@ -13,6 +13,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -21,7 +23,6 @@ import org.springframework.stereotype.Controller;
 import rest.server.dao.AccountDao;
 import rest.server.dao.UserDao;
 import rest.server.model.Account;
-import rest.server.model.Role;
 import rest.server.model.User;
 import rest.server.model.json.BootstrapRemoteValidator;
 import rest.server.security.KeyAuthenticator;
@@ -35,7 +36,9 @@ import rest.server.security.UserSessionFilter;
  */
 @Controller("userResource")
 @Path("/user")
-public class UserResource {
+public class UserResource 
+{
+	private Logger logger = LoggerFactory.getLogger(UserResource.class);
 	
 	@Autowired
 	@Qualifier("userDao")
@@ -79,9 +82,13 @@ public class UserResource {
 		if(authorized)
 		{
 			//create a HTTPSession to use for this session
-			request.getSession().setAttribute(UserSessionFilter.SESSION_USERNAME, unverified.getUsername());
-			Role role = userDao.getUser(unverified.getUsername()).getRole();
-			request.getSession().setAttribute(UserSessionFilter.SESSION_ROLE, role.getName());
+			User user = userDao.getUser(unverified.getUsername());
+			request.getSession().setAttribute(UserSessionFilter.SESSION_USER, user);
+			logger.info("Created user session for user=" + user);
+		}
+		else
+		{
+			logger.error("Invalid login attempt for user=" + unverified);
 		}
 		
 		return Response.ok(new BootstrapRemoteValidator(authorized)).build();
@@ -100,8 +107,7 @@ public class UserResource {
 	@Path("/accounts")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public Response getAccounts(@Context HttpServletRequest request){
-		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
-		User user = userDao.getUser(username);
+		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
 		if(user == null){
 			return Response.status(Status.BAD_REQUEST).entity(new String("Invalid user session!")).build();
 		}

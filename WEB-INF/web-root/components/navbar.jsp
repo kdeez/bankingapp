@@ -2,6 +2,8 @@
 <!-- Bootstrap core CSS -->
 <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 <link href="../assets/css/bootstrapValidator.min.css" rel="stylesheet">
+
+<%@ page import="rest.server.model.User, rest.server.model.Role" %>
 <%
 	//check for user session
 	Object user = session.getAttribute("user-name");
@@ -9,6 +11,8 @@
 	{
 		response.sendRedirect("/user/login.jsp");
 	}
+	
+	String username = ((User) user).getUsername();
 %>
 <!-- Fixed navbar -->
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -30,7 +34,7 @@
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/user/logout.jsp">Logged in as <%=user%> (Sign Out)
+				<li><a href="/user/logout.jsp">Logged in as <%=username%> (Sign Out)
 				</a></li>
 			</ul>
 		</div>

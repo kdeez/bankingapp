@@ -54,13 +54,7 @@ public class AccountResource
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public Response getAccount(@Context HttpServletRequest request, @QueryParam("id") Long id)
 	{
-		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
-		User user = userDao.getUser(username);
-		if(user == null)
-		{
-			return Response.status(Status.BAD_REQUEST).entity(new String("Invalid user session!")).build();
-		}
-		
+		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
 		Account account = accountDao.getAccount(user, id);
 		return Response.ok(account).build();
 	}
@@ -70,13 +64,7 @@ public class AccountResource
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public Response addAccount(@Context HttpServletRequest request, Account account)
 	{
-		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
-		User user = userDao.getUser(username);
-		if(user == null)
-		{
-			return Response.status(Status.BAD_REQUEST).entity(new String("Invalid user session!")).build();
-		}
-
+		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
 		account.setUserId(user.getId());
 		accountDao.saveUpdate(account);
 		return Response.ok(account).build();
@@ -85,13 +73,7 @@ public class AccountResource
 	@DELETE
 	public Response delete(@Context HttpServletRequest request, @QueryParam("id") Long id)
 	{
-		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
-		User user = userDao.getUser(username);
-		if(user == null)
-		{
-			return Response.status(Status.BAD_REQUEST).entity(new String("Invalid user session!")).build();
-		}
-		
+		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
 		Account account = accountDao.getAccount(user, id);
 		
 		if (account.getBalance() != 0) {
@@ -121,11 +103,7 @@ public class AccountResource
 	@Path("/transactions")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public Response getTransactions(@Context HttpServletRequest request, @QueryParam("id") long id){
-		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
-		User user = userDao.getUser(username);
-		if(user == null){
-			return Response.status(Status.UNAUTHORIZED).entity(new String("Invalid user session!")).build();
-		}
+		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
 		
 		Account account = accountDao.getAccount(user, id);
 		if(account == null)
@@ -147,12 +125,7 @@ public class AccountResource
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public Response executeTransaction(@Context HttpServletRequest request, Transaction transaction)
 	{
-		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
-		User user = userDao.getUser(username);
-		if(user == null)
-		{
-			return Response.status(Status.UNAUTHORIZED).entity(new String("Invalid user session!")).build();
-		}
+		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
 		
 		Account account = accountDao.getAccount(user, transaction.getAccountId());
 		if(account == null)
@@ -182,12 +155,7 @@ public class AccountResource
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to execute transaction!")).build();
 		}
 		
-		String username = (String) request.getSession().getAttribute(UserSessionFilter.SESSION_USERNAME);
-		User user = userDao.getUser(username);
-		if(user == null)
-		{
-			return Response.status(Status.UNAUTHORIZED).entity(new String("Invalid user session!")).build();
-		}
+		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
 		
 		Account from = accountDao.getAccount(user, id);
 		if(from == null)

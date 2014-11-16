@@ -19,8 +19,9 @@
 	</style>
   </head>
 
+<%@ page import="rest.server.model.User, rest.server.model.Role" %>
 <%
-	Object role = session.getAttribute("user-role");
+	Role role = ((User) session.getAttribute("user-name")).getRole();
 	String accountId = request.getParameter("id");
 %>
 <body>

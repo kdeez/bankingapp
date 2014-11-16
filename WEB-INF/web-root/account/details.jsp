@@ -19,9 +19,10 @@
 	</style>
   </head>
 <body>
+<%@ page import="rest.server.model.User, rest.server.model.Role" %>
 <%
+	Role role = ((User) session.getAttribute("user-name")).getRole();
 	String accountId = request.getParameter("id");
-	Object role = session.getAttribute("user-role");
 %>
 <!--include directive to import the navigation bar so it is not copy and pasted into every page -->
 	<%@include file="/components/navbar.jsp" %>

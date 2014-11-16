@@ -113,7 +113,6 @@ if(error != null)
 	  			type:"POST",
 	  			data:$form.toJSONString(),
 	  			contentType:"application/json; charset=utf-8",
-	  			dataType:"json",
 	  			success: function(){
 	  				window.location.href = "/index.jsp";
 	  			},

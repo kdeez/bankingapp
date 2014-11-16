@@ -199,6 +199,16 @@ public class User implements Serializable {
 		this.created = created;
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", role=" + role + ", username=" + username
+				+ ", password=" + password + ", active=" + active
+				+ ", deletable=" + deletable + ", firstName=" + firstName
+				+ ", lastname=" + lastname + ", street=" + street + ", city="
+				+ city + ", state=" + state + ", zipCode=" + zipCode
+				+ ", email=" + email + ", phone=" + phone + ", created="
+				+ created + "]";
+	}
 
 	@Override
 	public int hashCode() {
