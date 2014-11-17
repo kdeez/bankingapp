@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../favicon.ico">
+    <link rel="icon" href="../assets/favicon.ico">
 
     <title>Bytekonzz Banking</title>
 
@@ -124,7 +124,7 @@ if(error != null)
 	  				}
 	  				
 	  			},
-	  			error: function(xhr, status, error){
+	  			error: function(status, error){
 	  				window.location.href = "/user/login.jsp?error="+ encodeURIComponent("Invalid username or password");  			
 	  			}
 			});

@@ -56,10 +56,9 @@ public class UserSessionFilter extends OncePerRequestFilter
 		HttpSession session = req.getSession();
 		
 		String path = (req.getServletPath() != null ? req.getServletPath() : "/") + (req.getPathInfo() != null ? req.getPathInfo() : "");
-		logger.info("Intercepted =" + path);
+		logger.info("Intercepted = " + req.getMethod() + " "+ path);
 		
-		String resourcePath = req.getServletPath().equals("/rest") ? req.getPathInfo() : req.getServletPath();
-		Resource resource = new Resource(req.getMethod(), resourcePath);
+		Resource resource = new Resource(req.getMethod(), path);
 		
 		if (session != null)
 		{
