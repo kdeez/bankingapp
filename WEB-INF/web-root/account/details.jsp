@@ -43,7 +43,7 @@
 							data-toggle="dropdown">I Want To... <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 							<%
-								if(role.equals("Admin") || role.equals("Employee"))
+								if(role.getName().equals("Admin") || role.getName().equals("Employee"))
 								{
 									out.write("<li><a href='/account/deposit.jsp?id=" + accountId + "'>Deposit Funds</a></li>");
 									out.write("<li><a href='/account/debit.jsp?id=" + accountId + "'>Withdraw Funds</a></li>");
