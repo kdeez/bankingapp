@@ -21,6 +21,8 @@ Installing the database via command-line(MySQLWorkbench can also be used)
 4. type "mysql -uroot -ppassword bytekonzz < /src/main/sql/bytekonzz-mysql.sql"  (note that you may need cd or change the path)
 5. That's it!
 
+REMINDER: Check your password on /WEB-INF/config.properties
+
 Running the application from Eclipse:
 1. Right click on project select Debug As->Java Application ("Run As" is also valid but won't invoke the debugger)
 2. Select rest.server.main.JettyServer as the main class and then press Run
