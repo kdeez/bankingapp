@@ -19,14 +19,14 @@
 	</style>
   </head>
 
-<%@ page import="rest.server.model.User, rest.server.model.Role" %>
-<%
-	Role role = ((User) session.getAttribute("user-name")).getRole();
-	String accountId = request.getParameter("id");
-%>
+<%String accountId = request.getParameter("id");%>
 <body>
 	<!--include directive to import the navigation bar so it is not copy and pasted into every page -->
 	<%@include file="/components/navbar.jsp" %>
+	<%@ page import="rest.server.model.User, rest.server.model.Role" %>
+	<% 
+		Role role = ((User) session.getAttribute("user-name")).getRole();
+	%>
 	<%@include file="/components/deleteAccountModal.jsp" %>
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->

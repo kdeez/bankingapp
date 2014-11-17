@@ -88,7 +88,7 @@ public class UserResource
 		}
 		else
 		{
-			logger.error("Invalid login attempt for user=" + unverified);
+			logger.error("Invalid login attempt for user=" + unverified);	
 		}
 		
 		return Response.ok(new BootstrapRemoteValidator(authorized)).build();

@@ -113,8 +113,16 @@ if(error != null)
 	  			type:"POST",
 	  			data:$form.toJSONString(),
 	  			contentType:"application/json; charset=utf-8",
-	  			success: function(){
-	  				window.location.href = "/index.jsp";
+	  			dataType:"json",
+	  			success: function(xhr){
+	  				if(xhr.valid)
+	  				{
+	  					window.location.href = "/index.jsp";
+	  				}else
+	  				{
+	  					window.location.href = "/user/login.jsp?error="+ encodeURIComponent("Invalid username or password");  
+	  				}
+	  				
 	  			},
 	  			error: function(xhr, status, error){
 	  				window.location.href = "/user/login.jsp?error="+ encodeURIComponent("Invalid username or password");  			
