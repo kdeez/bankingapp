@@ -36,13 +36,12 @@ public class UserSessionFilter extends OncePerRequestFilter
 	
 	private static final void addResources()
 	{
-		unprotected.add(new Resource("GET", "/user/login.jsp"));
 		unprotected.add(new Resource("POST", "/rest/user"));
 		unprotected.add(new Resource("GET", "/rest/user/validate"));
 		unprotected.add(new Resource("POST", "/rest/user/login"));
 		
-		restricted.put(new Resource("GET", "/account/deposit.jsp"), BANK_EMPLOYEES);
-		restricted.put(new Resource("GET", "/account/debit.jsp"), BANK_EMPLOYEES);
+		//restricts customers from posting transactions
+		restricted.put(new Resource("POST", "/rest/account/transactions"), BANK_EMPLOYEES);
 	}
 	
 	public UserSessionFilter()
@@ -67,12 +66,14 @@ public class UserSessionFilter extends OncePerRequestFilter
 			{
 				logger.info("Protected content, redirecting to user login...");
 				res.sendRedirect("/user/login.jsp");
+				return;
 			}
 			
 			if(user != null && this.isRestricted(resource) && !restricted.get(resource).contains(((User)user).getRole()))
 			{
 				logger.info("Restricted content, redirecting to dashboard...");
 				res.sendRedirect("/index.jsp");
+				return;
 			}
 			
 		}
