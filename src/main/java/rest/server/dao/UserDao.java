@@ -45,11 +45,18 @@ public interface UserDao
 	
 	
 	/**
-	 * Returns all Account's for the user
+	 * Returns all active accounts that the user has access to
 	 * @param user
 	 * @return
 	 */
 	public List<Account> getActiveAccounts(User user);
+	
+	/**
+	 * Returns all inactive accounts that the user has access to
+	 * @param user
+	 * @return
+	 */
+	public List<Account> getInActiveAccounts(User user);
 	
 	/**
 	 * Returns the role by name
