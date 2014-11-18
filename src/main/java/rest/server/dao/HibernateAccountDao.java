@@ -117,6 +117,7 @@ public class HibernateAccountDao implements AccountDao
 	public List<Account> getCustomerAccounts(int firstResult, int maxResults) 
 	{
 		return sessionFactory.getCurrentSession().createCriteria(Account.class)
+				.add(Restrictions.eq("active", true))
 				.add(Restrictions.ne("accountType", Type.CAPITOL.ordinal()))
 				.setFirstResult(firstResult)
 				.setMaxResults(maxResults).list();
