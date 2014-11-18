@@ -66,12 +66,13 @@ public class AccountResource
 	{
 		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
 		account.setUserId(user.getId());
+		account.setActive(true);
 		accountDao.saveUpdate(account);
 		return Response.ok(account).build();
 	}
 	
 	@DELETE
-	public Response delete(@Context HttpServletRequest request, @QueryParam("id") Long id)
+	public Response closeAccount(@Context HttpServletRequest request, @QueryParam("id") Long id)
 	{
 		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
 		Account account = accountDao.getAccount(user, id);
@@ -81,7 +82,7 @@ public class AccountResource
 		}
 		
 		try {
-			accountDao.deleteAccount(account);
+			accountDao.close(account);
 		}
 		catch (Exception ex) 
 		{

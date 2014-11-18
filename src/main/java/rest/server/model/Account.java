@@ -20,6 +20,7 @@ import rest.server.exceptions.TransactionException;
 public class Account implements Serializable {
 	private static final long serialVersionUID = 2395215592820350575L;
 	private long accountNumber;
+	private boolean active;
 	private String description;
 	private long userId;
 	private double balance;
@@ -52,6 +53,15 @@ public class Account implements Serializable {
 		this.accountNumber = accountNumber;
 	}
 	
+	@Column(name = "active")
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Column(name = "description")
 	public String getDescription() {
 		return description;

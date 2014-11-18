@@ -76,8 +76,10 @@ public class HibernateUserDao implements UserDao
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-	public List<Account> getAccounts(User user) {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Account.class);
+	public List<Account> getActiveAccounts(User user) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Account.class)
+				.add(Restrictions.eq("active", true));
+		
 		if( !(user.getRole().getName().equals("Admin") || user.getRole().getName().equals("Employee")))
 		{
 			criteria.add(Restrictions.eq("userId", user.getId()));

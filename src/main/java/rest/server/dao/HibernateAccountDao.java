@@ -124,9 +124,10 @@ public class HibernateAccountDao implements AccountDao
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-	public void deleteAccount(Account account) 
+	public void close(Account account) 
 	{
-		sessionFactory.getCurrentSession().delete(account);
+		account.setActive(false);
+		this.saveUpdate(account);
 	}
 
 	@Override

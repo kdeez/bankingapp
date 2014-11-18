@@ -35,6 +35,7 @@ INSERT INTO users (id,username,password,active,roleId,deletable) VALUES (1,'admi
 
 CREATE TABLE account(
 	accountNumber INT NOT NULL AUTO_INCREMENT,
+	active TINYINT NOT NULL DEFAULT 1,
 	description VARCHAR(255) NOT NULL,
 	userId INT NOT NULL,
 	accountType INT NOT NULL,

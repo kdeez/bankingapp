@@ -68,7 +68,7 @@ public interface AccountDao
 	 * Deletes the account
 	 * @param account
 	 */
-	public void deleteAccount(Account account);
+	public void close(Account account);
 	
 	/**
 	 * Transfers the funds between the accounts if funds are available

@@ -112,7 +112,7 @@ public class UserResource
 			return Response.status(Status.BAD_REQUEST).entity(new String("Invalid user session!")).build();
 		}
 		
-		List<Account> accounts =  userDao.getAccounts(user);
+		List<Account> accounts =  userDao.getActiveAccounts(user);
 		return Response.ok(accounts).build();
 	}
 }

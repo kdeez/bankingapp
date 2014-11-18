@@ -49,7 +49,7 @@ public interface UserDao
 	 * @param user
 	 * @return
 	 */
-	public List<Account> getAccounts(User user);
+	public List<Account> getActiveAccounts(User user);
 	
 	/**
 	 * Returns the role by name
