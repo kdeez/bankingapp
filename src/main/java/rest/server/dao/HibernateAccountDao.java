@@ -141,7 +141,7 @@ public class HibernateAccountDao implements AccountDao
 			return account.getBalance();
 		}
 		
-		return (double) sessionFactory.getCurrentSession().createCriteria(Transaction.class)
+		return (Double) sessionFactory.getCurrentSession().createCriteria(Transaction.class)
 				.setProjection(Projections.min("balance"))
 				.add(Restrictions.eq("accountId", account.getAccountNumber()))
 				.add(Restrictions.ge("dateTime", from))
@@ -158,7 +158,7 @@ public class HibernateAccountDao implements AccountDao
 			return account.getBalance();
 		}
 		
-		return (double) sessionFactory.getCurrentSession().createCriteria(Transaction.class)
+		return (Double) sessionFactory.getCurrentSession().createCriteria(Transaction.class)
 				.setProjection(Projections.max("balance"))
 				.add(Restrictions.eq("accountId", account.getAccountNumber()))
 				.add(Restrictions.ge("dateTime", from))
