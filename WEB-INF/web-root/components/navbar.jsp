@@ -13,6 +13,7 @@
 	}
 	
 	String username = ((User) user).getUsername();
+	Role ifAdmin = ((User) session.getAttribute("user-name")).getRole(); //created 'ifAdmin' because using 'role' was not working
 %>
 <!-- Fixed navbar -->
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -30,6 +31,12 @@
 				<li><a href="#contact">Contact</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">I Want To... <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
+					<%
+						if(ifAdmin.getName().equals("Admin") || ifAdmin.getName().equals("Employee"))
+						{
+							out.write("<li><a href='/account/closedAccountList.jsp'>Manage Closed Accounts</a></li>");
+						}
+					%>
 						<li><a href="/account/create.jsp">Create New Account</a></li>
 					</ul></li>
 			</ul>

@@ -71,6 +71,12 @@ public interface AccountDao
 	public void close(Account account);
 	
 	/**
+	 * Reactivates the account
+	 * @param account
+	 */
+	public void reactivate(Account account);
+	
+	/**
 	 * Transfers the funds between the accounts if funds are available
 	 * @param from
 	 * @param to

@@ -130,6 +130,13 @@ public class HibernateAccountDao implements AccountDao
 		account.setActive(false);
 		this.saveUpdate(account);
 	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public void reactivate(Account account) {
+		account.setActive(true);
+		this.saveUpdate(account);
+	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
@@ -191,7 +198,4 @@ public class HibernateAccountDao implements AccountDao
 		Account capitolAccount = this.getAccount( (long) 1);
 		this.transfer(capitolAccount, account, amount, "Interest for account: " + account.getAccountNumber());
 	}
-
-
-
 }

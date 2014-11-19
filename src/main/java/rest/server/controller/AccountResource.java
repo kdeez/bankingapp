@@ -91,6 +91,22 @@ public class AccountResource
 		return Response.ok().build();
 	}
 	
+	@POST
+	@Path("/reactivate")
+	public Response reactivateAccount(@Context HttpServletRequest request, @QueryParam("id") Long id)
+	{
+		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
+		Account account = accountDao.getAccount(user, id);
+		
+		try {
+			accountDao.reactivate(account);
+		}
+		catch (Exception ex) 
+		{
+			return Response.status(Status.BAD_REQUEST).entity(new String("Account cannot be reactivated!")).build();
+		}
+		return Response.ok().build();
+	}
 	
 	@GET
 	@Path("/validate")

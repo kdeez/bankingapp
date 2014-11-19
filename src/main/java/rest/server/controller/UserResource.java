@@ -23,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import rest.server.dao.AccountDao;
 import rest.server.dao.UserDao;
 import rest.server.model.Account;
+import rest.server.model.Transaction;
 import rest.server.model.User;
 import rest.server.model.json.BootstrapRemoteValidator;
 import rest.server.security.KeyAuthenticator;
@@ -113,6 +114,18 @@ public class UserResource
 		}
 		
 		List<Account> accounts =  userDao.getActiveAccounts(user);
+		return Response.ok(accounts).build();
+	}
+	
+	@GET
+	@Path("/inactiveAccounts")
+	@Produces(MediaType.APPLICATION_JSON_VALUE)
+	public Response getInActiveAccounts(@Context HttpServletRequest request){
+		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
+		if(user == null){
+			return Response.status(Status.BAD_REQUEST).entity(new String("Invalid user session!")).build();
+		}
+		List<Account> accounts =  userDao.getInActiveAccounts(user);
 		return Response.ok(accounts).build();
 	}
 }
