@@ -130,7 +130,7 @@ public class AccountTestIT {
 	}
 	
 	@Test
-	public void deleteAccount() throws Exception {
+	public void closeAccount() throws Exception {
 		HttpClient client = HttpClients.createDefault();
 		HttpClientContext context = HttpClientContext.create();
 		
@@ -138,18 +138,19 @@ public class AccountTestIT {
 		loginUser(new User("admin","password"),client,context);
 		
 		// add account
-		Account account = addAccount("description delete", "0", client, context);
-		String  deleteRequest = DELETE_ACCOUNT+account.getAccountNumber();
-		HttpDelete request = new HttpDelete(deleteRequest);
-		assertTrue("description delete".equals(account.getDescription()));
+		Account account = addAccount("description", "0", client, context);
+		System.out.println("Activity: "+ account.isActive());
+		assertTrue("description".equals(account.getDescription()));
+		assertTrue("Account should be active", account.isActive());
 		
 		// delete account please:)
+		HttpDelete request = new HttpDelete(DELETE_ACCOUNT+account.getAccountNumber());
 		HttpResponse response = client.execute(request);
 		
 		assertTrue("Should have recieved a HTTP 200 response", response.getStatusLine().getStatusCode() == Status.OK.getStatusCode());
 		User user = userDao.getUser("admin");
 		account = accDao.getAccount(user, account.getAccountNumber());
-		assertTrue("Account should be null", account == null);
+		assertTrue("Account should not be active", !account.isActive());
 	}
 	
 	@Test
