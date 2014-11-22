@@ -34,7 +34,7 @@
 					<%
 						if(ifAdmin.getName().equals("Admin") || ifAdmin.getName().equals("Employee"))
 						{
-							out.write("<li><a href='/account/closedAccountList.jsp'>Manage Closed Accounts</a></li>");
+							out.write("<li><a href='/account/inactive.jsp'>View Inactive Accounts</a></li>");
 						}
 					%>
 						<li><a href="/account/create.jsp">Create New Account</a></li>
