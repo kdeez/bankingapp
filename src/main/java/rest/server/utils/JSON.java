@@ -8,6 +8,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 /**
  * 
  * Utilities for (de)serializing Java <-> JSON
+ * Only needed by JUnit tests since jax-rs automatically does this for web resources
  *
  */
 public class JSON 

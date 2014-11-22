@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * 
- * Used for returning responses for Boostrap remote validation
+ * Used for returning responses for Boostrap remote validation for HTML forms
  * 
  * http://bootstrapvalidator.com/validators/remote/
  *

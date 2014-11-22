@@ -52,9 +52,13 @@ public class ScheduledTaskProcessor extends ThreadPoolTaskExecutor implements Ta
 	@PostConstruct
 	public void init()
 	{
-		
+		//initialize something if needed
 	}
 
+	/**
+	 * This method is executed by Spring by a Timer Thread
+	 * Executes the first day of every month by way of cron expression
+	 */
 	@Override
 	@Scheduled(cron="0 0 0 1 * ?")
 	public void executeTasks() 
@@ -62,6 +66,7 @@ public class ScheduledTaskProcessor extends ThreadPoolTaskExecutor implements Ta
 		logger.info("Running scheduled tasks...");
 		int firstResult = 0, maxResults = 500;
 		List<Account> accounts = null;
+		//this while loop is paging the results so the server does not go out of memory
 		while((accounts = accountDao.getCustomerAccounts(firstResult, maxResults)).isEmpty() == false)
 		{
 			for(Account account: accounts)
@@ -75,7 +80,8 @@ public class ScheduledTaskProcessor extends ThreadPoolTaskExecutor implements Ta
 	}
 
 	@Override
-	public boolean isRunning() {
+	public boolean isRunning() 
+	{
 		return started;
 	}
 
