@@ -204,6 +204,8 @@ public class AccountResource
 			{
 				return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
 			}
+			
+			return Response.status(Status.BAD_REQUEST).entity("Bad Request").build();
 		}
 		
 		return Response.ok(transaction).build();
@@ -250,6 +252,8 @@ public class AccountResource
 			{
 				return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
 			}
+			
+			return Response.status(Status.BAD_REQUEST).entity("Bad Request").build();
 		}
 		
 		return Response.ok(credit).build();
