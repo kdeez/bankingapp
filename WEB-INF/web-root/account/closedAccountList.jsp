@@ -71,10 +71,8 @@
 									"<span data-bind='label'>I Want To... </span><span class='caret'></span>" +
 								"</button>" +
 								"<ul class='dropdown-menu' role='menu' style='cursor:pointer'>" +
-									"<li><a href='/account/details.jsp?id=" + accounts[i].accountNumber + "'>View Transactions</a></li>" +
-									"<li><a href='/account/debit.jsp?id=" + accounts[i].accountNumber + "'>Withdraw Funds</a></li>" +
-									"<li><a href='/account/transfer.jsp?id=" + accounts[i].accountNumber + "'>Transfer Funds</a></li>" +
-									"<li class=\"divider\"></li>" +
+									//"<li><a href='/account/details.jsp?id=" + accounts[i].accountNumber + "'>View Transactions</a></li>" +
+									//"<li class=\"divider\"></li>" +
 									"<li><a href='/account/reactivate.jsp?id=" + accounts[i].accountNumber + "'>Reactivate Account</a></li>" +
 								"</ul>" +
 							"</div>" +
