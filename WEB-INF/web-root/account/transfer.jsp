@@ -116,7 +116,12 @@
 	  				window.location.href = "/account/details.jsp?id=" + <%=accountId%>;
 	  			},
 	  			error: function(xhr, status, error){
-	  				showErrorMessage(" Unable to complete transaction"); 			
+	  				var text = " Unable to complete transaction";
+	  				if(xhr.responseText){
+	  					text += ", " + xhr.responseText;
+	  				}
+	  				
+	  				showErrorMessage(text);	
 	  			}
 			});
 	    });

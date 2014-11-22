@@ -66,7 +66,12 @@
 	  				window.location.href = "/index.jsp";
 	  			},
 	  			error: function(xhr, status, error){
-	  				showErrorMessage(" Unable to complete transaction"); 			
+	  				var text = " Unable to complete request";
+	  				if(xhr.responseText){
+	  					text += ", " + xhr.responseText;
+	  				}
+	  				
+	  				showErrorMessage(text);					
 	  			}
 			});
 	    });

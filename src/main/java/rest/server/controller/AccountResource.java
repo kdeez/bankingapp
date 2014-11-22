@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 
 import rest.server.dao.AccountDao;
 import rest.server.dao.UserDao;
+import rest.server.exceptions.TransactionException;
 import rest.server.model.Account;
 import rest.server.model.Transaction;
 import rest.server.model.Transaction.Type;
@@ -194,7 +195,16 @@ public class AccountResource
 			
 		}
 		
-		accountDao.performTransaction(account, transaction);
+		try 
+		{
+			accountDao.performTransaction(account, transaction);
+		} catch (TransactionException e) 
+		{
+			if(e instanceof TransactionException)
+			{
+				return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+			}
+		}
 		
 		return Response.ok(transaction).build();
 	}
@@ -231,7 +241,16 @@ public class AccountResource
 		}
 		
 		double amount = credit.getAmount();
-		accountDao.transfer(from, to, amount, "Transfer to account: " + credit.getAccountId());
+		try 
+		{
+			accountDao.transfer(from, to, amount, "Transfer to account: " + credit.getAccountId());
+		} catch (Exception e) 
+		{
+			if(e instanceof TransactionException)
+			{
+				return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+			}
+		}
 		
 		return Response.ok(credit).build();
 	}
