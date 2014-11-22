@@ -2,33 +2,18 @@ package rest.server.test;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.sql.DataSource;
 import javax.ws.rs.core.Response.Status;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
@@ -36,20 +21,16 @@ import org.apache.http.util.EntityUtils;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.hibernate.SessionFactory;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 import rest.server.dao.AccountDao;
 import rest.server.dao.UserDao;
 import rest.server.model.Account;
-import rest.server.model.Transaction;
 import rest.server.model.User;
 import rest.server.model.json.BootstrapRemoteValidator;
 import rest.server.utils.JSON;
@@ -62,7 +43,7 @@ import rest.server.utils.JSON;
  */
 public class AccountTestIT { 
 	
-	private static final Logger logger = LoggerFactory.getLogger(WebTestIT.class);
+	private static final Logger logger = LoggerFactory.getLogger(AccountTestIT.class);
 	private final String ACCOUNT_DESCRIPTION = "flerp-derp";
 	private final String ACCOUNT_REQUEST     = "http://localhost:8081/rest/account";
 	private final String DELETE_ACCOUNT      = "http://localhost:8081/rest/account?id=";

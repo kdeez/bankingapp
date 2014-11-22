@@ -47,10 +47,29 @@ public class PenaltyInterestTask implements RunnableTask
 				logger.info("Applied penalty to " + account);
 			}
 			
+			double amount = 0;
+			double minBalance = accountDao.getMinBalance(account, from, to);
+			if(account.getType() == Account.Type.CHECKING)
+			{
+				
+				if(minBalance > 3000)
+				{
+					amount = minBalance * 0.03;
+				}
+				else
+				if(minBalance > 2000)
+				{
+					amount = minBalance * 0.02;
+				}
+				else
+				if(minBalance > 1000)
+				{
+					amount = minBalance * 0.01;
+				}
+			}
+			
 			if(account.getType() == Account.Type.SAVINGS)
 			{
-				double amount = 0;
-				double minBalance = accountDao.getMinBalance(account, from, to);
 				if(minBalance > 3000)
 				{
 					amount = minBalance * 0.04;
@@ -65,12 +84,13 @@ public class PenaltyInterestTask implements RunnableTask
 				{
 					amount = minBalance * 0.02;
 				}
-				
-				if(amount > 0)
-				{
-					accountDao.applyInterest(account, amount);
-				}
 			}
+			
+			if(amount > 0)
+			{
+				accountDao.applyInterest(account, amount);
+			}
+			
 		} catch (Exception e) 
 		{
 			logger.warn("task failed for account=" + account, e);
@@ -80,6 +100,6 @@ public class PenaltyInterestTask implements RunnableTask
 		logger.info("Running task for account=" + account);
 		return Result.SUCCESS;
 	}
-
-
+	
+	
 }

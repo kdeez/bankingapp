@@ -17,7 +17,8 @@ import rest.server.exceptions.TransactionException;
 @Entity
 @Table(name = "account")
 @SequenceGenerator(name = "account_seq", sequenceName = "account_seq")
-public class Account implements Serializable {
+public class Account implements Serializable, DailyLimitable 
+{
 	private static final long serialVersionUID = 2395215592820350575L;
 	private long accountNumber;
 	private boolean active;
@@ -26,15 +27,41 @@ public class Account implements Serializable {
 	private double balance;
 	private int accountType;
 	private Date created;
+	private Double dailyLimit;
 
-	public Account() {
+	public Account() 
+	{
 		super();
 	}
 	
-	public enum Type{
+	public enum Type
+	{
 		CHECKING,
 		SAVINGS,
 		CAPITOL;
+	}
+	
+	/**
+	 * This can be stored in the database and be different for each account (per customer)
+	 * @return
+	 */
+	@Override
+	@Column(name = "dailyLimit")
+	public Double getDailyLimit() 
+	{
+		return dailyLimit;
+	}
+	
+	public void setDailyLimit(Double dailyLimit) 
+	{
+		this.dailyLimit = dailyLimit;
+	}
+	
+	@Override
+	@Transient
+	public boolean hasDailyLimit()
+	{
+		return dailyLimit != null;
 	}
 
 	/**
@@ -155,6 +182,5 @@ public class Account implements Serializable {
 				+ description + ", userId=" + userId + ", balance=" + balance
 				+ ", accountType=" + accountType + ", created=" + created + "]";
 	}
-	
 	
 }

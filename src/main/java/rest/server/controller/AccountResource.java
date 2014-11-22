@@ -67,6 +67,19 @@ public class AccountResource
 		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
 		account.setUserId(user.getId());
 		account.setActive(true);
+		
+		switch(Account.Type.values()[account.getAccountType()])
+		{
+		case CHECKING:
+			account.setDailyLimit(10000d);
+			break;
+		case SAVINGS:
+			account.setDailyLimit(5000d);
+			break;
+		default:
+			account.setDailyLimit(null);
+		}
+		
 		accountDao.saveUpdate(account);
 		return Response.ok(account).build();
 	}
@@ -153,6 +166,32 @@ public class AccountResource
 		if(!(user.getRole().getName().equals("Admin") || user.getRole().getName().equals("Employee")) && transaction.getTransactionType() == Transaction.Type.CREDIT.ordinal())
 		{
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to complete transaction!")).build();
+		}
+		
+		//verify the daily limit
+		if(account.hasDailyLimit())
+		{
+			Calendar calendar = GregorianCalendar.getInstance();
+			Date to = calendar.getTime();
+			
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			Date from = calendar.getTime();
+			
+			List<Transaction> transactions = accountDao.getTransactions(account, from, to);
+			double total = 0;
+			for(Transaction tranny: transactions)
+			{
+				total += tranny.getAmount();
+			}
+			
+			if((total + transaction.getAmount()) > account.getDailyLimit())
+			{
+				return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to complete transaction, daily limit exceeded!")).build();
+			}
+			
 		}
 		
 		accountDao.performTransaction(account, transaction);
