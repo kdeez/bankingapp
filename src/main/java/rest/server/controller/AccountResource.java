@@ -159,7 +159,7 @@ public class AccountResource
 		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
 		
 		Account account = accountDao.getAccount(user, transaction.getAccountId());
-		if(account == null)
+		if(account == null || !account.isActive())
 		{
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
 		}
@@ -226,13 +226,13 @@ public class AccountResource
 		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
 		
 		Account from = accountDao.getAccount(user, id);
-		if(from == null)
+		if(from == null || !from.isActive())
 		{
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
 		}
 		
 		Account to = accountDao.getAccount(credit.getAccountId());
-		if(to == null)
+		if(to == null || !to.isActive())
 		{
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
 		}
