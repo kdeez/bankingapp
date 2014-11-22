@@ -66,7 +66,7 @@
 			                validators: {
 			                    remote: {
 			                        url: '/rest/account/validate',
-			                        message: 'The account does not exist'
+			                        message: 'Invalid account number'
 			                    }
 			                }
 			            },

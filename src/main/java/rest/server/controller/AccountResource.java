@@ -125,9 +125,10 @@ public class AccountResource
 	@GET
 	@Path("/validate")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public Response accountExists(@QueryParam("accountId") long accountId)
+	public Response isAccountActive(@QueryParam("accountId") long accountId)
 	{
-		return Response.ok(new BootstrapRemoteValidator(accountDao.getAccount(accountId) != null)).build();
+		Account account = accountDao.getAccount(accountId);
+		return Response.ok(new BootstrapRemoteValidator(account != null && account.isActive())).build();
 	}
 	
 	@GET
