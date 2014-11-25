@@ -39,11 +39,9 @@ public class HibernateUserDao implements UserDao
 	public boolean authorized(User unverified) 
 	{
 		User user = this.getUser(unverified.getUsername());
-		if(user != null)
-		{
-			KeyAuthenticator keyAuth = new KeyAuthenticator(unverified.getPassword(),user.getPassword());
-			return keyAuth.verifyKey();
-		}
+		if(user != null)	
+			return KeyAuthenticator.verifyKey(unverified.getPassword(), user.getPassword());
+		
 		return false;
 	}
 

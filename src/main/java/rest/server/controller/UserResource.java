@@ -63,7 +63,7 @@ public class UserResource
 		user.setActive(true);
 		user.setDeletable(true);
 		user.setRole(userDao.getRole("Customer"));
-		user.setPassword(new KeyAuthenticator(user.getPassword(),"").getHashCode());
+		user.setPassword(KeyAuthenticator.getHashCode(user.getPassword()));
 		
 		boolean saved = userDao.saveUser(user);
 		if(!saved){
