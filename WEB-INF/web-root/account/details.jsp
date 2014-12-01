@@ -26,7 +26,6 @@
 %>
 <!--include directive to import the navigation bar so it is not copy and pasted into every page -->
 	<%@include file="/components/navbar.jsp" %>
-	<%@include file="/components/deleteAccountModal.jsp" %>
 	<div class="container">
 	
 		<!-- Main component for a primary marketing message or call to action -->
@@ -51,7 +50,7 @@
 							%>
 								<li><a href="/account/transfer.jsp?id=<%=accountId%>">Transfer Funds</a></li>
 								<li class="divider"></li>
-								<li><a data-toggle="modal" data-target="#close-account-modal" style="cursor:pointer;">Close Account</a></li>
+								<li><a href="/account/close.jsp?id=<%=accountId%>">Close Account</a></li>
 							</ul>
 						</li>
 					</ul>

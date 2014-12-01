@@ -27,7 +27,6 @@
 	<% 
 		Role role = ((User) session.getAttribute("user-name")).getRole();
 	%>
-	<%@include file="/components/deleteAccountModal.jsp" %>
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="panel panel-default">
