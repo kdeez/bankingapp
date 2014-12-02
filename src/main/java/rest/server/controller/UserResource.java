@@ -194,7 +194,7 @@ public class UserResource
 	}
 	
 	@GET
-	@Path("/inactiveAccounts")
+	@Path("/accounts/inactive")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public Response getInActiveAccounts(@Context HttpServletRequest request){
 		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);

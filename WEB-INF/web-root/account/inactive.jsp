@@ -49,7 +49,7 @@
     <script>
     function getAccounts(userRole){
     	xmlhttp= new XMLHttpRequest();
-		xmlhttp.open("GET", "/rest/user/inactiveAccounts/", true);
+		xmlhttp.open("GET", "/rest/user/accounts/inactive/", true);
 		xmlhttp.setRequestHeader("Content-Type","application/json");
 		xmlhttp.onreadystatechange=function()
 		  {
