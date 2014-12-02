@@ -30,7 +30,7 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">I Want To... <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 					<li><a href="/user/profile.jsp">Edit Profile</a></li>
-<!-- 					<li><a href="/user/password.jsp">Change Password</a></li> -->
+					<li><a href="/user/password.jsp">Change Password</a></li>
 					<li class="divider"></li>
 					<%
 						if(ifAdmin.getName().equals("Admin") || ifAdmin.getName().equals("Employee"))

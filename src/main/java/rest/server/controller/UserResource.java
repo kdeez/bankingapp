@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -141,6 +142,27 @@ public class UserResource
 		user.setCity(updated.getCity());
 		user.setState(updated.getState());
 		user.setZipCode(updated.getZipCode());
+		
+		//update session and database
+		userDao.update(user);
+		request.getSession().setAttribute(UserSessionFilter.SESSION_USER, user);
+		
+		return Response.ok(user).build();
+	}
+	
+	@POST
+	@Path("/password")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@Produces(MediaType.APPLICATION_JSON_VALUE)
+	public Response updatePassword(@Context HttpServletRequest request, @FormParam("password") String password)
+	{
+		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
+		if(user == null)
+		{
+			return Response.status(Status.BAD_REQUEST).entity(new String("Invalid user session!")).build();
+		}
+		
+		user.setPassword(KeyAuthenticator.getHashCode(password));
 		
 		//update session and database
 		userDao.update(user);

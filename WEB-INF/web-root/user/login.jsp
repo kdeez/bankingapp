@@ -160,7 +160,7 @@ if(error != null)
 		                    stringLength: {
 		                        min: 5,
 		                        max: 30,
-		                        message: 'The username must be more than 6 and less than 30 characters long'
+		                        message: 'The password must be more than 6 and less than 30 characters long'
 		                    }
 		                }
 		            },
