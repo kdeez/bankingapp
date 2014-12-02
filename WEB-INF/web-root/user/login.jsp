@@ -62,6 +62,7 @@ if(error != null)
 				<div class="form-group">
 					<input type="text" class="form-control" placeholder="Username" name="username"><br>
 					<input type="password"class="form-control" placeholder="Password" name="password"><br>
+					<input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword"><br>
 					<input type="email" class="form-control" placeholder= "E-mail" name="email"><br>
 					<input type="text" class="form-control" placeholder= "First Name" name="firstName"><br>
 					<input type="text" class="form-control" placeholder= "Last Name" name="lastname"><br>
@@ -161,6 +162,18 @@ if(error != null)
 		                        min: 5,
 		                        max: 30,
 		                        message: 'The password must be more than 6 and less than 30 characters long'
+		                    },
+		                    identical: {
+		                        field: 'confirmPassword',
+		                        message: 'The password and its confirm are not the same'
+		                    }
+		                }
+		            },
+		            confirmPassword: {
+		                validators: {
+		                    identical: {
+		                        field: 'password',
+		                        message: 'The password and its confirm are not the same'
 		                    }
 		                }
 		            },

@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * 
  * @author roger.hagen
@@ -24,6 +26,7 @@ import javax.persistence.Table;
  * variable includes an @Column annotation that maps itself to a table column.
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "users")
 @SequenceGenerator(name = "user_seq", sequenceName = "user_seq")
