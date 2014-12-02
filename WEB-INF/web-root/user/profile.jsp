@@ -35,15 +35,15 @@
 			<div class="panel-body">
 				<form id="profile-form" method="POST" action="/rest/user/profile">
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder= "First Name" name="firstName" value="<%=userProfile.getFirstName()%>"><br>
-					<input type="text" class="form-control" placeholder= "Last Name" name="lastname" value="<%=userProfile.getLastname()%>"><br>
-					<input type="text" class="form-control" placeholder= "Phone" name="phone" value="<%=userProfile.getPhone()%>"><br>
-					<input type="email" class="form-control" placeholder= "E-mail" name="email" value="<%=userProfile.getEmail()%>"><br>
+					<input type="text" class="form-control" placeholder= "First Name" name="firstName" value="<%=userProfile.getFirstName() != null ? userProfile.getFirstName(): "" %>"><br>
+					<input type="text" class="form-control" placeholder= "Last Name" name="lastname" value="<%=userProfile.getLastname() != null ? userProfile.getLastname(): "" %>"><br>
+					<input type="text" class="form-control" placeholder= "Phone" name="phone" value="<%=userProfile.getPhone() != null ? userProfile.getPhone(): "" %>"><br>
+					<input type="email" class="form-control" placeholder= "E-mail" name="email" value="<%=userProfile.getEmail() != null ? userProfile.getEmail(): "" %>"><br>
 					
-					<input type="text" class="form-control" placeholder= "Street Address" name="street" value="<%=userProfile.getStreet()%>"><br>
-					<input type="text" class="form-control" placeholder= "City" name="city" value="<%=userProfile.getCity()%>"><br>
-					<input type="text" class="form-control" placeholder= "State" name="state" value="<%=userProfile.getState()%>"><br>
-					<input type="text" class="form-control" placeholder= "Zipcode" name="zipCode" value="<%=userProfile.getZipCode()%>"><br>
+					<input type="text" class="form-control" placeholder= "Street Address" name="street" value="<%=userProfile.getStreet() != null ? userProfile.getStreet(): "" %>"><br>
+					<input type="text" class="form-control" placeholder= "City" name="city" value="<%=userProfile.getCity() != null ? userProfile.getCity(): "" %>"><br>
+					<input type="text" class="form-control" placeholder= "State" name="state" value="<%=userProfile.getState() != null ? userProfile.getState(): "" %>"><br>
+					<input type="text" class="form-control" placeholder= "Zipcode" name="zipCode" value="<%=userProfile.getZipCode() != null ? userProfile.getZipCode(): "" %>"><br>
 				</div>
 				<div class="modal-footer">
 					<a href="/index.jsp" class="btn btn-default" role="button">Cancel</a>
