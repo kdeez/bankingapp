@@ -65,7 +65,7 @@ public class UserResource
 		user.setRole(userDao.getRole("Customer"));
 		user.setPassword(KeyAuthenticator.getHashCode(user.getPassword()));
 		
-		boolean saved = userDao.saveUser(user);
+		boolean saved = userDao.save(user);
 		if(!saved){
 			return Response.serverError().build();
 		}

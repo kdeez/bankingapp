@@ -33,7 +33,13 @@ public interface UserDao
 	 * @param user
 	 * @return
 	 */
-	public boolean saveUser(User user);
+	public boolean save(User user);
+	
+	/**
+	 * Updates the user
+	 * @param user
+	 */
+	public void update(User user);
 	
 	
 	/**

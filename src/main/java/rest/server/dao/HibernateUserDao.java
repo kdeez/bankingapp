@@ -59,8 +59,15 @@ public class HibernateUserDao implements UserDao
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-	public boolean saveUser(User user) {
+	public boolean save(User user) {
 		return sessionFactory.getCurrentSession().save(user) != null;
+	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public void update(User user) 
+	{
+		sessionFactory.getCurrentSession().update(user);
 	}
 
 	@Override

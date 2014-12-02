@@ -28,8 +28,8 @@ import rest.server.exceptions.TransactionException;
 import rest.server.model.Account;
 import rest.server.model.Transaction;
 import rest.server.model.Transaction.Type;
-import rest.server.model.json.BootstrapRemoteValidator;
 import rest.server.model.User;
+import rest.server.model.json.BootstrapRemoteValidator;
 import rest.server.security.UserSessionFilter;
 
 /**
@@ -95,13 +95,27 @@ public class AccountResource
 			return Response.status(Status.BAD_REQUEST).entity(new String("Account needs to be empty!")).build();
 		}
 		
-		try {
+		try 
+		{
 			accountDao.close(account);
 		}
 		catch (Exception ex) 
 		{
 			return Response.status(Status.BAD_REQUEST).entity(new String("Account cannot be deleted!")).build();
 		}
+		
+		boolean active = ! userDao.getActiveAccounts(user).isEmpty();
+		if( !active)
+		{
+			//disables the user account if no active accounts exist
+			user.setActive(active);
+			userDao.update(user);
+			
+			//invalidate the session
+			request.getSession().removeAttribute(UserSessionFilter.SESSION_USER);
+			request.getSession().invalidate();
+		}
+		
 		return Response.ok().build();
 	}
 	

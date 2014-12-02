@@ -33,20 +33,19 @@
 				<h3 class="panel-title">Close Account</h3>
 			</div>
 			<div class="panel-body">
-				<p>Are you sure you would like to close the account?</p>
-				<p>Please remove all funds before proceeding</p>
-				<p class="text-danger"><strong>WARNING: This cannot be undone</strong></p>
+				<p>Your user account will be deactivated if no other accounts exist.</p>
+				<p>All funds must be withdrawn before closing account.</p>
+				<p class="text-danger"><strong>Are you sure you would like to close the account?</strong></p>
 				<form id="close-account-form">
 					<div class="modal-footer">
 						<a href="/index.jsp" class="btn btn-default" role="button">Cancel</a>
-						<button type="submit" class="btn btn-danger">Submit</button>
+						<button type="submit" class="btn btn-danger">Continue</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 
-<!-- form validation for new account http://bootstrapvalidator.com/getting-started/-->
 <script>
 	$(document).ready(function() {
     	$('#close-account-form')
