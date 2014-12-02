@@ -145,7 +145,7 @@ public class User implements Serializable {
 		this.state = state;
 	}
 
-	@Column(name = "zipcode")
+	@Column(name = "zipCode")
 	public Integer getZipCode() {
 		return zipCode;
 	}

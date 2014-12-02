@@ -107,6 +107,49 @@ public class UserResource
 	}
 	
 	@GET
+	@Path("/profile")
+	@Produces(MediaType.APPLICATION_JSON_VALUE)
+	public Response getProfile(@Context HttpServletRequest request)
+	{
+		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
+		if(user == null)
+		{
+			return Response.status(Status.BAD_REQUEST).entity(new String("Invalid user session!")).build();
+		}
+		
+		return Response.ok(user).build();
+	}
+	
+	@POST
+	@Path("/profile")
+	@Consumes(MediaType.APPLICATION_JSON_VALUE)
+	@Produces(MediaType.APPLICATION_JSON_VALUE)
+	public Response updateProfile(@Context HttpServletRequest request, User updated)
+	{
+		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
+		if(user == null)
+		{
+			return Response.status(Status.BAD_REQUEST).entity(new String("Invalid user session!")).build();
+		}
+		
+		//do not update username or password!
+		user.setFirstName(updated.getFirstName());
+		user.setLastname(updated.getLastname());
+		user.setPhone(updated.getPhone());
+		user.setEmail(updated.getEmail());
+		user.setStreet(updated.getStreet());
+		user.setCity(updated.getCity());
+		user.setState(updated.getState());
+		user.setZipCode(updated.getZipCode());
+		
+		//update session and database
+		userDao.update(user);
+		request.getSession().setAttribute(UserSessionFilter.SESSION_USER, user);
+		
+		return Response.ok(user).build();
+	}
+	
+	@GET
 	@Path("/validate")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public Response isUserAvailable(@QueryParam("username") String username)

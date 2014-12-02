@@ -20,7 +20,11 @@
   </head>
 <body>
 <!--include directive to import the navigation bar so it is not copy and pasted into every page -->
+<%@ page import="rest.server.model.User"%>
 <%@include file="/components/navbar.jsp" %>
+<%
+	User userProfile = ((User) session.getAttribute("user-name"));
+%>
 	<div class="container">
 	<!-- Main component for a primary marketing message or call to action -->
 		<div class="panel panel-default">
@@ -29,27 +33,91 @@
 				<h4>My Profile</h4>
 			</div>
 			<div class="panel-body">
-				<form id="new-user-form" method="POST" action="/rest/user">
+				<form id="profile-form" method="POST" action="/rest/user/profile">
 				<div class="form-group">
-					<input type="hidden" name="username"><br>
-					<input type="hidden" name="password"><br>
-					<input type="text" class="form-control" placeholder= "First Name" name="firstName"><br>
-					<input type="text" class="form-control" placeholder= "Last Name" name="lastname"><br>
-					<input type="text" class="form-control" placeholder= "Phone" name="phone"><br>
-					<input type="email" class="form-control" placeholder= "E-mail" name="email"><br>
+					<input type="text" class="form-control" placeholder= "First Name" name="firstName" value="<%=userProfile.getFirstName()%>"><br>
+					<input type="text" class="form-control" placeholder= "Last Name" name="lastname" value="<%=userProfile.getLastname()%>"><br>
+					<input type="text" class="form-control" placeholder= "Phone" name="phone" value="<%=userProfile.getPhone()%>"><br>
+					<input type="email" class="form-control" placeholder= "E-mail" name="email" value="<%=userProfile.getEmail()%>"><br>
 					
-					<input type="text" class="form-control" placeholder= "Street Address" name="street"><br>
-					<input type="text" class="form-control" placeholder= "City" name="city"><br>
-					<input type="text" class="form-control" placeholder= "State" name="state"><br>
-					<input type="text" class="form-control" placeholder= "Zipcode" name="zipCode"><br>
+					<input type="text" class="form-control" placeholder= "Street Address" name="street" value="<%=userProfile.getStreet()%>"><br>
+					<input type="text" class="form-control" placeholder= "City" name="city" value="<%=userProfile.getCity()%>"><br>
+					<input type="text" class="form-control" placeholder= "State" name="state" value="<%=userProfile.getState()%>"><br>
+					<input type="text" class="form-control" placeholder= "Zipcode" name="zipCode" value="<%=userProfile.getZipCode()%>"><br>
 				</div>
 				<div class="modal-footer">
 					<a href="/index.jsp" class="btn btn-default" role="button">Cancel</a>
 					<button type="submit" class="btn btn-primary">Save</button>
 				</div>
-			</form>
+				</form>
 			</div>
 		</div>
 	</div>
+<script>
+	$(document).ready(function() {
+    	$('#profile-form').bootstrapValidator({
+		        fields: {
+		            email: {
+		                validators: {
+		                    notEmpty: {
+		                        message: 'The email is required and cannot be empty'
+		                    },
+		                    emailAddress: {
+		                        message: 'The input is not a valid email address'
+		                    }
+		                }
+		            },
+		            firstName: {
+		                validators: {
+		                    notEmpty: {
+		                        message: 'The first name is required'
+		                    },
+		                }
+		            },
+		            lastname: {
+		                validators: {
+		                    notEmpty: {
+		                        message: 'The last name is required'
+		                    },
+		                }
+		            },
+		            zipCode: {
+		                validators: {
+		                    regexp: {
+		                        regexp: /^\d{5}$/,
+		                        message: 'The US zipcode must contain 5 digits'
+		                    }
+		                }
+		            },
+		        }
+		})
+	    .on('success.form.bv', function(e) {
+	        // Prevent form submission
+	        e.preventDefault();
+	
+	        // Get the form instance
+	        var $form = $(e.target);
+	
+	        // Get the BootstrapValidator instance
+	        var bv = $form.data('bootstrapValidator');
+	
+	        // Use JQuery Ajax to submit form data
+	        $.ajax({
+	  			url:$form.attr('action'),
+	  			type:$form.attr('method'),
+	  			data:$form.toJSONString(),
+	  			contentType:"application/json; charset=utf-8",
+	  			dataType:"json",
+	  			
+	  			success: function(){
+	  				window.location.href = "/index.jsp";
+	  			},
+	  			error: function(xhr, status, error){
+	  				showErrorMessage(" Unable to update profile."); 	 			
+	  			}
+			});
+	    });
+	});
+	</script>
 </body>
 </html>
