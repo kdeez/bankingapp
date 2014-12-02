@@ -23,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import rest.server.dao.AccountDao;
 import rest.server.dao.UserDao;
 import rest.server.model.Account;
+import rest.server.model.Account.Type;
 import rest.server.model.User;
 import rest.server.model.json.BootstrapRemoteValidator;
 import rest.server.security.KeyAuthenticator;
@@ -66,9 +67,20 @@ public class UserResource
 		user.setPassword(KeyAuthenticator.getHashCode(user.getPassword()));
 		
 		boolean saved = userDao.save(user);
-		if(!saved){
+		if(!saved)
+		{
 			return Response.serverError().build();
 		}
+		
+		//add a default checking account
+		Account account = new Account();
+		account.setType(Type.CHECKING);
+		account.setDescription("Personal Checking");
+		account.setUserId(user.getId());
+		account.setActive(true);
+		account.setDailyLimit(10000d);
+		accountDao.saveUpdate(account);
+		
 		return Response.ok(user).build();
 	}
 	
