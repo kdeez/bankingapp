@@ -1,5 +1,6 @@
 package rest.server.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -16,6 +17,7 @@ import rest.server.model.Account;
 import rest.server.model.Role;
 import rest.server.model.User;
 import rest.server.security.KeyAuthenticator;
+import rest.server.security.Lockout;
 
 /**
  * Hibernate ORM mplementation of User DAO 
@@ -27,6 +29,7 @@ import rest.server.security.KeyAuthenticator;
 @Repository("userDao")
 public class HibernateUserDao implements UserDao 
 {
+	private ArrayList<Lockout> accessList = new ArrayList<Lockout>();
 	
 	/**
 	 * @Autowired means that Spring will automatically inject this dependency at runtime
@@ -39,11 +42,59 @@ public class HibernateUserDao implements UserDao
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 	public boolean authorized(User unverified) 
 	{
-		User user = this.getUser(unverified.getUsername());
-		if(user != null)	
-			return KeyAuthenticator.verifyKey(unverified.getPassword(), user.getPassword());
+//		boolean loginOK;
+//		boolean lockUser;
 		
-		return false;
+		User user = this.getUser(unverified.getUsername());
+		
+		if (user != null)
+		{
+			return (KeyAuthenticator.verifyKey(unverified.getPassword(), user.getPassword()));
+		}
+		else
+			return false;
+		
+		
+		
+		
+//		if(user != null) {
+//			
+//			Lockout lock = new Lockout(System.currentTimeMillis(), user.getUsername());
+//			
+//			
+//			if (KeyAuthenticator.verifyKey(unverified.getPassword(), user.getPassword())) {
+//				if (accessList.contains(lock)) {
+//					
+//					Lockout userLock = accessList.get(accessList.indexOf(lock));
+//					
+//					if (userLock.isLocked(System.currentTimeMillis()))
+//						loginOK = false;
+//					else
+//						loginOK = true;
+//				}
+//				else {
+//					loginOK = true;
+//				}
+//			}
+//			else {
+//				
+//				if (accessList.contains(lock)) {
+//					Lockout userLock = accessList.get(accessList.indexOf(lock));
+//					
+//					userLock.incrementAttempt(System.currentTimeMillis());
+//					loginOK = false;
+////					loginOK = !userLock.getLocked();
+//				}
+//				else {
+//					accessList.add(lock);
+//					loginOK = false;
+//				}
+//			}
+//		}
+//		else
+//			loginOK = false;
+//		
+//		return loginOK;
 	}
 
 	/**
