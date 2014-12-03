@@ -32,7 +32,7 @@ if(success != null)
 String error = request.getParameter("error");
 if(error != null)
 {
-	out.print("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> " + error + "</div>");
+	out.print("<div class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error!</strong> " + error + "</div>");
 }
 
 %>
