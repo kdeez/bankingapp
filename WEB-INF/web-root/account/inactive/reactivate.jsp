@@ -26,6 +26,14 @@
 
 <!--include directive to import the navigation bar so it is not copy and pasted into every page -->
 	<%@include file="/components/navbar.jsp" %>
+	<%@ page import="rest.server.model.User, rest.server.model.Role" %>
+	<% 
+		Role role = ((User) session.getAttribute("user-name")).getRole();
+		if(!(role.getName().equals("Admin") || role.getName().equals("Employee")))
+		{
+			response.sendRedirect("/index.jsp");
+		}
+	%>
     <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
 		<div class="panel panel-default">
@@ -36,7 +44,7 @@
 				<p>Are you sure you would like to reactivate the account?</p>
 				<form id="reactivate-account-form">
 					<div class="modal-footer">
-						<a href="/account/closedAccountList.jsp" class="btn btn-default" role="button">Cancel</a>
+						<a href="/account/inactive/inactive.jsp" class="btn btn-default" role="button">Cancel</a>
 						<button type="submit" class="btn btn-submit">Submit</button>
 					</div>
 				</form>

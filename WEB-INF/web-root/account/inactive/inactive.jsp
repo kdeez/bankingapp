@@ -62,7 +62,7 @@
 				  for(i = 0; i < accounts.length; i++)
 				  {	
 					  content += "<tr>";
-					  content += "<td><a href='/account/details.jsp?id=" + accounts[i].accountNumber + "'>" + accounts[i].description + "</a>" + "</td>";
+					  content += "<td><a href='/account/inactive/details.jsp?id=" + accounts[i].accountNumber + "'>" + accounts[i].description + "</a>" + "</td>";
 					  content += "<td><span class='label label-default'>"+ (accounts[i].accountType == 0 ? "Checking (" : "Savings (") + ('000000000'+ accounts[i].accountNumber).slice(-9) + ")</span></td>";
 					  content += "<td><div class='input-group'>" +
 					  		"<div class='btn-group'>" +
@@ -71,9 +71,9 @@
 									"<span data-bind='label'>I Want To... </span><span class='caret'></span>" +
 								"</button>" +
 								"<ul class='dropdown-menu' role='menu' style='cursor:pointer'>" +
-									//"<li><a href='/account/details.jsp?id=" + accounts[i].accountNumber + "'>View Transactions</a></li>" +
-									//"<li class=\"divider\"></li>" +
-									"<li><a href='/account/reactivate.jsp?id=" + accounts[i].accountNumber + "'>Reactivate Account</a></li>" +
+									"<li><a href='/account/inactive/details.jsp?id=" + accounts[i].accountNumber + "'>View History</a></li>" +
+									"<li class=\"divider\"></li>" +
+									"<li><a href='/account/inactive/reactivate.jsp?id=" + accounts[i].accountNumber + "'>Reactivate Account</a></li>" +
 								"</ul>" +
 							"</div>" +
 						"</div></td>";

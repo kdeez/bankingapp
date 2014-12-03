@@ -1,7 +1,7 @@
 
 <!-- Bootstrap core CSS -->
-<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-<link href="../assets/css/bootstrapValidator.min.css" rel="stylesheet">
+<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="/assets/css/bootstrapValidator.min.css" rel="stylesheet">
 
 <%@ page import="rest.server.model.User, rest.server.model.Role" %>
 <%
@@ -35,7 +35,7 @@
 					<%
 						if(ifAdmin.getName().equals("Admin") || ifAdmin.getName().equals("Employee"))
 						{
-							out.write("<li><a href='/account/inactive.jsp'>View Inactive Accounts</a></li>");
+							out.write("<li><a href='/account/inactive/inactive.jsp'>View Inactive Accounts</a></li>");
 						}
 					%>
 						<li><a href="/account/create.jsp">Create New Account</a></li>
@@ -51,7 +51,7 @@
 	</div>
 </div>
 <!-- Bootstrap core JavaScript -->
-<script src="../assets/js/jquery.js"></script>
-<script src="../assets/js/bootstrap.min.js"></script>
-<script src="../assets/js/form2json.js"></script>
-<script src="../assets/js/bootstrapValidator.min.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/form2json.js"></script>
+<script src="/assets/js/bootstrapValidator.min.js"></script>
