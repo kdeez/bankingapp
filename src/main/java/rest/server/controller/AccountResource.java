@@ -17,6 +17,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -139,9 +140,28 @@ public class AccountResource
 	@GET
 	@Path("/validate")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public Response isAccountActive(@QueryParam("accountId") long accountId)
+	public Response isAccountActive(@QueryParam("accountId") String accountId)
 	{
-		Account account = accountDao.getAccount(accountId);
+		//ok, this is a bit of hack due to how the UI validator registers
+		Account account = null;
+		// look up account by email or phone if needed
+		if (StringUtils.isNumeric(accountId)) 
+		{
+			account = accountDao.getAccount(Long.parseLong(accountId));
+		} else
+		{
+			User tmp = userDao.getUserByEmail(accountId);
+			if(tmp == null)
+			{
+				tmp = userDao.getUserByPhone(accountId);
+			}
+			
+			if(tmp != null)
+			{
+				account = userDao.getDefaultAccount(tmp);
+			}
+		} 
+		
 		return Response.ok(new BootstrapRemoteValidator(account != null && account.isActive())).build();
 	}
 	

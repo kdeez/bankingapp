@@ -174,10 +174,25 @@ public class UserResource
 	@GET
 	@Path("/validate")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public Response isUserAvailable(@QueryParam("username") String username)
+	public Response isUserAvailable(@QueryParam("username") String username, @QueryParam("email") String email, @QueryParam("phone") String phone)
 	{
-		User user = userDao.getUser(username);
-		return Response.ok(new BootstrapRemoteValidator(user == null)).build();
+		boolean available = true;
+		if(username != null)
+		{
+			available = userDao.getUser(username) == null;
+		}
+		
+		if(email != null)
+		{
+			available = userDao.getUserByEmail(email) == null;
+		}
+		
+		if(phone != null)
+		{
+			available = userDao.getUserByPhone(phone) == null;
+		}
+
+		return Response.ok(new BootstrapRemoteValidator(available)).build();
 	}
 	
 	@GET

@@ -49,7 +49,7 @@
 					</div>
 					<br>
 					<div class="input-group">
-  						<span class="input-group-addon"></span>
+  						<span class="input-group-addon">&nbsp;&nbsp;</span>
   						<input type="text" class="form-control" placeholder= "Enter description..." name="description"><br>
 					</div>
 					<br>
@@ -71,14 +71,14 @@
 	$(document).ready(function() {
     	$('#transfer-funds-form').bootstrapValidator({
 		        fields: {
-// 		        	accountId: {
-// 			                validators: {
-// 			                    remote: {
-// 			                        url: '/rest/account/validate',
-// 			                        message: 'Invalid account number'
-// 			                    }
-// 			                }
-// 			            },
+		        	accountId: {
+			                validators: {
+			                    remote: {
+			                        url: '/rest/account/validate',
+			                        message: 'Account does not exist'
+			                    }
+			                }
+			            },
 		        	amount: {
 		                validators: {
 		                    notEmpty: {
