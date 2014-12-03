@@ -92,6 +92,11 @@ public class AccountResource
 		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
 		Account account = accountDao.getAccount(user, id);
 		
+		if(account.getType().equals(Account.Type.CAPITOL))
+		{
+			return Response.status(Status.BAD_REQUEST).entity(new String("Capitol accounts cannot be closed!")).build();
+		}
+		
 		if (account.getBalance() != 0) {
 			return Response.status(Status.BAD_REQUEST).entity(new String("Account needs to be empty!")).build();
 		}
