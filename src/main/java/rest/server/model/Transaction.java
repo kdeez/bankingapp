@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -122,5 +123,28 @@ public class Transaction implements Serializable{
 	}
 	
 	
+	/**
+	 * Below fields are only used for web transactions
+	 */
+	private String email;
+	private String phone;
+
+	@Transient
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Transient
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	
 }

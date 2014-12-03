@@ -49,6 +49,26 @@ public interface UserDao
 	 */
 	public User getUser(String username);
 	
+	/**
+	 * Look up the User by email address
+	 * @param email
+	 * @return
+	 */
+	public User getUserByEmail(String email);
+	
+	/**
+	 * Look up the user by phone number
+	 * @param phone
+	 * @return
+	 */
+	public User getUserByPhone(String phone);
+	
+	/**
+	 * Returns the designated default account for the user
+	 * @param user
+	 * @return
+	 */
+	public Account getDefaultAccount(User user);
 	
 	/**
 	 * Returns all active accounts that the user has access to

@@ -246,7 +246,31 @@ public class AccountResource
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
 		}
 		
-		Account to = accountDao.getAccount(credit.getAccountId());
+		Account to = null;
+		// look up account by email or phone if needed
+		if (credit.getAccountId() != 0) 
+		{
+			to = accountDao.getAccount(credit.getAccountId());
+		} else if (credit.getEmail() != null) 
+		{
+			User tmp = userDao.getUserByEmail(credit.getEmail());
+			if(tmp == null)
+			{
+				return Response.status(Status.BAD_REQUEST).entity("Invalid email address").build();
+			}
+			
+			to = userDao.getDefaultAccount(tmp);
+		} else if (credit.getPhone() != null) 
+		{
+			User tmp = userDao.getUserByPhone(credit.getPhone());
+			if(tmp == null)
+			{
+				return Response.status(Status.BAD_REQUEST).entity("Invalid phone number").build();
+			}
+			
+			to = userDao.getDefaultAccount(tmp);
+		} 
+		
 		if(to == null || !to.isActive())
 		{
 			return Response.status(Status.UNAUTHORIZED).entity(new String("Unauthorized to access account!")).build();
@@ -254,13 +278,16 @@ public class AccountResource
 		
 		if(from.getAccountNumber() == to.getAccountNumber())
 		{
-			return Response.status(Status.UNAUTHORIZED).entity(new String("Cannot transfer funds to same account")).build();
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Cannot transfer funds to same account.")).build();
 		}
+		
+		//update the credit accountId in case it gets referenced in the below code
+		credit.setAccountId(to.getAccountNumber());
 		
 		double amount = credit.getAmount();
 		try 
 		{
-			accountDao.transfer(from, to, amount, "Transfer to account: " + credit.getAccountId());
+			accountDao.transfer(from, to, amount, "Transfer to account: " + to.getAccountNumber());
 		} catch (Exception e) 
 		{
 			if(e instanceof TransactionException)

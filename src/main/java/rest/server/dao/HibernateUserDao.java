@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -76,6 +77,49 @@ public class HibernateUserDao implements UserDao
 		return (User) sessionFactory.getCurrentSession().createCriteria(User.class)
 				.add(Restrictions.eq("username", username))
 				.add(Restrictions.eq("active", true)).uniqueResult();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public User getUserByEmail(String email) {
+		List<User> users = sessionFactory.getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.eq("email", email)).list();
+		
+		//unique so its valid
+		if(users.size() == 1)
+		{
+			return users.get(0);
+		}
+		
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public User getUserByPhone(String phone) {
+		List<User> users = sessionFactory.getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.eq("phone", phone)).list();
+		
+		//unique so its valid
+		if(users.size() == 1)
+		{
+			return users.get(0);
+		}
+		
+		return null;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+	public Account getDefaultAccount(User user) {
+		return (Account) sessionFactory.getCurrentSession().createCriteria(Account.class)
+				.add(Restrictions.eq("userId", user.getId()))
+				.add(Restrictions.eq("active", true))
+				.addOrder(Order.asc("id"))
+				.setMaxResults(1)
+				.uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")

@@ -35,18 +35,27 @@
 				<div class="form-group">
 					<input type="hidden" class="form-control" name="transactionType" value="1">
 					<div class="input-group">
-  						<span class="input-group-addon"></span>
-  						<input type="text" class="form-control" placeholder= "Account Number" name="accountId"><br>
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+								<span data-bind="label">Account </span><span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu" style="cursor:pointer">
+								<li value="0"><a>Account </a></li>
+								<li value="1"><a>Email </a></li>
+								<li value="2"><a>Phone </a></li>
+							</ul>
+						</div>
+						<input id="entity-field" type="text" class="form-control" placeholder="Enter account number..." name="accountId">
 					</div>
 					<br>
 					<div class="input-group">
   						<span class="input-group-addon"></span>
-  						<input type="text" class="form-control" placeholder= "Enter Description" name="description"><br>
+  						<input type="text" class="form-control" placeholder= "Enter description..." name="description"><br>
 					</div>
 					<br>
 					<div class="input-group">
   						<span class="input-group-addon">$</span>
-  						<input type="text" class="form-control" placeholder= "Enter Amount" name="amount"><br>
+  						<input type="text" class="form-control" placeholder= "Enter amount..." name="amount"><br>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -62,14 +71,14 @@
 	$(document).ready(function() {
     	$('#transfer-funds-form').bootstrapValidator({
 		        fields: {
-		        	accountId: {
-			                validators: {
-			                    remote: {
-			                        url: '/rest/account/validate',
-			                        message: 'Invalid account number'
-			                    }
-			                }
-			            },
+// 		        	accountId: {
+// 			                validators: {
+// 			                    remote: {
+// 			                        url: '/rest/account/validate',
+// 			                        message: 'Invalid account number'
+// 			                    }
+// 			                }
+// 			            },
 		        	amount: {
 		                validators: {
 		                    notEmpty: {
@@ -127,5 +136,30 @@
 	    });
 	});
 	</script>
+	<!-- This is the jquery code for making a Bootstrap dropdown widget behave like a native "select" element -->
+<script>
+$(document.body).on('click', '.dropdown-menu li', function(event) {
+	var $target = $(event.currentTarget);
+	$target.closest('.input-group-btn').find('[data-bind="label"]').text($target.text()).end().children('.dropdown-toggle').dropdown('toggle');
+	
+	switch($target.val())
+	{
+		case 0:
+			$('#entity-field').attr("name", "accountId");
+			$('#entity-field').attr('placeholder', "Enter account number...");
+			break;
+		case 1:
+			$('#entity-field').attr("name", "email");
+			$('#entity-field').attr('placeholder', "Enter email address...");
+			break;
+		case 2:
+			$('#entity-field').attr("name", "phone");
+			$('#entity-field').attr('placeholder', "Enter phone number...");
+			break;
+	}
+	
+	return false;
+});
+</script>
 </body>
 </html>

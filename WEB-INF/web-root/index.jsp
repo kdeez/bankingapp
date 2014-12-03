@@ -73,7 +73,6 @@
 									"<li><a href='/account/transfer.jsp?id=" + accounts[i].accountNumber + "'>Transfer Funds</a></li>" +
 									"<li class=\"divider\"></li>" +
 									"<li><a href='/account/close.jsp?id=" + accounts[i].accountNumber + "'>Close Account</a></li>" +
-									//"<li><a data-toggle=\"modal\" data-target=\"#close-account-modal\" data-id=\"" + accounts[i].accountNumber +"\" style=\"cursor:pointer;\">Close Account</a></li>" +
 								"</ul>" +
 							"</div>" +
 						"</div></td>";
