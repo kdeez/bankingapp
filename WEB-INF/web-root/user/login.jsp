@@ -215,10 +215,10 @@ if(error != null)
 		            },
 		            phone: {
 		                validators: {
-		                    regexp: {
-		                        regexp: /^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/,
-		                        message: 'The US zipcode must contain 5 digits'
-		                    },
+		                	phone: {
+	                            country: 'US',
+	                            message: 'The value is not valid %s phone number'
+	                        },
 		                    remote: {
 		                        url: '/rest/user/validate',
 		                        message: 'The phone number is already in use'
