@@ -29,9 +29,6 @@
 				<li><a href="/index.jsp">Home</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">I Want To... <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-					<li><a href="/user/profile.jsp">Edit Profile</a></li>
-					<li><a href="/user/password.jsp">Change Password</a></li>
-					<li class="divider"></li>
 					<%
 						if(ifAdmin.getName().equals("Admin") || ifAdmin.getName().equals("Employee"))
 						{
@@ -42,7 +39,11 @@
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/user/logout.jsp">Logged in as <%=username%> (Sign Out)
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=username%> <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+				<li><a href="/user/profile.jsp">Edit Profile</a></li>
+				<li><a href="/user/password.jsp">Change Password</a></li>
+				<li><a href="/user/logout.jsp">Sign Out
 				</a></li>
 			</ul>
 		</div>
