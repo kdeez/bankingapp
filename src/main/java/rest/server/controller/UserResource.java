@@ -174,23 +174,27 @@ public class UserResource
 	@GET
 	@Path("/validate")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public Response isUserAvailable(@QueryParam("username") String username, @QueryParam("email") String email, @QueryParam("phone") String phone)
+	public Response isUserAvailable(@Context HttpServletRequest request, @QueryParam("username") String username, @QueryParam("email") String email, @QueryParam("phone") String phone)
 	{
-		boolean available = true;
+		User user = (User) request.getSession().getAttribute(UserSessionFilter.SESSION_USER);
+		User other = null;
+		
 		if(username != null)
 		{
-			available = userDao.getUser(username) == null;
+			other = userDao.getUser(username);
 		}
 		
 		if(email != null)
 		{
-			available = userDao.getUserByEmail(email) == null;
+			other = userDao.getUserByEmail(email);
 		}
 		
 		if(phone != null)
 		{
-			available = userDao.getUserByPhone(phone) == null;
+			other = userDao.getUserByPhone(phone);
 		}
+		
+		boolean available = other == null || (user != null && user.equals(other));
 
 		return Response.ok(new BootstrapRemoteValidator(available)).build();
 	}

@@ -102,6 +102,10 @@
 		                    remote: {
 		                        url: '/rest/user/validate',
 		                        message: 'The phone number is already in use'
+		                    },
+		                    regexp: {
+		                        regexp: /^(\d+-?)+\d+$/,
+		                        message: 'The phone number must match xxx-xxx-xxxx'
 		                    }
 		                }
 		            },
