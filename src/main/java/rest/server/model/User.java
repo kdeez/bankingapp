@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -47,6 +48,8 @@ public class User implements Serializable {
 	private String email;
 	private String phone;
 	private Date created;
+	private int failedAttempts;
+	private long lockedTime;
 
 	public User() 
 	{
@@ -201,6 +204,62 @@ public class User implements Serializable {
 	public void setCreated(Date created) {
 		this.created = created;
 	}
+	
+	
+	@Column(name = "failedAttempts")
+	public int getFailedAttempts() {
+		return failedAttempts;
+	}
+	
+	public void setFailedAttempts(int failedAttempts) {
+		this.failedAttempts = failedAttempts;
+	}
+	
+	@Column(name = "lockedTime")
+	public long getLockedTime() {
+		return lockedTime;
+	}
+	
+	public void setLockedTime(long lockedTime) {
+		this.lockedTime = lockedTime;
+	}
+	
+	@Transient
+	public boolean isLocked(long timeStamp)
+	{
+		
+		if (lockedTime == 0)
+			return false;
+		
+		System.out.println("Time now    : "+timeStamp);
+		System.out.println("Locked Time : "+lockedTime);
+		System.out.println("Difference  : "+(timeStamp - lockedTime));
+		
+		if ((timeStamp - lockedTime) < 60000)
+			return true;
+		
+		this.unlockAccount();
+		
+		return false;
+	}
+	
+	@Transient
+	public void setFailedAttempt()
+	{	
+		if (failedAttempts < 2) {
+			failedAttempts++;
+		}
+		else if (failedAttempts == 2) {
+			lockedTime = System.currentTimeMillis();
+		}
+	}
+
+	@Transient
+	public void unlockAccount()
+	{
+		failedAttempts = 0;
+		lockedTime     = 0;
+	}
 
 	@Override
 	public String toString() {
@@ -316,8 +375,8 @@ public class User implements Serializable {
 		} else if (!zipCode.equals(other.zipCode))
 			return false;
 		return true;
-	}
-
+	}	
+	
 	
 	
 }

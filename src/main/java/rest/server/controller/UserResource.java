@@ -91,18 +91,35 @@ public class UserResource
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public Response login(@Context HttpServletRequest request, User unverified)
 	{
+		User user = userDao.getUser(unverified.getUsername());
+		
+		if(user == null)
+		{
+			return Response.status(Status.BAD_REQUEST).entity(new String("Invalid username")).build();
+		}
+		
+		if(user.isLocked(System.currentTimeMillis()))
+		{
+			return Response.status(Status.UNAUTHORIZED).entity(new String("Account is locked!")).build();
+		}
+		
 		boolean authorized = userDao.authorized(unverified);
+
 		if(authorized)
 		{
+			user.unlockAccount();
 			//create a HTTPSession to use for this session
-			User user = userDao.getUser(unverified.getUsername());
 			request.getSession().setAttribute(UserSessionFilter.SESSION_USER, user);
 			logger.info("Created user session for user=" + user);
 		}
 		else
 		{
+			user.setFailedAttempt();
 			logger.error("Invalid login attempt for user=" + unverified);	
 		}
+		
+		//update session and database
+		userDao.update(user);
 		
 		return Response.ok(new BootstrapRemoteValidator(authorized)).build();
 	}
