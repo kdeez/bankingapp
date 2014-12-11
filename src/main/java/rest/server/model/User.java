@@ -16,6 +16,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import rest.server.controller.UserResource;
 
 /**
  * 
@@ -50,6 +54,8 @@ public class User implements Serializable {
 	private Date created;
 	private int failedAttempts;
 	private long lockedTime;
+	
+	private Logger logger = LoggerFactory.getLogger(UserResource.class);
 
 	public User() 
 	{
@@ -231,9 +237,9 @@ public class User implements Serializable {
 		if (lockedTime == 0)
 			return false;
 		
-		System.out.println("Time now    : "+timeStamp);
-		System.out.println("Locked Time : "+lockedTime);
-		System.out.println("Difference  : "+(timeStamp - lockedTime));
+		logger.info("Time now    : "+timeStamp);
+		logger.info("Locked Time : "+lockedTime);
+		logger.info("Difference  : "+(timeStamp - lockedTime));
 		
 		if ((timeStamp - lockedTime) < 60000)
 			return true;
